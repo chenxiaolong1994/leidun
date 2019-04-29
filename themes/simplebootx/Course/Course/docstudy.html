@@ -1,0 +1,54 @@
+<tc_include file="Public:header" />  
+<link href="__PUBLIC__/js/artDialog_v6/ui_dialog.css" rel="stylesheet" />
+ <div id="content-container" class="container">
+  <div class="article-detail row" id="detail-content">
+    <div class="col-md-12 article-detail-main">
+      <section class="es-section article-content">
+        <ol class="breadcrumb">
+          <a  class="btn btn-default" href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}" id="returncourse" style="color:#82d867;">返回课程</a>
+        </ol>       
+        <div class="article-metas">
+            <input type="hidden" id="cs_id" value="{$lession['cs_id']}"></input>
+			<input type="hidden" id="sc_id" value="{$lession['id']}"></input>
+          <div class="text-center">
+             <h2 class="title">{$lession['sc_name']}</h2>
+          </div>
+          
+        </div>        
+        <div class="article-text">
+          {$lession['doccontent']}
+        </div>
+      </section>
+    </div>
+    <div class="col-md-7 col-md-offset-10">
+		<button   id="isover" class="btn btn-primary js-ajax-submit">我已经学完了 </button>
+	</div>
+    </div>
+  </div>
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/js/artDialog_v6/dialogmin.js"></script>
+<script type="text/javascript"> 
+$("#isover").click(function(){
+	var sid=document.getElementById("sc_id").value;
+	var cid=document.getElementById("cs_id").value;
+	$.ajax({ url:'{:u('Course/Course/studied')}', 
+		 type:"post", data:{'sc_id':sid,'cs_id':cid}, 
+		 dataType:'json', 
+		 success:function(data){
+		     var d = dialog({
+				title: '正在提交..',
+				content: '我已经学完了本课程！',
+				
+			});
+			setTimeout(function () {
+				document.getElementById("returncourse").click();
+			}, 2000);
+			d.width(300)
+			d.showModal();
+			
+		   }
+		}
+	  );
+	})
+</script> 
+<tc_include file="Public:footer" />

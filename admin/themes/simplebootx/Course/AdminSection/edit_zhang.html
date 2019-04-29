@@ -1,0 +1,22 @@
+<admintpl file="header" />
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="js-ajax-form" name="myform" id="myform" action="{:u('AdminSection/edit_post')}" method="post">
+			<div class="form-group" style="margin-bottom:10px;">
+             <label>章名称</label>
+              <input type="hidden" name="cs_id" value="{$section['cs_id']}">
+              <input type="hidden" name="type_id" value="1">
+              <input type="hidden" name="id" value="{$section['id']}" />
+              <input type="text" style="width:400px;" name="sc_name" id="sc_name"   value="{$section['sc_name']}" style="color:" class="input input_hd J_title_color" />       
+            </div>
+ 
+            <input type="hidden" name="addtime"  value="{:date('Y-m-d H:i:s',time())}" size="21" class="input length_3 J_datetime "></td>
+            <div class="form-action" style="margin-top:40px;">
+              <script type="text/javascript"  src="__ROOT__/public/js/ueditor/ueditor.all.min.js"></script>
+              <button class="btn btn_submit js-ajax-submit"type="submit">提交</button>
+            </div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

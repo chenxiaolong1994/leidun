@@ -1,0 +1,167 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+     <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+      <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item " ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item "  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item active"><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <!--<li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          -->
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">基础信息</div>
+	           <div class="panel-body">
+			     <form id="user-profile-form" class="form-horizontal js-ajax-form" method="post" action="{:U('user/Setting/setting_post')}">
+					<div class="form-group">
+					  <label class="col-md-2 control-label" for="profile_truename">姓名</label>
+					  <div class="col-md-7 controls radios">
+              	        <input type="text"  name="user_nicename" class="form-control"  value="{$user['user_nicename']}">
+              	        <div class="help-block" style="display:none;"></div>
+            	      </div> 
+            		</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">性别</label>
+						<php>
+          	               	$man=$user['sex']==1?"checked":"";
+          		            $woman=$user['sex']==0?"checked":"";
+                     	</php>
+						<div class="col-md-7 controls radios">
+							<div id="profile_gender">
+								<input type="radio" id="profile_gender_0" name="sex" required="required" value="1" {$man}>
+								<label for="profile_gender_0" class="required">男</label>
+								<input type="radio" id="profile_gender_1" name="sex" required="required" value="0" {$woman} >
+								<label for="profile_gender_1" class="required">女</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="profile_mobile" class="col-md-2 control-label">手机号码</label>
+							<div class="col-md-7 controls">
+								<div class="control-text">              	             
+								  <input type="text"  name="mobile" class="form-control"  readonly="true"  value="{$user['mobile']}">
+								</div>
+							</div>
+						</div>
+					<if condition="$user['user_type']==3">	
+						<div class="form-group">
+							<label class="col-md-2 control-label">教师职称</label>
+							<div class="col-md-7 controls">
+								<input type="text" id="zhicheng" name="zhicheng" class="form-control" value="{$user['zhicheng']}">
+								<div class="help-block" style="display:none;"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">教师简介</label>
+							<div class="col-md-7 controls">
+								<textarea type="text" rows="4" maxlength="80" id="tcProfile" name="tcProfile" class="form-control">{$user['tcprofile']}</textarea>
+								<div class="help-block" style="display:none;"></div>
+							</div>
+						</div>
+					</if> 	
+					<div class="form-group form-forIam-group form-notStudent-group">
+						<label class="col-md-2 control-label">地址</label>
+						<input type="hidden" id="p" name="p" value="{$user['prov']}">
+						<input type="hidden" id="c" name="c" value="{$user['city']}">
+						<input type="hidden" id="d" name="d" value="{$user['dist']}">
+					
+						<div id="city" class="col-md-7 controls"> 
+						  <select class="prov form-control" name="prov" style="width:150px;float:left"></select>  
+						  <select class="city form-control" name="city" style="width:150px;float:left;margin-left:10px;display:none;" ></select> 
+						  <select class="dist form-control" name="dist" style="width:140px;float:left;margin-left:10px;display:none;" ></select> 
+						</div> 
+					</div>
+					
+					<div class="form-group form-forIam-group form-notStudent-group">
+						<label class="col-md-2 control-label">生日</label>
+						<div class="col-md-7 controls">
+						    <input class="js-date form-control" type="text" id="input-birthday" placeholder="2013-01-04" name="birthday" value="{$user['birthday']}">
+							<div class="help-block" style="display:none;"></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">个人签名</label>
+						<div class="col-md-7 controls">
+							<textarea type="text" rows="4" maxlength="80" id="profile_signature" name="signature" class="form-control">{$user['signature']}</textarea>
+							<div class="help-block" style="display:none;"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">微信</label>
+						<div class="col-md-7 controls">
+							<input type="text" id="profile_weixin" name="weiixn" class="form-control" value="{$user['weiixn']}">
+							<div class="help-block" style="display:none;"></div>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="profile_qq" class="col-md-2 control-label">QQ</label>
+						<div class="col-md-7 controls">
+							<input type="text" id="profile_qq" name="qq" class="form-control" data-widget-cid="widget-2" data-explain="" value="{$user['qq']}">
+							<div class="help-block" style="display:none;"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-7 col-md-offset-2">
+							<button id="profile-save-btn"  type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+						</div>
+					</div>
+			    </form>
+		       </div>
+	         </div>
+          </div>
+     </div>
+  </div>
+
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/js/jquery.cityselect.js"></script>
+<script type="text/javascript">
+var p=document.getElementById('p').value;
+var c=document.getElementById('c').value;
+var d=document.getElementById('d').value;
+  $(function(){
+		$("#city").citySelect({
+			nodata:"none",
+			prov:p,
+			city:c,
+			dist:d,
+			required:false
+		}); 
+	});
+</script>  
+<tc_include file="Public:footer" />

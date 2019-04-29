@@ -1,0 +1,169 @@
+
+/* 轮播图父元素 */
+.poster.hidden-xs{
+    position: relative;
+
+}
+
+#submenu-wrapper{
+    width: 100%;
+    height: 370px;
+    position: absolute;
+    /*z-index: 1000;*/
+}
+#submenu{
+    position: relative;
+    width: 1140px;
+    height: 370px;
+    margin: 0 auto;
+    /*z-index: 100;*/
+    font: 14px/1.5 "PingFang SC", "微软雅黑", "Microsoft YaHei", Helvetica, "Helvetica Neue", Tahoma, Arial, sans-serif;
+
+}
+
+#submenu > ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 216px;
+    height: 100%;
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-top: 5px;
+    box-sizing: border-box;
+    background: #2b333b;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    /* background: rgba(0,0,0,0.5); */
+    opacity: 0.9;
+    z-index: 100;
+
+}
+#submenu > ul > li{
+    height: 60px;
+    line-height: 60px;
+    font-size: 12px;
+    cursor: pointer;
+    padding-left: 12px;
+    position: relative;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+#submenu > ul > li > a{
+    color: rgba(255, 255, 255, 0.6);
+}
+#submenu > ul > li > a > i{
+    position: absolute;
+    right: 8px;
+    top: 28px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-left: 6px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 3px solid transparent;
+}
+
+#submenu > ul > li:hover{
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+/* 菜单具体内容 */
+#submenu > .content{
+    width: 924px;
+    height: 100%;
+    margin-left: 216px;
+    display: none;
+    position: relative;
+    z-index: 0;
+
+}
+#submenu > .content > div{
+    width: 924px;
+    height: 185px;   
+    box-sizing: border-box;
+    padding: 30px 30px 20px 30px;
+}
+#submenu > .content > .content-title{
+    background-color: #fff;
+    border-top-right-radius: 10px;
+}
+#submenu > .content > .content-list{
+    background-color: #f8fafc;
+    border-bottom-right-radius: 10px;
+}
+/* 展开菜单中课程 - title */
+#submenu > .content > .content-title > div.first {
+    display: flex;
+    align-items: center;
+}
+#submenu > .content > .content-title > div.first> span{
+    color: #f00;
+    margin-right: 15px;
+    font-weight: 500;
+}
+#submenu > .content .line{
+    flex-grow: 1;
+    border-bottom: 1px solid #ddd;
+}
+#submenu > .content > .content-title > div.second {
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+#submenu > .content > .content-title > div.second> a{
+    display: inline-block;
+    margin: 10px 20px 10px 0;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+#submenu > .content > .content-title > div.second> a:hover{
+    /*color: rgba(255, 0, 0, 0.5)*/
+    color: #82d867
+}
+/* 展开菜单中课程 - list */
+#submenu .content-list{
+    float: left;
+}
+#submenu  .celler{
+    position: relative;
+    display: inline-block;
+    width: 400px;
+    margin-bottom: 25px;
+    margin-right: 52px;
+}
+#submenu  .celler:nth-child(even){
+    margin-right: 0;
+}
+#submenu  .celler img{
+    display: inline-block;
+    width: 80px;
+    height: 50px;
+    margin-right: 15px;
+}
+#submenu  .celler > a > div{
+    display: inline-block;
+    position: absolute;
+    height: 50px;
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+#submenu  .celler > a > div > span{
+    display: block;
+    width: 300px;
+    color: #2b333b;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#submenu  .celler > a > div > div > span{
+    color: #2b333b;
+    opacity: 0.5;
+}
+

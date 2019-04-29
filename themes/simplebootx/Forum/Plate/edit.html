@@ -1,0 +1,55 @@
+<tc_include file="Public:header" />
+<link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
+<div id="content-container" class="container">
+    <div class="panel panel-default">
+		<div class="panel-heading"><h3 class="panel-title">创建板块</h3></div>
+		<div class="panel-body">
+			<form name="myform" id="myform" action="{:u('Forum/Plate/editpost')}" method="post" class="form-horizontal js-ajax-form">
+				<div class="form-group">
+					<label class="col-md-2 control-label" for="group_grouptitle">板块名称</label>
+					<div class="col-md-7 controls">
+						<input type="text" id="group_grouptitle" name="name" class="form-control" value="{$data['name']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">板块图标</label>
+					<div class="controls col-md-8 controls">
+					    <div  style="text-align: left;"><input type='hidden' name='pic' id='thumb' value=''>
+							<a href='javascript:void(0);' onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp|mp4,1,,,1','','','');return false;">
+							<if condition="empty($data['pic'])">
+								<img src='__PUBLIC__/images/group.png' id='thumb_preview'  alt="{vo['name']}" class="avatar-square-md"  /></a>
+							<else/>
+								<img src='{$data['pic']}' id='thumb_preview'  alt="{data['name']}" class="avatar-square-md"  /></a>
+							</if>
+                        </div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label" for="group_about">板块介绍</label>
+					<div class="col-md-7 controls">
+						<td><script id="content" type="text/plain"  name="brief">{$data['brief']}</script></td>
+						<input type="hidden" value="{$data['id']}" name="id">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-7 col-md-offset-2">
+					    <button   type="submit" class="btn btn-primary js-ajax-submit">提交 </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:150});
+	editorcontent.render( 'content' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<tc_include file="Public:scripts" /> 
+<tc_include file="Public:footer" />
+        

@@ -1,0 +1,483 @@
+<tc_include file="Public:header" />  
+ <section class="index-course-list lazyload">
+   <div  class="container">
+     <div class="es-tabs">
+       <div class="tab-header">
+          <if condition="empty($top_id)">
+            <ul class="clearfix">
+               <li class="active" ><a href="{:u('Exam/Shiti/index')}">全部</a></li>
+             <volist name="toptype" id="vo" key="key">
+               <li class=""><a href="{:u('Exam/Shiti/index',array('topid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+             </volist> 
+            </ul>
+          <else/> 
+            <ul class="clearfix">
+               <li><a href="{:u('Exam/Shiti/index')}">全部</a></li>
+             <volist name="toptype" id="vo">
+              <if condition="$vo['term_id']==$top_id">
+               <li class="active"><a href="{:u('Exam/Shiti/index',array('topid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+              <else/>
+               <li class=""><a href="{:u('Exam/Shiti/index',array('topid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+              </if>
+             </volist> 
+           </ul>
+          </if>
+       </div>
+	   <if condition="$childtype">
+			<div class="tab-body">
+				<ul class="clearfix">
+				    <li class="all"><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id))}">全部</a></li>
+				    <volist name="childtype" id="vo" key="key">
+					    <if condition="$vo['term_id']==$child_id">
+							 <li class="active"><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id,'childid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+						<else/>
+						     <li class=""><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id,'childid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+						</if>
+				    </volist> 
+				</ul>
+			</div>
+		</if>
+        <if condition="$label">		
+			<div class="tab-body">
+				<ul class="clearfix">
+				    <li class="all"><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id,'childid'=>$child_id))}">全部</a></li>
+				    <volist name="label" id="vo" key="key">
+					    <if condition="$vo['id']==$label_id">
+							 <li class="active"><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id,'childid'=>$child_id,'labelid'=>$vo['id']))}">{$vo['labelname']}</a></li>
+						<else/>
+						     <li class=""><a href="{:u('Exam/Shiti/index',array('topid'=>$top_id,'childid'=>$child_id,'labelid'=>$vo['id']))}">{$vo['labelname']}</a></li>
+						</if>
+				    </volist> 
+				</ul>
+			</div>
+		</if>	
+     </div>
+     <div class="row">
+			<div class="col-md-12 prevent-copy">
+				<div class="testpaper-body" >
+					<div id="testpaper-navbar" class="testpaper-navbar" data-spy="affix" data-offset-top="200">
+						<ul id="myTab" class="nav nav-pills clearfix">
+							<if condition="!empty($choice)">
+							  <li class="active"><a href="#single_choice" data-toggle="tab">选择题</a></li>
+							</if>
+							<if condition="!empty($fill)">
+							  <li><a href="#fill" data-toggle="tab">填空题</a></li>
+							</if> 	
+							<if condition="!empty($determine)">
+							  <li><a href="#determine" data-toggle="tab">判断题</a></li>
+							</if> 
+							<if condition="!empty($essay)">
+							  <li><a href="#essay" data-toggle="tab">问答题</a></li>
+							</if> 
+							<if condition="!empty($material)">
+							  <li><a href="#material" data-toggle="tab">材料题</a></li>
+							</if> 
+						</ul>
+					</div>
+					<div id="myTabContent" class="tab-content">
+					<if condition="!empty($choice)">
+						<div class="tab-pane active  panel panel-default testpaper-question-block" id="single_choice">
+							<div class="panel-heading"><strong class="">选择题</strong>
+							</div>
+							<div class="panel-body">
+								<foreach name="choice" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-choice " id="{$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<if condition="$vo['isdone'] eq 1">
+													   <div id="done1_{$vo['id']}" class="testpaper-question-score text-success">已做</div>
+													</if>  
+													   <div id="done_{$vo['id']}" class="testpaper-question-score text-success" style="display:none;">已做</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+											<ul class="testpaper-question-choices">
+												<li class=""><span class="testpaper-question-choice-index">A.</span> <p>{$vo['xa']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">B.</span> <p>{$vo['xb']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">C.</span> <p>{$vo['xc']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">D.</span> <p>{$vo['xd']}</p></li>
+											</ul>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-choice-inputs" id="choiceyonghudaan_{$vo['id']}">
+											    <if condition="$vo['uncertain']==0">
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="A" >A</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="B" >B</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="C" >C</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="D" >D</label>
+												<else/>	
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="A"> A</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="B"> B</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="C"> C</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="D"> D</label>
+												</if>	
+											</div>
+											<input type="hidden" id="biaozundaan_{$vo['id']}" value="{$vo['daan']}"> </input>
+										</div>
+										<div class="testpaper-question-choice-inputs" id="result_{$vo['id']}" style="margin-top:10px;display:none;">
+										        
+										</div>
+										<div class="testpaper-question-actions pull-right">
+												<a class="btn btn-sm btn-link analysis-btn" id="analysis_{$vo['id']}"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+												<a class="btn btn-sm btn-link unanalysis-btn" id="unanalysis_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+												 <if condition="$vo['iserror']==0">
+													<a  class="btn btn-sm btn-default favorite-btn_1" id="favorite1_{$vo['id']}" ><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												 <else />	
+													<a  class="btn btn-link btn-sm unfavorite-btn_1" id="unfavorite1_{$vo['id']}"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+												 </if>
+												<a  class="btn btn-sm btn-default favorite-btn_2" id="favorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												<a  class="btn btn-link btn-sm unfavorite-btn_2"  id="unfavorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+										</div>
+										
+								  	</div>
+									<div class="testpaper-question-analysis well" id="questionanalysis_{$vo['id']}" style="margin-top:10px;display:none;" >
+											{$vo['analysis']}
+								    </div>
+								</foreach>  
+                                <nav class="text-center"><div class="pagination text-center">{$choice_page}</div></nav>								
+							</div>
+						</div>
+						
+					</if>
+					<if condition="!empty($fill)">
+						<div class="tab-pane panel panel-default testpaper-question-block" id="fill">
+							<div class="panel-heading"><strong class="">填空题</strong>
+							</div>
+							<div class="panel-body">
+								<foreach name="fill" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-fill ">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<if condition="$vo['isdone'] eq 1">
+													   <div  id="done1_{$vo['id']}" class="testpaper-question-score text-success">已做</div>
+													</if>  
+													   <div id="done_{$vo['id']}" class="testpaper-question-score text-success" style="display:none;">已做</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-fill-inputs" id="xueyuandaandiv_{$vo['id']}">
+												<input class="form-control showMsg" id="xueyuandaaninput_{$vo['id']}" type="text" placeholder="这里写答案,多个空用逗号隔开！"  />
+											    <script id="xueyuandaantext_{$vo['id']}" type="text/plain"  name="xueyuandaantext_{$vo['id']}"></script>
+											</div>
+										</div>
+										<div class="testpaper-question-actions pull-right">
+												<a class="btn btn-sm btn-link analysis-btn" id="analysis_{$vo['id']}"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+												<a class="btn btn-sm btn-link unanalysis-btn" id="unanalysis_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+												 <if condition="$vo['iserror']==0">
+													<a  class="btn btn-sm btn-default favorite-btn_1" id="favorite1_{$vo['id']}" ><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												 <else />	
+													<a  class="btn btn-link btn-sm unfavorite-btn_1" id="unfavorite1_{$vo['id']}"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+												 </if>
+												<a  class="btn btn-sm btn-default favorite-btn_2" id="favorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												<a  class="btn btn-link btn-sm unfavorite-btn_2"  id="unfavorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+										</div>
+									</div>
+									<div class="testpaper-question-analysis well" id="questionanalysis_{$vo['id']}" style="margin-top:10px;display:none;" >
+											{$vo['analysis']}
+								    </div>
+								</foreach> 
+								<nav class="text-center"><div class="pagination text-center">{$fill_page}</div></nav>
+							</div>
+							
+						</div>
+					</if>
+					<if condition="!empty($determine)">
+						<div class="tab-pane panel panel-default testpaper-question-block" id="determine">
+							<div class="panel-heading"><strong class="">判断题</strong>
+							</div>
+							<div class="panel-body">
+								<foreach name="determine" item="vo"  key="k">							
+									<div class="testpaper-question testpaper-question-determine ">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<if condition="$vo['isdone'] eq 1">
+													   <div id="done1_{$vo['id']}" class="testpaper-question-score text-success">已做</div>
+													</if>  
+													   <div id="done_{$vo['id']}" class="testpaper-question-score text-success" style="display:none;">已做</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-determine-inputs" id="determineyonghudaan_{$vo['id']}">
+												<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="1" > 正确</label>
+												<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="2" >错误</label>
+											</div>
+										</div>
+										<input type="hidden" id="biaozundaan_{$vo['id']}" value="{$vo['daan']}"> </input>
+										<div class="testpaper-question-choice-inputs" id="result_{$vo['id']}" style="margin-top:10px;display:none;">
+										        
+										</div>
+										<div class="testpaper-question-actions pull-right">
+												<a class="btn btn-sm btn-link analysis-btn" id="analysis_{$vo['id']}"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+												<a class="btn btn-sm btn-link unanalysis-btn" id="unanalysis_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+												 <if condition="$vo['iserror']==0">
+													<a  class="btn btn-sm btn-default favorite-btn_1" id="favorite1_{$vo['id']}" ><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												 <else />	
+													<a  class="btn btn-link btn-sm unfavorite-btn_1" id="unfavorite1_{$vo['id']}"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+												 </if>
+												<a  class="btn btn-sm btn-default favorite-btn_2" id="favorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												<a  class="btn btn-link btn-sm unfavorite-btn_2"  id="unfavorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+										</div>
+									</div>
+									<div class="testpaper-question-analysis well" id="questionanalysis_{$vo['id']}" style="margin-top:10px;display:none;" >
+										{$vo['analysis']}
+								    </div>
+								</foreach>
+								<nav class="text-center"><div class="pagination text-center">{$determine_page}</div></nav>
+							</div>
+						</div>
+					</if>		
+					<if condition="!empty($essay)">
+						<div class="tab-pane panel panel-default testpaper-question-block" id="essay">
+							<div class="panel-heading"><strong class="">问答题</strong>
+							</div>
+							<div class="panel-body">
+								<foreach name="essay" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-essay " >
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<if condition="$vo['isdone'] eq 1">
+													   <div id="done1_{$vo['id']}" class="testpaper-question-score text-success">已做</div>
+													</if>  
+													   <div id="done_{$vo['id']}" class="testpaper-question-score text-success" style="display:none;">已做</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-fill-inputs" id="xueyuandaandiv_{$vo['id']}">
+												<input class="form-control showMsg" id="xueyuandaaninput_{$vo['id']}" type="text" placeholder="这里写答案！"  />
+											    <script id="xueyuandaantext_{$vo['id']}" type="text/plain"  name="xueyuandaantext_{$vo['id']}"></script>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+										<div class="testpaper-question-actions pull-right">
+												<a class="btn btn-sm btn-link analysis-btn" id="analysis_{$vo['id']}"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+												<a class="btn btn-sm btn-link unanalysis-btn" id="unanalysis_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+												 <if condition="$vo['iserror']==0">
+													<a  class="btn btn-sm btn-default favorite-btn_1" id="favorite1_{$vo['id']}" ><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												 <else />	
+													<a  class="btn btn-link btn-sm unfavorite-btn_1" id="unfavorite1_{$vo['id']}"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+												 </if>
+												<a  class="btn btn-sm btn-default favorite-btn_2" id="favorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												<a  class="btn btn-link btn-sm unfavorite-btn_2"  id="unfavorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+										</div>
+									</div>
+									<div class="testpaper-question-analysis well" id="questionanalysis_{$vo['id']}" style="margin-top:10px;display:none;" >
+											{$vo['analysis']}
+								    </div>
+								</foreach>
+								<nav class="text-center"><div class="pagination text-center">{$essay_page}</div></nav>		
+							</div>
+						</div>
+					</if>
+					<if condition="!empty($material)">
+						<div class="tab-pane panel panel-default testpaper-question-block" id="material">
+							<div class="panel-heading"><strong class="">材料题</strong>
+							</div>
+							<div class="panel-body">
+								<foreach name="material" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-material " >
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<if condition="$vo['isdone'] eq 1">
+													   <div id="done1_{$vo['id']}" class="testpaper-question-score text-success">已做</div>
+													</if>  
+													   <div id="done_{$vo['id']}" class="testpaper-question-score text-success" style="display:none;">已做</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-fill-inputs" id="xueyuandaandiv_{$vo['id']}">
+												<input class="form-control showMsg" id="xueyuandaaninput_{$vo['id']}" type="text" placeholder="这里写答案！"  />
+											    <script id="xueyuandaantext_{$vo['id']}" type="text/plain"  name="xueyuandaantext_{$vo['id']}"></script>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+										<div class="testpaper-question-actions pull-right">
+												<a class="btn btn-sm btn-link analysis-btn" id="analysis_{$vo['id']}"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+												<a class="btn btn-sm btn-link unanalysis-btn" id="unanalysis_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+												 <if condition="$vo['iserror']==0">
+													<a  class="btn btn-sm btn-default favorite-btn_1" id="favorite1_{$vo['id']}" ><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												 <else />	
+													<a  class="btn btn-link btn-sm unfavorite-btn_1" id="unfavorite1_{$vo['id']}"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+												 </if>
+												<a  class="btn btn-sm btn-default favorite-btn_2" id="favorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star-empty"></span> 添加到错题本</a>
+												<a  class="btn btn-link btn-sm unfavorite-btn_2"  id="unfavorite2_{$vo['id']}" style="display:none"><span class="glyphicon glyphicon-star"></span> 从错题本中移除</a>
+										</div>
+									</div>
+									<div class="testpaper-question-analysis well" id="questionanalysis_{$vo['id']}" style="margin-top:10px;display:none;" >
+											{$vo['analysis']}
+								    </div>
+								</foreach> 
+								<nav class="text-center"><div class="pagination text-center">{$material_page}</div></nav>		
+							</div>
+						</div>
+					</if>
+					<if condition="(empty($choice)) and (empty($fill)) and (empty($determine)) and(empty($essay)) and (empty($material))">
+					    <div class="empty">试题库暂为空</div>
+					</if>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+  </div>
+ </section>
+ <tc_include file="Public:scripts" />
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+ $(".analysis-btn").click(function(){ 
+    var analysis_id=$(this).attr('id');
+	var id=analysis_id.split("_")[1];
+    $("#"+analysis_id).css('display','none');
+	$("#unanalysis_"+id).css('display','');
+	$("#questionanalysis_"+id).css('display','');
+   
+}); 
+$(".unanalysis-btn").click(function(){ 
+    var unanalysis_id=$(this).attr('id');
+	var id=unanalysis_id.split("_")[1];
+    $("#"+unanalysis_id).css('display','none');
+	$("#analysis_"+id).css('display','');
+	$("#questionanalysis_"+id).css('display','none');
+}); 
+$(".showMsg").click(function(){ 
+   var divid=$(this).attr('id');
+   var id=divid.split("_")[1];
+   var editorid="xueyuandaantext_"+id;
+	$("#"+divid).css('display','none');
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:150});
+	editorcontent.render(''+editorid);
+	editorcontent.addListener("blur", function (type, event) {
+	  $("#done1_"+id).css('display','none');
+	  $.ajax({ 
+				url:'{:u('Exam/Shiti/adddone')}',
+				type:"post", data:{'id':id}, 
+				dataType:'json', 
+				success:function(data){
+				  $("#done_"+id).css('display','');
+				}
+			}
+	    );
+    });
+	try{editorcontent.sync();}catch(err){};
+}); 
+$("label").click(function(){
+    var labelid=$(this).parent().attr("id");
+    var id=labelid.split("_")[1];
+	var youhudaan=$("input[name='choices["+id+"]']:checked").val();
+		youhudaan=youhudaan.toUpperCase();	
+	var biaozundaan=$("#biaozundaan_"+id).val();
+		biaozundaan=biaozundaan.toUpperCase();
+		$("#result_"+id).css('display','');
+		$("#done_"+id).css('display','');
+		$("#done1_"+id).css('display','none');
+		$("#result_"+id).text("");
+		$.ajax({ url:'{:u('Exam/Shiti/adddone')}', 
+				type:"post", data:{'id':id}, 
+				dataType:'json', 
+				success:function(data){
+				}
+			}
+	    );
+	  if(youhudaan==biaozundaan){
+	     if(youhudaan==1 || youhudaan==2){
+		    $("#result_"+id).append("<strong class='text-success'>&nbsp&nbsp&nbsp&nbsp回答正确</strong>"); 
+		 }else{
+		    $("#result_"+id).append("正确答案：<strong class='text-success'>"+biaozundaan+"&nbsp&nbsp&nbsp&nbsp</strong>你的答案是 <strong class='text-success'>"+youhudaan+"&nbsp&nbsp&nbsp&nbsp回答正确</strong>"); 
+		 }
+	    
+	  }else{
+	     if(youhudaan==1 || youhudaan==2){
+		    $("#result_"+id).append("<strong class='text-danger'>&nbsp&nbsp&nbsp&nbsp回答错误</strong>"); 
+		 }else{
+		    $("#result_"+id).append("正确答案：<strong class='text-success'>"+biaozundaan+"&nbsp&nbsp&nbsp&nbsp</strong>你的答案是 <strong class='text-danger'>"+youhudaan+"&nbsp&nbsp&nbsp&nbsp回答错误</strong>"); 
+		 }
+	  }
+	
+ })
+$(".favorite-btn_1").click(function(){ 
+   var id=$(this).attr('id');
+   var shitiid=id.split("_")[1];
+   $.ajax({ url:'{:u('Exam/Shiti/adderrors')}', 
+		 type:"post", data:{'id':shitiid}, 
+		 dataType:'json', 
+		 success:function(data){
+		    $("#"+id).css('display','none');
+			$("#unfavorite1_"+shitiid).css('display','none');
+			$("#unfavorite2_"+shitiid).css('display','');
+		   }
+		}
+	  );
+
+}); 
+$(".favorite-btn_2").click(function(){ 
+   var id=$(this).attr('id');
+   var shitiid=id.split("_")[1];
+   $.ajax({ url:'{:u('Exam/Shiti/adderrors')}', 
+		 type:"post", data:{'id':shitiid}, 
+		 dataType:'json', 
+		 success:function(data){
+		    $("#"+id).css('display','none');
+			$("#unfavorite1_"+shitiid).css('display','none');
+			$("#unfavorite2_"+shitiid).css('display','');
+		   }
+		}
+	  );
+
+}); 
+$(".unfavorite-btn_1").click(function(){ 
+    var id=$(this).attr('id');
+    var shitiid=id.split("_")[1];
+   $.ajax({ url:'{:u('Exam/Shiti/dellerrors')}', 
+		 type:"post", data:{'id':shitiid}, 
+		 dataType:'json', 
+		 success:function(data){
+		    $("#"+id).css('display','none');
+			$("#favorite2_"+shitiid).css('display','');
+		   }
+		}
+	  );
+
+}); 
+$(".unfavorite-btn_2").click(function(){ 
+   var id=$(this).attr('id');
+   var shitiid=id.split("_")[1];
+   $.ajax({ url:'{:u('Exam/Shiti/dellerrors')}', 
+		 type:"post", data:{'id':shitiid}, 
+		 dataType:'json', 
+		 success:function(data){
+		    $("#"+id).css('display','none');
+			$("#favorite2_"+shitiid).css('display','');
+		   }
+		}
+	  );
+
+}); 
+</script> 
+<tc_include file="Public:footer" />

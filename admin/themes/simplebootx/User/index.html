@@ -1,0 +1,116 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <form class="well form-search" method="post" action="{:u('User/Indexadmin/index')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">昵称：
+        <input type="text" class="input length_2" name="keyword" style="width:200px;" value="{$formget.keyword}" placeholder="请输入昵称...">
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="40">编号</th>
+	            <th>姓名</th>
+	            <th>手机</th>
+	            <th>用户类型</th>
+	            <th>可用金额</th>
+	            <th width="100">性别</th>
+	            <th width="200">注册时间</th>
+	            <th width="200">最后登录时间</th>
+	            <th width="100">状态</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"正常","0"=>"禁用");
+        		$memeber_type=array("1"=>"普通用户","2"=>"金牌会员");
+        		$sex=array("1"=>"男","2"=>"女","0"=>"保密");
+        	</php>
+        	<foreach name="lists" item="vo">
+	        	<tr> 
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.user_nicename|default="未设置"}</span></td>
+                    <td>{$vo['mobile']}</td>
+                    <td>{$memeber_type[$vo['member_type']]}</td>
+                    <td>{$vo['coin']}</td>
+                    <td>{$sex[$vo['sex']]}</td>
+    	            <td>{$vo.create_time}</td>
+    	            <td>{$vo.last_login_time}</td>
+		            <td>{$status[$vo['user_status']]}</td>
+		            <td>
+		                <div class="btn-group">
+		                   <a  class="btn btn-default btn-sm" >管理</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a href="javascript:open_iframe_dialog('{:U('User/Indexadmin/detailed',array('id'=>$vo['id']))}','详细信息')">详细信息</a></li>
+                             <li><a href="javascript:open_iframe_dialog('{:U('User/Indexadmin/buycourse',array('id'=>$vo['id']))}','所买课程')">所买课程</a></li>
+                            <li><a href="javascript:open_iframe_dialog('{:U('User/Indexadmin/presentcourse',array('id'=>$vo['id']))}','赠送课程')">赠送课程</a></li>
+							<li><a href="javascript:open_iframe_dialog('{:U('User/Indexadmin/repass',array('id'=>$vo['id']))}','重置密码')">重置密码</a></li>
+                             <li><a href="javascript:open_iframe_dialog('{:U('User/Indexadmin/addmoney',array('id'=>$vo['id']))}','赠送金币')">赠送金币</a></li> 
+                           </ul>
+                        </div>
+					</td>
+	          	</tr>
+          </foreach>
+          
+          </table>
+          <div class="pagination">{$Page}</div>   
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminCourse/index',$formget)}";
+    }
+}
+setInterval(function(){
+	refersh_window();
+}, 2000);
+$(function () {
+	setCookie("refersh_time",0);
+    Wind.use('ajaxForm','artDialog','iframeTools', function () {
+        //批量移动
+        $('#J_Content_remove').click(function (e) {
+            var str = 0;
+            var id = tag = '';
+            $("input[name='ids[]']").each(function () {
+                if ($(this).attr('checked')) {
+                    str = 1;
+                    id += tag + $(this).val();
+                    tag = ',';
+                }
+            });
+            if (str == 0) {
+				art.dialog.through({
+					id:'error',
+					icon: 'error',
+					content: '您没有勾选信息，无法进行操作！',
+					cancelVal: '关闭',
+					cancel: true
+				});
+                return false;
+            }
+            var $this = $(this);
+            art.dialog.open("__ROOT__/index.php?g=course&m=AdminCourse&a=move&ids=" + id, {
+                title: "批量移动",
+                width:"80%"
+            });
+        });
+    });
+});
+
+
+</script>
+</body>
+</html>

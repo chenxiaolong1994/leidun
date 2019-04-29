@@ -1,0 +1,14 @@
+<div class="modal-body">
+
+    <div class="wechat-login-img">
+        <div>使用微信扫描下方二维码登录</div>
+        <img src="{:u('user/weixin/show_qrcode_img')}" >
+        <input type="hidden" value="{$scene_str}" id="scene_str">
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button id="join-course-btn" class="btn btn-primary js-ajax-submit" type="submit">关闭</button>
+</div>
+<tc_include file="Public:scripts"/>

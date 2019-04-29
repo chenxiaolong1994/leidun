@@ -1,0 +1,97 @@
+<tc_include file="Public:header" />
+<link rel="stylesheet" media="screen" href="./themes/simplebootx/public/css/fileinput.css" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item active"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">作业批改</a></li> 
+            </ul>
+          </div>
+        </div>
+         <div class="col-md-9">
+			<div class="panel panel-default panel-col">
+				<div class="panel-heading">
+					试卷批阅
+				</div>
+				<div class="panel-body">
+					<ul class="nav nav-tabs">
+						<li class=""><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">未批阅</a></li>
+						<li class="active"><a href="{:u('Exam/Shiti/checkpaperfinished',array('cs_id'=>$cs_id))}">已批阅</a></li>
+					</ul>
+					<br>
+					<table class="table table-striped table-hover">
+						<tbody>
+							<foreach name="papers" item="vo">
+								<tr>
+									<td>
+										<a href="{:u('Exam/Shiti/result',array('id'=>$vo['papersid']))}" target="_blank">{$vo['title']}</a>
+										
+									</td>
+									<td style="width:25%">
+										<a class="link-dark " href="#">{$vo['userid']|getusername}</a><br>
+										<small class="text-muted">{$vo['addtime']}交卷</small>
+									</td>
+									<td style="width:15%">
+										<a class="link-dark " href="#">成绩</a><br>
+										<small class="text-muted">{$vo['score']}分</small>
+									</td>
+									<td style="width:10%">
+										<a href="{:u('Exam/Shiti/result',array('id'=>$vo['papersid']))}" class="btn btn-default btn-sm pull-right" target="_blank">查看</a>
+			
+									</td>
+								</tr>
+							</foreach> 
+						</tbody>
+					</table>
+					 <nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+				</div>
+			</div>
+		</div>
+     </div>
+  </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+</script>   
+<tc_include file="Public:footer" />

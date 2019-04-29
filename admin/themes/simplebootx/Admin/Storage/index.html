@@ -1,0 +1,57 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		    
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('storage/setting_post')}">
+			<select name="type"> 			
+		       <option <eq name="data.type" value="1" >selected</eq> value="1">本地存储</option>
+			   <option <eq name="data.type" value="2" >selected</eq> value="2">腾讯云存储</option>
+			</select>
+			<div style="margin-top: 10px;">
+				<ul class="nav nav-tabs">
+					<li class="active"><a>腾讯云存储</a></li>
+				</ul>
+
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label">SecretId</label>
+						<div class="controls">
+							<input type="text" class="input mr5" name="SecretId" value="{$data['secretid']}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">SecretKey</label>
+						<div class="controls">
+							<input type="text" class="input mr5" name="SecretKey" value="{$data['secretkey']}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">空间域名</label>
+						<div class="controls">
+							<input type="text" class="input mr5" name="" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{:L('BUCKET')}</label>
+						<div class="controls">
+							<input type="text" class="input mr5" name="Qiniu[bucket]" value="{$Qiniu.bucket}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">{:L('GET_ACCESS_KEY')}</label>
+						<div class="controls">
+							<a href="https://portal.qiniu.com/signup?code=3lfihpz361o42" target="_blank">{:L('GET_IT_NOW')}</a>
+						</div>
+					</div>
+					
+				</fieldset>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+			</div>
+		</form>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+      <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item " ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item "  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item active"><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <!--<li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          -->
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">头像设置</div>
+	        <div class="panel-body">         
+              <div class="form-group">
+                <div class="col-md-2 control-label"><b>当前头像</b></div>
+                  <div class="controls col-md-8 controls">
+          	         <if condition="empty($avatar)">
+				        <a  href="javascript:void(0);"  onclick="ToSelectFile();"><img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="headicon"/></a>
+			         <else/>
+				        <a href="javascript:void(0);" onclick="ToSelectFile();"><img src="{:sp_get_user_avatar_url($avatar)}?t={:time()}" class="headicon" style="width: 150px" /></a>
+			         </if>
+			         <input type="file" onchange="avatar_upload(this)" id="avatar_uploder"  name="file" class="form-control" style="margin-top:10px;margin-bottom:10px;width:250px;display:none;"/>
+                     </br></br></br>
+				   <div class="uploaded_avatar_area">
+                     <div class="uploaded_avatar_btns">
+                       <a class="btn btn-primary confirm_avatar_btn" onclick="update_avatar()">上传新头像</a>
+                       <a class="btn" onclick="reloadPage()">取消</a>
+                     </div>
+                   </div>
+                  </div>
+             </div>
+       
+           </div>
+	     </div>
+       </div>
+     </div>
+  </div> 
+<script type="text/javascript">
+    function ToSelectFile() {
+		$("#avatar_uploder").click();
+	}
+	function update_avatar(){
+		var area=$(".uploaded_avatar_area img").data("area");
+		$.post("{:U('profile/avatar_update')}",area,
+				function(data){
+			if(data.status==1){
+				reloadPage(window);
+			}
+			
+		},"json");
+		
+	}
+	function avatar_upload(obj){
+		var $fileinput=$(obj);
+		Wind.css("jcrop");
+		Wind.use("ajaxfileupload","jcrop","noty",function(){
+			$.ajaxFileUpload({
+				url:"{:u('user/center/avatar_upload')}",
+				secureuri:false,
+				fileElementId:"avatar_uploder",
+				dataType: 'json',
+				data:{},
+				success: function (data, status){
+					if(data.status==1){
+						var $uploaded_area=$(".uploaded_avatar_area");
+						$uploaded_area.find("img").remove();
+						var $img=$("<img/>").attr("src","__UPLOAD__avatar/"+data.data.file);
+						$img.prependTo($uploaded_area);
+						$(".uploaded_avatar_btns").show();
+						$img.Jcrop({
+					    	aspectRatio:1/1,
+					    	setSelect: [ 0, 0, 100, 100 ],
+					    	onSelect: function(c){
+					    		$img.data("area",c);
+					    	}
+					    });
+						
+					}else{
+						noty({text: data.info,
+                    		type:'error',
+                    		layout:'center'
+                    	});
+					}
+					
+				},
+				error: function (data, status, e){}
+			});
+		});
+		
+		
+		
+		return false;
+	}
+</script> 
+<tc_include file="Public:scripts" />  
+<tc_include file="Public:footer" />

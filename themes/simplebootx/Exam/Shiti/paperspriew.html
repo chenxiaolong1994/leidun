@@ -1,0 +1,321 @@
+<tc_include file="Public:header" />
+<style>
+.time-item strong {
+    background:#5AC32D;
+    color:#fff;
+    line-height:30px;
+    font-size:24px;
+    font-family:Arial;
+    padding:0 10px;
+    margin-right:10px;
+    border-radius:5px;
+    box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+}
+#day_show {
+    float:left;
+    line-height:30px;
+    color:#c71c60;
+    font-size:24px;
+    margin:0 10px;
+    font-family:Arial,Helvetica,sans-serif;
+}
+.item-title .unit {
+    background:none;
+    line-height:30px;
+    font-size:24px;
+    padding:0 10px;
+    float:left;
+}
+</style>
+<div id="content-container" class="container">
+	<div class="es-section testpaper-heading">
+		<div class="testpaper-titlebar clearfix">
+			<h1 class="testpaper-title">{$data['title']} <br><small class="text-sm"></small></h1>
+			<div class="testpaper-status">      
+				<div class="label label-success">试卷预览中</div>
+			</div>
+		</div>
+		<div class="testpaper-description"><p>试卷说明</p></div>
+		<div class="testpaper-metas">
+				共 {$single_choice_num+$fill_num+$determine_num+$essay_num+$material_num} 题，总分{$totalscore}分
+		</div>
+		<div id="testpaper-navbar" class="testpaper-navbar" data-spy="affix" data-offset-top="200">
+			<ul class="nav nav-pills clearfix">
+			    <if condition="!empty($single_choice)">
+				  <li><a href="#single_choice">选择题</a></li>
+				</if>
+				<if condition="!empty($fill)">
+				  <li><a href="#fill">填空题</a></li>
+				</if> 	
+				<if condition="!empty($determine)">
+				  <li><a href="#determine">判断题</a></li>
+				</if> 
+				<if condition="!empty($essay)">
+				  <li><a href="#essay">问答题</a></li>
+				</if> 
+				<if condition="!empty($material)">
+				  <li><a href="#material">材料题</a></li>
+				</if> 
+			</ul>
+		</div>
+	</div>
+    <form name="myform" id="myform" action="{:u('Exam/Shiti/dopaperspost')}" method="post" class="form-horizontal js-ajax-form">
+		<div class="row">
+			<div class="col-md-9 prevent-copy">
+				<div class="testpaper-body" >
+					
+					<if condition="!empty($single_choice)">
+						<div class="panel panel-default testpaper-question-block" id="single_choice">
+							<div class="panel-heading"><strong class="">选择题</strong>
+								<small class="text-muted">共{$single_choice_num}题，每题{$data['single_choice_score']}分 ,共{$single_choice_num*$data['single_choice_score']}分</small>
+							</div>
+							<div class="panel-body">
+								<foreach name="single_choice" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-choice " id="{$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$k+1}</div>
+													<div class="testpaper-question-score">{$data['single_choice_score']}.0分</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+											<ul class="testpaper-question-choices">
+												<li class=""><span class="testpaper-question-choice-index">A.</span> <p>{$vo['xa']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">B.</span> <p>{$vo['xb']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">C.</span> <p>{$vo['xc']}</p></li>
+												<li class=""><span class="testpaper-question-choice-index">D.</span> <p>{$vo['xd']}</p></li>
+											</ul>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-choice-inputs" id="{$k+1+100000}">
+											    <if condition="$vo['uncertain']==0">
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="A" >A</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="B" >B</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="C" >C</label>
+													<label class="radio-inline "><input type="radio"  name="choices[{$vo['id']}]" value="D" >D</label>
+												<else/>	
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="A"> A</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="B"> B</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="C"> C</label>
+													<label class="checkbox-inline"><input type="checkbox" name="choices[{$vo['id']}]" value="D"> D</label>
+												</if>	
+											</div>
+												
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+									</div>
+								</foreach>    
+							</div>
+						</div>
+					</if>
+					<if condition="!empty($fill)">
+						<div class="panel panel-default testpaper-question-block" id="fill">
+							<div class="panel-heading"><strong class="">填空题</strong>
+								<small class="text-muted">共{$fill_num}题，每题{$data['fill_score']}分 ,共{$fill_num*$data['fill_score']}分 </small>
+							</div>
+							<div class="panel-body">
+								<foreach name="fill" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-fill "  id="{$single_choice_num+$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$single_choice_num+$k+1}</div>
+													<div class="testpaper-question-score">{$data['fill_score']}.0分</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-fill-inputs" id="{$single_choice_num+$k+1+100000}">
+												<input class="form-control showMsg" id="{$single_choice_num+$k+1+500000}" type="text" placeholder="这里写答案,多个空用逗号隔开！"  />
+											    <script id="{$single_choice_num+$k+1+600000}" type="text/plain"  name="fill[{$vo['id']}]"></script>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+									</div>
+								</foreach>    	
+							</div>
+						</div>
+					</if>
+					<if condition="!empty($determine)">
+						<div class="panel panel-default testpaper-question-block" id="determine">
+							<div class="panel-heading"><strong class="">判断题</strong>
+								<small class="text-muted">共{$determine_num}题，每题{$data['determine_score']}分 ,共{$determine_num*$data['determine_score']}分</small>
+							</div>
+							<div class="panel-body">
+								<foreach name="determine" item="vo"  key="k">							
+									<div class="testpaper-question testpaper-question-determine "  id="{$single_choice_num+$fill_num+$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$single_choice_num+$fill_num+$k+1}</div>
+													<div class="testpaper-question-score">{$data['determine_score']}.0分</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-determine-inputs" id="{$single_choice_num+$fill_num+$k+1+100000}">
+												<label class="radio-inline "><input type="radio"  name="determine[{$vo['id']}]" value="1" > 正确</label>
+												<label class="radio-inline "><input type="radio"  name="determine[{$vo['id']}]" value="2" >错误</label>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+									</div>
+								</foreach>
+							</div>
+						</div>
+					</if>	
+					<if condition="!empty($essay)">
+						<div class="panel panel-default testpaper-question-block" id="essay">
+							<div class="panel-heading"><strong class="">问答题</strong>
+								<small class="text-muted">共{$essay_num}题，每题{$data['essay_score']}分 ,共{$essay_num*$data['essay_score']}分 </small>
+							</div>
+							<div class="panel-body">
+								<foreach name="essay" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-essay " id="{$single_choice_num+$fill_num+$determine_num+$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$single_choice_num+$fill_num+$determine_num+$k+1}</div>
+													<div class="testpaper-question-score">{$data['essay_score']}.0分</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-essay-inputs">
+												<input class="form-control showMsg" id="{$single_choice_num+$fill_num+$determine_num+$k+1+500000}" type="text"  placeholder="这里写答案"  />
+											    <script id="{$single_choice_num+$fill_num+$determine_num+$k+1+600000}" type="text/plain" name="essay[{$vo['id']}]"></script>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+									</div>
+								</foreach>    	
+							</div>
+						</div>
+					</if>
+					<if condition="!empty($material)">
+						<div class="panel panel-default testpaper-question-block" id="material">
+							<div class="panel-heading"><strong class="">材料题</strong>
+								<small class="text-muted">共{$material_num}题，每题{$data['material_score']}分 ,共{$material_num*$data['material_score']}分 </small>
+							</div>
+							<div class="panel-body">
+								<foreach name="material" item="vo"  key="k">
+									<div class="testpaper-question testpaper-question-material "  id="{$single_choice_num+$fill_num+$determine_num+$essay_num+$k+1}">
+										<div class="testpaper-question-body">
+											<div class="testpaper-question-stem-wrap clearfix">
+												<div class="testpaper-question-seq-wrap">
+													<div class="testpaper-question-seq">{$single_choice_num+$fill_num+$determine_num+$essay_num+$k+1}</div>
+													<div class="testpaper-question-score">{$data['material_score']}.0分</div>
+												</div>
+												<div class="testpaper-question-stem">
+													<p>{$vo['stem']}</p><br />
+												</div>
+											</div>
+										</div>
+										<div class="testpaper-question-footer clearfix">
+											<div class="testpaper-question-essay-inputs">
+												<input class="form-control showMsg" id="{$single_choice_num+$fill_num+$determine_num+$essay_num+$k+1+500000}" type="text"  placeholder="这里写答案"  />
+												 <script id="{$single_choice_num+$fill_num+$determine_num+$essay_num+$k+1+600000}" type="text/plain"  name="material[{$vo['id']}]" ></script>
+											</div>
+											<div class="testpaper-question-actions pull-right"></div>
+										</div>
+									</div>
+								</foreach>    	
+							</div>
+						</div>
+					</if>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="testpaper-card" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+						     <input type="hidden" id="totaltime" value="{$data['limitedtime']}">
+						     <if condition="$data['limitedtime'] neq 0">
+								<span class="testpaper-card-timer time-item">考试时间:{$data['limitedtime']}分钟</span>
+								</br>
+							<else/>   
+								<span class="testpaper-card-timer">考试时间:不限</span>
+							</if>   
+							
+						</div>
+						<div class="panel-body">
+							<for start="1" end="$single_choice_num+$fill_num+$determine_num+$essay_num+$material_num+1">
+								<a href="#{$i}" class="btn btn-default btn-index pull-left " id="{$i+200000}">{$i}</a>
+							</for>
+						</div>
+						<div class="panel-footer">
+						    <input type="hidden" name="papersid" value="{$id}">
+							<button class="btn btn-success btn-block" disabled="disabled">我要交卷</button>
+						</div>
+					</div> 			
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="timeout-dialog-layout">
+		<div id="timeout-dialog" class="modal in" aria-hidden="false" style="display: none;">
+			<div class="modal-dialog modal-dialog-small">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">考试结束</h4>
+					</div>
+					<div class="modal-body">
+						<div class="well well-lg">
+							<div class="empty">考试已结束，请点击下面的按钮查看结果~</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="/test/0/result" id="show_testpaper_result" class="btn btn-info">查看结果</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:800px;">
+		<div class="modal-content">
+			<div class="modal-body"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+</script>   
+<script type="text/javascript"> 
+$(".showMsg").click(function(){ 
+   var id=$(this).attr('id');
+   var editorid=parseInt(id)+parseInt(100000);
+	$("#"+id).css('display','none');
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:150});
+	editorcontent.render(''+editorid);
+	editorcontent.addListener("blur", function (type, event) {
+	     var doneid=parseInt(id)-parseInt(300000);
+	     $("#"+doneid).addClass("btn-success")      
+    });
+	try{editorcontent.sync();}catch(err){};
+}); 
+$("label").click(function(){
+    var id=$(this).parent().attr("id");
+	var doneid=parseInt(id)+parseInt(100000);
+	$("#"+doneid).addClass("btn-success")
+ })
+</script> 
+<tc_include file="Public:footer" />

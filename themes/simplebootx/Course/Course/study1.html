@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>{$name} {$site_name} {$site_seo_title}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}" />
+	<link rel="icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon" media="screen" />
+
+	<link href="__PUBLIC__/simplebootx/public/css/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/common.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/main.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/es-icon.css" />
+<link href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/theme.css" />
+<!--[if lt IE 9]>
+    <script src="__PUBLIC__/simplebootx/public/js/html5shiv.js"></script>
+    <script src="__PUBLIC__/simplebootx/public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class=" row">
+		<div class="col-md-9" style="margin-top:20px;">
+			<section class="es-section article-content">
+				<ol class="breadcrumb">
+					<span class="divider">&raquo;</span>
+					<span class="chapter-label">{$lession['sc_name']}</span>
+				</ol>        
+				<div class="article-text">
+                   <if condition="$isbuy==1 or $lession['is_free']==1">
+						<if condition="$lession['video_type']==1">
+							<div id="a1"></div>
+							<script type="text/javascript" src="__PUBLIC__/simplebootx/Public/ckplayer/ckplayer.js" charset="gb2312"></script>
+							<script type="text/javascript">
+							    var nowD=0;
+								function loadedHandler(){
+									if(CKobject.getObjectById('ckplayer_a1').getType()){//说明使用html5播放器
+										CKobject.getObjectById('ckplayer_a1').addListener('play',playHandler);
+										CKobject.getObjectById('ckplayer_a1').addListener('pause',pauseHandler);
+									}
+									else{
+										CKobject.getObjectById('ckplayer_a1').addListener('play','playHandler');
+										CKobject.getObjectById('ckplayer_a1').addListener('pause','pauseHandler');
+									}
+								}
+
+								function playerstop(){
+									nowD++;
+									alert(nowD);
+									if(nowD>=videoarr.length-1){
+										nowD=0;
+									}
+									playvideo(nowD);								
+								}
+								function nextplay(){
+									nowD++;
+									if(nowD>=videoarr.length-1){
+										nowD=0;
+									}
+									playvideo(nowD);								
+								}
+								function backplay(){
+									nowD--;
+									if(nowD==0){
+										nowD=videoarr.length;
+									}
+									playvideo(nowD);								
+								}
+								var videoarr = new Array();
+								var html5arr = new Array();
+								var sclist =<?php echo json_encode($psc_list);?>;
+								 json = eval(sclist)  ;
+								  for(var i=0; i<json.length; i++)  
+								  {  
+								      videoarr.push(json[i].yun_url);
+									  html5arr.push([json[i].yun_url+'->video/mp4']);
+								  }  			
+								function playvideo(n){
+									nowD=n;
+									var flashvars={
+										f:videoarr[n],
+										c:0,
+										p:1,
+										e:0,
+										loaded:'loadedHandler'
+										};
+									CKobject.embed('__PUBLIC__/simplebootx/Public/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','500',false,flashvars,html5arr[n]);
+									for(var j=0; j<videoarr.length; j++){
+											if(j!=nowD){
+												document.getElementById(j).style.backgroundColor='#FFFFFF';
+											}
+											else{
+												document.getElementById(j).style.backgroundColor='#DAF2FF';
+											}
+									}
+									
+								}
+								playvideo(0);
+							</script>		
+						<else />
+							<div id="a1"> <embed src="{$lession[yun_url]}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" height="300px;" width="100%" ></embed></div>
+							<p class="text-center">{$lession['sc_name']} <font color="green">&nbsp&nbsp&nbsp&nbsp播放密码：{$lession['playpass']}</font></p>
+				
+						</if>
+
+					<else />
+						<div class="lesson-content lesson-content-text" id="lesson-unpublished-content" data-role="lesson-content" >
+							<div class="lesson-content-text-body">您还没购买此课程，请购买后再观看学习。</div>
+						</div>
+					</if>
+                    <div class="dashboard-footer clearfix" style="margin-top:40px;">
+						<div class="pull-right">
+							<button class="btn "><span class="glyphicon glyphicon-chevron-left"></span> <a href="javascript:jsnull();" onclick="nextplay()" title="{$sub['sc_name']}">上一节</a></button>
+							<button class="btn "><span class="glyphicon glyphicon-chevron-right"></span> <a href="javascript:jsnull();" onclick="backplay" title="{$sub['sc_name']}">下一节</a></button>
+							<button class="btn "><span class="glyphicon glyphicon-unchecked"></span> <a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}">返回课程</a></button>
+							<input type="hidden" name="sc_id" value="{$lession['id']}"> 
+							<input type="hidden" name="cs_id" value="{$lession['cs_id']}">
+						</div>
+					</div>
+				</div>        
+				
+			</section>
+		</div>
+		<div class="col-md-3 "style="margin-top:20px;">
+			<section class="es-section">
+				<ol class="breadcrumb">
+					<span class="divider">&raquo;</span>
+					<span class="chapter-label">课时列表</span>
+				</ol>        
+				<div class="article-text">
+				 <ul class="period-list" id="course-item-list">
+					<if condition="$is_zhang">
+						<volist name="sc_list" id="vo">
+                            <li class="chapter clearfix">
+                                <i class="es-icon es-icon-toc"></i>
+                                    <span class="title">{$vo['sc_name']}</span>
+                                    <span class="period-show"><i class="es-icon es-icon-remove"></i></span>
+                            </li>
+                                <volist name="vo['voo']" id="sub"> 
+                                    <li id="{$i-1}" class="period lesson-item">
+                                        <a href="javascript:jsnull();" onclick="playvideo({$i-1})" title="{$sub['sc_name']}">
+                                            <if condition="isstudy($sub['id']) eq 1">
+                                              <i class="es-icon es-icon-done1 color-primary status-icon"></i>
+                                            <else/>
+                                              <i class="es-icon es-icon-undone status-icon"></i>
+                                            </if>
+                                            <span class="title">{$sub['sc_name']}</span>
+                                         </a>
+                                    </li>
+                                </volist> 
+                        </volist> 
+                    <else />
+					    <volist name="sc_list" id="sub"> 
+							<li class="period lesson-item">
+								<a href="{:u('course/Course/study',array('id'=>$sub['id']))}"   title="{$sub['sc_name']}">
+									<if condition="isstudy($sub['id']) eq 1">
+										<i class="es-icon es-icon-done1 color-primary status-icon"></i>
+									<else/>
+										<i class="es-icon es-icon-undone status-icon"></i>
+									</if>
+									<span class="title">{$sub['sc_name']}</span>
+								</a>
+							</li>
+						</volist> 
+					</if>
+				  </ul> 
+				</div>        
+				
+			</section>
+       
+		</div>
+    </div>
+<tc_include file="Public:scripts" /> 
+</body>

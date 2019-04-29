@@ -1,0 +1,17 @@
+ <form id="user-profile-form" class="form-horizontal js-ajax-form" method="post" action="{:U('Teacher/Center/addzhang_post')}">
+	<div class="form-group" style="margin-top:30px;">
+	  <label class="col-md-2 control-label">章名称</label>
+		<div class="col-md-7 controls">
+			<input type="hidden" name="cs_id" value="{$cs_id}">
+            <input type="hidden" name="type_id" value="1">
+            <input type="hidden" name="addtime"  value="{:date('Y-m-d H:i:s',time())}" >
+			<input type="text" name="sc_name" class="form-control">
+		</div>
+	</div>				      
+	<div class="row">
+		<div class="col-md-7 col-md-offset-2">
+			<button id="profile-save-btn"  type="submit" class="btn btn-primary js-ajax-submit">发布 </button>
+		</div>
+	</div>
+</form>
+<tc_include file="Public:scripts" /> 

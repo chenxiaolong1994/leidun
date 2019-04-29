@@ -1,0 +1,30 @@
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3></h3>
+</div>
+<form id="course-buy-form" class="form-horizontal" method="post" action="{:u('course/Course/order',array('id'=>$cs_data['id']))}">
+<div class="modal-body">
+ 
+    <div class="form-group">
+      <div class="col-sm-3 control-label">课程名称</div>
+      <div class="col-sm-9 controls">
+      	<span class="control-text text-muted">《{$cs_data['cs_name']}》</span>
+        <input type="hidden" name="lessonId" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3 control-label">价格</div>
+      <div class="col-sm-9 controls money-text">
+      	<span class="control-text"><strong class="money">{$cs_data['cs_price']}.00</strong>
+        <span class="text-muted">元</span></span>
+      </div>
+    </div>
+    <input type="hidden" name="targetId" value="301" />
+    <input type="hidden" name="payment" value="alipay" />
+    <input type="hidden" name="_csrf_token" value="61f6b1029015de74dfe30cd37f15707191ba9af4">
+   
+</div>
+<div class="modal-footer">                    
+  <button id="join-course-btn" class="btn btn-primary"   type="submit" >去支付</button>
+</div>
+</form>       

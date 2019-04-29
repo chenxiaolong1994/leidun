@@ -1,0 +1,44 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+            <h3 class="panel-title">发表话题</h3>
+        </div>
+		<div class="panel-body">
+			<form name="myform" id="myform" action="{:u('Forum/Plate/threadcreatepost')}" method="post" class="form-horizontal js-ajax-form">
+			    <input type="hidden" name="plateid" value={$plateid} />
+				<div class="form-group">
+					<label class="col-xs-2 control-label" for="thread_title">标题</label>
+					<div class="col-xs-7 col-xs-10 controls">
+						<input type="text" id="thread_title" name="topictltle" class="form-control" value="">
+						<div class="help-block" style="display:none;"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" for="thread_content">内容</label>
+					<div class="col-sm-7 col-xs-10 controls">
+					     <td><script id="content" type="text/plain"  name="topiccontent" style="width:100%;height:300px;"></script></td>
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-sm-7 col-xs-10 col-xs-offset-2">
+						<button   type="submit" class="btn btn-primary js-ajax-submit">发布</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:250});
+	editorcontent.render( 'content' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<tc_include file="Public:scripts" /> 
+<tc_include file="Public:footer" />
+        

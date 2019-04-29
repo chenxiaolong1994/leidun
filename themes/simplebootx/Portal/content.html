@@ -1,0 +1,69 @@
+<tc_include file="Public:header" />  
+ <div id="content-container" class="container">
+  <div class="article-detail row" id="detail-content">
+    <!-- 主内容 -->
+    <div class="col-md-8 article-detail-main">
+      <section class="es-section article-content">
+        <ol class="breadcrumb">
+          <li><a href="{:u('Portal/Index/article')}">教育资讯</a></li>
+          <li><a href="{:u('Portal/Index/article',array('termid'=>$term_id))}">{$termname}</a></li>
+          <li class="active">正文</li>
+        </ol>        
+        <div class="article-metas">
+          
+          <div class="text-center">
+             <h2 class="title">{$content['post_title']}</h2>
+          </div>
+          <div class=" text-right">
+           {$content['post_modified']}
+          </div>
+        </div>        
+        <div class="article-text">
+          {$content['post_content']}
+        </div>
+      </section>
+    </div>
+    <aside class="col-md-4 article-sidebar">
+        <!-- 热门资讯 -->
+      <div class="panel panel-default hot-article">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="es-icon es-icon-whatshot"></i>热门文章</h3>
+         </div>
+         <div class="panel-body">
+            <volist name="remen" id="vo" key="key">
+          <div class="media media-number">
+             <div class="media-left">
+               <span class="num">{$key}</span>
+             </div>
+             <div class="media-body">
+                <a class="link-dark" href="{:u('Portal/Index/content',array('id'=>$vo['id'],'termid'=>$vo['term_id']))}" title="{$vo['post_title']}">{$vo['post_title']}</a>
+             </div>
+          </div> 
+          </volist>  
+         </div>
+       </div>
+        <!-- 推荐资讯 -->
+       <div class="panel panel-default recommend-article">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+               <i class="es-icon es-icon-language"></i>推荐文章
+            </h3>
+          </div>
+          <div class="panel-body">
+             <volist name="tuijian" id="vo" key="key">
+            <div class="media media-number">
+             <div class="media-left">
+               <span class="num">{$key}</span>
+             </div>
+             <div class="media-body">
+                <a class="link-dark" href="{:u('Portal/Index/content',array('id'=>$vo['id'],'termid'=>$vo['term_id']))}" title="{$vo['post_title']}">{$vo['post_title']}</a>
+             </div>
+          </div> 
+          </volist>  
+          </div>
+       </div>
+      </aside>
+    </div>
+  </div>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

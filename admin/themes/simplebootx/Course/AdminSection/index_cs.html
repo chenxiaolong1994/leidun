@@ -1,0 +1,100 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">{$cs_data}</a></li>
+  </ul>
+  <form class="js-ajax-form" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>课时名称</th>
+				<if condition="$cstype=='live'">
+				<th width="160">直播时间</th>
+				<th width="80">直播状态</th>
+				</if>
+	            <th width="80">免费</th>
+	            <th width="80">状态</th>
+	            <th width="160"><span>发布时间</span></th>
+	            <th width="80">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"已审核","0"=>"未审核");
+        		$free_status=array("1"=>"免费","0"=>"不免费");
+				$livestate=array("0"=>"<font color='red'>无输入流</font>","1"=>"<font color='green'>直播中</font>","2"=>"<font color='red'>异常</font>","3"=>"<font color='red'>关闭</font>",""=>"<font color='blue'>未创建</font>");
+        	</php>
+        	<foreach name="sc_data" item="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td>
+		               <if condition="$vo[type_id]==1">
+		                 <span>{$vo.sc_name}</span>
+		               <else/>
+		               	 <span>&nbsp&nbsp&nbsp&nbsp&nbsp{$vo.sc_name}</span>
+		               </if> 
+		            </td>
+					<if condition="$cstype=='live'">
+					<td>{$vo['live_starttime']}</td>
+					<td>{$livestate[$vo['livestate']]}</td>
+					</if>
+		            <td>{$free_status[$vo['is_free']]}</td>
+					<td>{$status[$vo['state']]}</td>
+		            <td>{$vo.addtime}</td>
+		            <td>
+		                <div class="btn-group">
+                           <button type="button" class="btn btn-default">管理</button>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <if condition="$vo[type_id]==1">
+		               	       <li><a href="javascript:open_iframe_dialog('{:u('course/AdminSection/edit_zhang',array('id'=>$vo['id']))}','编辑课时')">编辑</a></li>
+		                     <else/>
+		               	       <li><a href="javascript:open_iframe_dialog('{:u('course/AdminSection/edit',array('id'=>$vo['id']))}','编辑课时')">编辑</a></li>
+		                     </if>   
+							 
+                             <li><a href="{:U('AdminMaterial/add',array('sc_id'=>$vo['id'],'cs_id'=>$cs_id))}"  target="_self">添加资料</a></li>
+                             <li><a href="{:U('AdminSection/delete',array('id' => $vo['id']))}" class="js-ajax-delete" >删除</a></li>
+                           </ul>
+                          </div>
+					</td>
+	          	</tr>
+          </foreach>
+          <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>课时名称</th>
+				<if condition="$cstype=='live'">
+				<th width="160">直播时间</th>
+				<th width="80">直播状态</th>
+				</if>
+	            <th width="80">免费</th>
+	            <th width="80">状态</th>
+	            <th width="160"><span>发布时间</span></th>
+	            <th width="80">操作</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$page}</div>
+    </div>
+    <div class="form-actions">
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/check',array('check'=>1))}" data-subcheck="true" >审核</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/check',array('uncheck'=>1))}" data-subcheck="true" >取消审核</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/isfree',array('free'=>1))}" data-subcheck="true" >免费</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/isfree',array('unfree'=>1))}" data-subcheck="true" >取消免费</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+    </div>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+</html>

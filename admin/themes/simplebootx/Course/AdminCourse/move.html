@@ -1,0 +1,63 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap jj">
+  <div class="common-form">
+    <form method="post" class="js-ajax-forms" >
+      <div class="table_list">
+        <table cellpadding="2" cellspacing="2" width="100%">
+          <tbody>
+            <tr>
+              <td width="140">上级:</td>
+              <td>
+              	<select name="ty_id" id='first' class="normal_select">
+					<foreach name="terms" item="vo">
+						<option value="{$vo.term_id}" >{$vo.spacer}{$vo.name}</option>
+					</foreach>
+				</select>
+				<span id="second"> 
+                  <select id="label" name="labelid"> 
+                  
+                  </select> 
+                </span> 
+			  </td>														
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     <div class="form-actions">
+           <button class="btn btn-primary btn_submit js-ajax-submit"type="submit">移动</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script language="javascript"> 
+$(function(){ 
+$("#second").hide(); //初始化的时候第二个下拉列表隐藏 
+$("#first").change(function(){ //当第一个下拉列表变动内容时第二个下拉列表将会显示 
+var parentId=$("#first").val(); 
+if(null!= parentId && ""!=parentId){
+	
+$.getJSON("{:U('AdminLabel/select')}",{id:parentId},function(myJSON){
+var options=""; 
+if(myJSON.length>0){ 
+options+="<option value='-1'>==请选择标签==</option>"; 
+for(var i=0;i<myJSON.length;i++){ 
+options+="<option value="+myJSON[i].id+">"+myJSON[i].labelname+"</option>"; 
+} 
+$("#label").html(options); 
+$("#second").show(); 
+} 
+else if(myJSON.length<=0){ 
+$("#second").hide(); 
+} 
+}); 
+} 
+else{ 
+$("#second").hide(); 
+} 
+}); 
+}); 
+</script> 
+<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

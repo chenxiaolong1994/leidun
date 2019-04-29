@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta name="renderer" content="webkit">
+	<meta name="baidu-site-verification" content="E4o5zK2oZI" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>{$name} {$site_name} {$site_seo_title}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}" />
+<link rel="icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon" media="screen" />
+<link href="__PUBLIC__/simplebootx/public/css/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/common.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/main.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/es-icon.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/iconfont.css" />
+<link href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/theme.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/submenu.css" />
+<link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
+<!--[if lt IE 9]>    
+	<script src="__PUBLIC__/simplebootx/public/js/html5shiv.js"></script>   
+	<script src="__PUBLIC__/simplebootx/public/js/respond.min.js"></script>  
+<![endif]-->
+
+
+</head>
+<body>	
+	<header class="navbar">		
+		<div class="container">			
+			<div class="clearfix navbar-top">				
+				<a href="__ROOT__/"><img src="__PUBLIC__/simplebootx/public/images/logo.png" class="pull-left logo-left"></a>				
+				<button class="navbar-toggle pull-left" type="button" data-toggle="collapse" data-target=".navbar-collapse">		
+					<span class="sr-only">Toggle navigation</span>			
+					<span class="icon-bar"><i class="iconfont icon-gengduo"></i></span>		
+					<span class="icon-bar"></span>				
+					<span class="icon-bar"></span>				
+				</button>				
+				<form class="navbar-form hidden-xs" role="search" action="{:u('Course/Course/search')}" method="post">					
+					<div class="form-group">					
+						<input type="search" placeholder="搜索课程" class="form-control js-search" name="keywords" value="{$keyword}">
+					</div>					
+					<button type="submit" class="button iconfont icon-search"></button>				
+				</form>				
+				<a class="pull-right hidden-xs">					
+					<i class="iconfont icon-mianfeidianhua icon"></i>				
+					<span class="telephone">全国服务热线：{$kefu_tel}</span>
+				</a>			
+				<div class="navbar-user pull-right visible-xs"  style="top:16px;" >					
+				<if condition="session('?user')">						
+					<ul class="nav navbar-nav navbar-right">														
+						<li class="info-img">
+							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 		
+								<span>{$user_nicename}</span> <i class="iconfont icon-xia"></i> 
+							</a>								
+									<ul class="dropdown-menu menu-ul" role="menu">
+										<li><a href="{:u('User/Center/up_user')}"><i class="iconfont icon-shezhi"></i>升级会员</a></li>
+
+										<li><a href="{:u('User/Center/setting')}"><i class="iconfont icon-shezhi"></i>个人设置</a></li>
+
+										<li><a href="{:u('user/center/count')}"><i class="iconfont icon-001"></i> 账户中心</a></li>
+											<li><a href="{:u('user/center/application')}"><i class="iconfont icon-001"></i> 成为教师</a></li>								
+										<li class="hidden-xs"><a href="{:U('user/index/logout')}"><i class="iconfont icon-tuichu"></i>退出登录</a></li>
+									</ul>								
+						</li>					
+					</ul>					
+				<else />						
+					<ul class="nav navbar-nav navbar-right">							
+						<li><a href="{:leuu('User/Login/index')}"> 登录</a></li>							
+						<li>｜</li>							
+						<!-- <li><a href="{:leuu('User/Register/index')}">注册</a></li>			-->
+					</ul>					
+				</if>				
+				</div>			
+			</div>		
+		</div>		
+		<nav class="nav-collapse">			
+			<div class="container">				
+				<div class="navbar-header">					
+					<ul class="nav navbar-left navbar-collapse collapse">						
+						<li class=""><a href="__ROOT__/" class="">首页 </a></li>						
+						<li class=""><a target="_blank" href="__ROOT__/pages/bigdata.html" class="">大数据就业班 </a></li>
+						<!--<li class=""><a href="{:leuu('Course/Course/coursecenter')}" class="">精品课程</a></li>-->
+						<li class=""><a href="{:leuu('Teacher/Teacher/index')}" class="">金牌讲师</a></li>						
+						<li class=""><a href="{:leuu('Exam/Shiti/index')}" class="">在线题库</a></li>						
+						<li class=""><a href="{:leuu('Portal/Index/article')}" class="">文章资讯</a></li>						
+						<li class=""><a href="{:leuu('Forum/Plate/index')}" class="">交流论坛</a></li>						
+						<volist name="nav" id="vo">							
+							<li class=""><a href="{$vo['href']|sp_get_href}" class="">{$vo['label']}</a></li>					
+						</volist>					
+					</ul>				
+				</div>				
+				<div class="navbar-user hidden-xs">				
+					<ul class="nav navbar-nav navbar-right">						
+					<if condition="session('?user')">						
+						<ul class="nav navbar-nav navbar-right">							
+							<if condition="$user_type eq 3">								
+								<li><a href="{:u('Teacher/Center/index')}" class="nav-study">我的教室</a></li>							
+							<else/>								
+								<li><a href="{:u('User/Center/index')}" class="nav-study">我的教室</a></li>						
+							</if>								
+								<li class="info-img">
+									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 				
+										<if condition="empty($avatar)">						
+											<img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="img-circle" />		
+										<else /> 										
+											<img src="{:sp_get_user_avatar_url($avatar)}?t={:time()}" class="img-circle" /> 	
+										</if> 									
+										<span>{$user_nicename}</span> <i class="iconfont icon-xia"></i> 
+									</a>									
+									<ul class="dropdown-menu menu-ul" role="menu">
+										<li><a href="{:u('User/Center/up_user')}"><i class="iconfont icon-shezhi"></i>升级会员</a></li>
+
+										<li><a href="{:u('User/Center/setting')}"><i class="iconfont icon-shezhi"></i>个人设置</a></li>		
+										<li><a href="{:u('user/center/count')}"><i class="iconfont icon-001"></i> 账户中心</a></li>	
+										<li><a href="{:u('user/center/application')}"><i class="iconfont icon-001"></i> 成为教师</a></li>	
+										<li><a href="{:U('user/index/logout')}"><i class="iconfont icon-tuichu"></i>退出登录</a></li>	
+									</ul>								
+								</li>						
+						</ul>					
+					<else />				
+						<ul class="nav navbar-nav navbar-right">							
+							<li><a href="{:leuu('User/Login/index')}"> <span class="glyphicon glyphicon-log-in"></span>&nbsp&nbsp登录</a></li>	
+							<!-- <li><a href="{:leuu('User/Register/index')}"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp注册</a></li>	-->
+						</ul>					
+					</if>					
+					</ul>				
+				</div>			
+			</div>		
+		</nav>    
+	</header>  

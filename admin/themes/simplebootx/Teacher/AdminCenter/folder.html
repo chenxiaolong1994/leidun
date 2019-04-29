@@ -1,0 +1,30 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+		<div class="tabbable">
+			<div class="tab-content">
+			  <div class="tab-pane active" id="A">
+					<table cellpadding="2" cellspacing="2" width="100%">
+						<tbody>
+							<tr>
+								<td width="140">视频文件夹名:</td>
+								<td>{$folderName}</td>
+							</tr>
+							<tr>
+								<td>视频文件夹ID:</td>
+								<td>{$folderID}</td>
+							</tr>
+							<br>
+							
+						</tbody>
+						<input type="hidden" name="id" value="{$data['id']}" />
+						<input type="hidden" name="tid" value="{$data['user_id']}" />
+					</table>
+			  </div>
+				  
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item active" ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">作业批改</a></li> 
+            </ul>
+          </div>
+        </div>
+         <div class="col-md-9">
+           <div class="panel panel-default panel-col">
+			<div class="panel-heading clearfix">
+				题目管理
+			</div>
+			<div class="panel-body">
+				<ol class="breadcrumb">
+					<li><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+					<li class="active">添加题目</li>
+				</ol>
+				<div id="question-creator-widget">
+					<form name="myform" id="myform" action="{:u('Exam/Shiti/editshiti_post')}" method="post" class="form-horizontal js-ajax-form">
+
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label>从属</label></div>
+								<div class="col-md-8 controls">
+									<select class="form-control width-input width-input-large" name="target" data-role="target">
+										<option value="course-33">本课程</option>
+									</select>
+								</div>
+						</div>
+        
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label>难度</label></div>
+							<div class="col-md-8 controls radios">
+								<label><input type="radio" name="difficulty" value="simple"> 简单</label>
+								<label><input type="radio" name="difficulty" value="normal" checked="checked"> 一般</label>
+								<label><input type="radio" name="difficulty" value="difficulty"> 困难</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label for="question-stem-field">题干</label></div>
+							<div class="col-md-8 controls">
+								<td><script id="stem" type="text/plain"  name="stem" style="width:100%;height:100px;">{$data['stem']}</script></td>
+							</div>
+						</div>
+                   	
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label>答案</label></div>
+							<div class="col-md-8 controls">
+								<td><script id="daan" type="text/plain"  name="daan" style="width:100%;height:300px;">{$data['daan']}</script></td>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label for="question-analysis-field">解析</label></div>
+							<div class="col-md-8 controls">
+								<td><script id="analysis" type="text/plain"  name="analysis" style="width:100%;height:300px;">{$data['analysis']}</script></td>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label"><label for="question-score-field">分值</label></div>
+								<div class="col-md-4 controls">
+									<input class="form-control"  type="text"  name="score" value="{$data['score']}"/>
+								</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-8 col-md-offset-2 controls">
+								<button   type="submit" class="btn btn-primary js-ajax-submit">添加 </button>
+								<a href="" class="btn btn-link">返回</a>
+							</div>
+						</div>
+
+						<input type="hidden" name="cs_id" value="{$data['cs_id']}">
+						<input type="hidden" name="typeid" value="5">
+						<input type="hidden" name="teacherid" value="{$data['teacherid']}">	
+						<input type="hidden" name="id" value="{$data['id']}">	
+					</form>
+				</div>
+
+			</div>
+		</div>
+	 </div>
+    </div>
+   </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:150});
+	editorcontent.render( 'stem' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:100});
+	editorcontent.render( 'daan' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:100});
+	editorcontent.render( 'analysis' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<tc_include file="Public:scripts" /> 
+<tc_include file="Public:footer" />

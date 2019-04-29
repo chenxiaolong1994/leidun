@@ -1,0 +1,138 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+            <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item active"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item active"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			    <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item" ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+			   <li class="list-group-item "><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading col-md-12">
+				<div class="panel-heading_img" style="margin-bottom:20px;float:left;width:118px;height:66px;border:1px solid #e3e1e1">			  
+					<if condition="empty($cs_pic)">				 
+						<img style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle" src="__PUBLIC__/images/course.png" alt="{$lession.cs_name}">	
+					<else /> 			
+						<img  style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle" src="{$cs_pic}" alt="{$lession.cs_name}">				
+					</if> 			 
+				</div>			 
+				<div style="height:66px;float:left;text-align:left;margin-left:20px;line-height:66px;" >{$cs_data}</div>	
+			</div>
+	          <div class="panel-body">
+                 <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="vodeo">
+                       <form id="user-profile-form" class="form-horizontal js-ajax-form" method="post" action="{:U('Teacher/Center/addsection_post')}">
+					      <div class="form-group">
+						     <label class="col-md-2 control-label">课时标题</label>
+						        <div class="col-md-7 controls">
+						           <input type="hidden" name="cs_id" value="{$cs_id}">								   <input type="hidden" name="videoid" id="videoid" value="">
+                                   <input type="hidden" name="type_id" value="0">
+                                   <input type="hidden" name="video_type" id="video_type" value="1">
+                                   <input type="hidden" name="section_type" value="1">
+							       <input type="text" name="sc_name" id="sc_name" value="" class="form-control">
+						        </div>
+					      </div>
+					      <div class="form-group">					          
+							<label class="col-md-2 control-label">播放时长</label>						       
+							<div class="checkbox col-md-2 controls" style="margin-bottom:10px;">                                
+								<input type="text" name="sc_time" id="sc_time" value="" class="form-control">                
+							</div>					    
+						  </div>
+					      <div class="form-group">
+					           <label class="col-md-2 control-label">是否免费</label>
+						       <div class="checkbox col-md-2 controls" style="margin-bottom:10px;">
+                                  <label> <input type="checkbox" name="is_free" value="1" ></label>
+                               </div>
+					      </div>
+					      
+					      <div class="form-group" id="video">
+						       <label class="col-md-2 control-label">播放地址</label>
+						       <label class="checkbox-inline">
+                                  <input type="radio" name="radio"  value="1" checked  onchange="radioSwitch(this)" >云存储
+                               </label>
+                               <label class="checkbox-inline">
+                                  <input type="radio" name="radio"  value="2" onchange="radioSwitch(this)">视频网站
+                              </label>  
+					      </div>
+					      <div class="form-group">
+					           <div id="yun" class="col-md-7 controls col-md-offset-2">
+					               <input type="text"  name="yun_url" id="yun_url" value="" placeholder="可以直接添加，也可以点击后面的资料库选择！" style="width:370px;float:left;margin-right:20px;" class="form-control" >
+                                   <a class="btn btn-primary " href="{:u('Teacher/Center/ziyuanku2')}" data-toggle="modal" data-target="#myModal">资料库</a>
+                               </div>
+			                   <div id="youku" class="col-md-7 controls col-md-offset-2 hidden">
+							       <input  type="text" name="youku_url" placeholder="优酷的视频" style="width:350px;float:left;margin-right:20px;" class="form-control" >
+							       <input  type="text" name="playpass" placeholder="播放密码" style="width:90px;" class="form-control" >
+						       </div>
+						  </div>
+						  <div class="row">
+					  	    <div class="col-md-7 col-md-offset-2">
+							   <button id="profile-save-btn"  type="submit" class="btn btn-primary js-ajax-submit">添加 </button>
+						   </div>
+					    </div>
+			           </form>
+                    </div>
+                 </div>	   
+		      </div>
+	        </div>
+         </div>
+     </div>
+   </div>
+ <div class="modal fade " id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog"  style="width:600px;">
+      <div class="modal-content" >
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+ </div>  
+<tc_include file="Public:scripts" /> 
+
+<script>
+function radioSwitch(){
+	var val = $('#video input[name="radio"]:checked ').val();
+	var yun = document.getElementById('yun');
+	var youku = document.getElementById('youku');  
+	if(val==1){
+		yun.className = 'col-md-7 controls col-md-offset-2';
+		youku.className = 'col-md-7 controls col-md-offset-2 hidden';
+		document.getElementById("video_type").value='1';
+		}else{
+			yun.className = 'col-md-7 controls col-md-offset-2  hidden';
+			youku.className = 'col-md-7 controls col-md-offset-2';
+			document.getElementById("video_type").value='2';
+			}
+	 
+}
+</script>  
+<tc_include file="Public:footer" />

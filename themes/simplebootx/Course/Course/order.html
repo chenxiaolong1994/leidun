@@ -1,0 +1,43 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+ <div class="order-pay">
+  <div class="es-section">
+    <ul class="es-step es-step-3 clearfix">
+      <li class="doing"><span class="number">1</span>订单确认</li>
+      <li><span class="number">2</span>订单支付</li>
+      <li><span class="number">3</span>订单完成</li>
+    </ul>
+    <div class="order-pay-body">
+      <form id="order-create-form" method="post" action="{:u('course/Course/createorder',array('id'=>$cs_data['id']))}">
+        <input type="hidden" name="course_id" value="$cs_data['id']"/>
+        <input type="hidden" name="totalPrice" value="{$cs_data['cs_price']}"/>
+        <div class="order-detail-bg" style="border:none">
+          <div class="order-detail clearfix">
+             <div class="order-img hidden-xs">
+                <a href="{:u('course/Course/courseinfo',array('id'=>$cs_data['id']))}">
+					 <if condition="empty($cs_data['cs_picture'])">
+					   <img class="img-responsive " src="__PUBLIC__/images/course.png">
+					 <else /> 
+					   <img class="img-responsive "  src="{$cs_data['cs_picture']}" alt="{$cs_data['cs_name']}">
+					 </if> 
+				</a>
+            </div>
+            <div class="order-info text-overflow">{$cs_data['cs_name']}</div>
+            <div class="order-price">
+              <span class="pay-rmb">￥</span>
+              <span role="total-price" class="pay-rmb">{$cs_data['cs_price']}</span>
+            </div>
+          </div> 
+         </div>
+         <div class="form-group">
+          <div class="total-price"> 应付金额：<span class="pay-rmb">￥</span><span role="pay-rmb" class="pay-rmb">{$cs_data['cs_price']}</span></div>
+          </div>
+          <div class="form-group text-right">
+              <button id="join-course-btn" class="btn btn-primary" type="submit" >提交订单</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+ </div>
+<tc_include file="Public:footer" />

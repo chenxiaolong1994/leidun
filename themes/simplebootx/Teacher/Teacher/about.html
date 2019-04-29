@@ -1,0 +1,48 @@
+<tc_include file="Public:header" />
+ <section class="index-course-list">
+	<div class="user-center-header" style="background:#ccc" >
+		<div class="container clearfix">
+			<div class="user-avatar">
+				<div class="avatar-wrap" style="width:150px;height:150px;overflow:hidden;">
+				    <if condition="empty($teacher['avatar'])"> 
+						<img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="img-circle" style="max-width:150px;width:150px;"/>
+					<else /> 
+						<img src="{:sp_get_user_avatar_url($teacher['avatar'])}" class="img-circle" style="max-width:150px;;width:150px;"/> 
+					</if>
+				</div>
+				<div class="name">
+					{$teacher['user_nicename']}
+				</div>
+				<div class="position">
+					<span class="mrm">{$teacher['zhicheng']|default="该教师没有设置！"}</span>
+                </div>
+				<!-- <div class="mates">
+					<span class="mrm">0</span>粉丝<span class="mlm mrm">｜</span><span class="mrm">0</span>关注
+				</div
+				<div class="actions">
+					<a class="btn btn-primary follow-btn mrl" href="javascript:;" data-url="/user/6/follow" >关注</a>
+					<a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="/user/6/unfollow"  style="display:none;" >已关注</a>
+					<button class="btn btn-ghost-white" data-toggle="modal" data-backdrop="static" data-target="#modal" data-url="/message/create/6">私信</button>
+				</div> -->
+			</div>
+			<div class="user-about hidden-sm hidden-xs">
+				<div class="user-about-content">
+					{$teacher['signature']|default="该教师没有设置！"}      
+				</div>
+			</div>
+		</div>
+		<div class="mask"></div>
+	</div>
+
+    <div id="content-container" class="container">
+        <ul class="nav nav-tabs clearfix">
+			<li class="active"><a href="{:u('Teacher/Teacher/about',array('id'=>$teacher['id']))}">个人介绍</a></li>
+  		    <li ><a href="{:u('Teacher/Teacher/teach',array('id'=>$teacher['id']))}">在教课程</a></li>
+		</ul>
+		<div class="editor-text">
+			{$teacher['tcprofile']|default="该教师没有设置！"}   
+		</div>
+    </div>
+</section>
+<tc_include file="Public:scripts" />          
+<tc_include file="Public:footer" />

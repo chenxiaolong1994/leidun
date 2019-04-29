@@ -1,0 +1,98 @@
+<tc_include file="Public:header" />  
+ <section class="index-course-list lazyload">
+   <div  class="container">
+     <div class="es-tabs">
+       <div class="tab-header">
+         <if condition="empty($term_id)">
+            <ul class="clearfix">
+               <li class="active" ><a href="{:u('Portal/Index/article')}">全部</a></li>
+             <volist name="term" id="vo" key="key">
+               <li class=""><a href="{:u('Portal/Index/article',array('termid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+             </volist> 
+            </ul>
+          <else/> 
+            <ul class="clearfix">
+               <li><a href="{:u('Portal/Index/article')}">全部</a></li>
+             <volist name="term" id="vo">
+              <if condition="$vo['term_id']==$term_id">
+               <li class="active"><a href="{:u('Portal/Index/article',array('termid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+              <else/>
+               <li class=""><a href="{:u('Portal/Index/article',array('termid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+              </if>
+             </volist> 
+           </ul>
+          </if>
+       </div>
+     </div>
+      <div class="col-md-8 article-list-main">
+	   <div class="article-metas clearfix">
+         <div class="article-list">
+          <volist name="article" id="vo" key="key">
+            <article class="article-item">
+               <div class="article-metas clearfix">
+                  <div class="pull-left">
+                    <div class="date">
+                      <div class="day">{$vo['ri']}</div>
+                      <div class="month">{$vo['yue']}月</div>
+                   </div>
+                  </div>
+                  <div class="metas-body">
+                    <h2 class="title">
+                      <a class="link-dark" href="{:u('Portal/Index/content',array('id'=>$vo['id'],'termid'=>$vo['term_id']))}">{$vo['post_title']}</a>
+                    </h2>
+                  </div>
+               </div>
+               <div class="media">
+                 <div class="media-left">
+                 </div>
+                 <div class="media-body">{$vo['post_excerpt']}</div>
+               </div>
+             </article>  
+           </volist>
+        </div>
+	    <nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+	 </div>
+   </div>
+   <aside class="col-md-4 article-sidebar">
+     <div class="panel panel-default hot-article">
+       <div class="panel-heading">
+          <h3 class="panel-title"><i class="es-icon es-icon-whatshot"></i>热门文章</h3>
+       </div>
+       <div class="panel-body">
+         <volist name="remen" id="vo" key="key">
+          <div class="media media-number">
+             <div class="media-left">
+               <span class="num">{$key}</span>
+             </div>
+             <div class="media-body">
+                <a class="link-dark" href="{:u('Portal/Index/content',array('id'=>$vo['id'],'termid'=>$vo['term_id']))}" title="{$vo['post_title']}">{$vo['post_title']}</a>
+             </div>
+          </div> 
+          </volist>  
+       </div>
+     </div>
+     <!-- 推荐资讯 -->
+      <div class="panel panel-default recommend-article">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+             <i class="es-icon es-icon-language"></i>推荐文章
+          </h3>
+        </div>
+        <div class="panel-body">
+         <volist name="tuijian" id="vo" key="key">
+          <div class="media media-number">
+             <div class="media-left">
+               <span class="num">{$key}</span>
+             </div>
+             <div class="media-body">
+                <a class="link-dark" href="{:u('Portal/Index/content',array('id'=>$vo['id'],'termid'=>$vo['term_id']))}" title="{$vo['post_title']}">{$vo['post_title']}</a>
+             </div>
+          </div> 
+          </volist>  
+        </div>
+      </div>
+   </aside>
+  </div>
+ </section>
+  <tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

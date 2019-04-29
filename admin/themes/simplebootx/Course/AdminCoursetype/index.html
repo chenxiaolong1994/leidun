@@ -1,0 +1,34 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap jj">
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{:U('AdminCoursetype/index')}">分类管理</a></li>
+	<li><a href="{:U('AdminCoursetype/add')}">添加分类</a></li>
+</ul>
+<div class="common-form">
+<form method="post" class="js-ajax-form"
+	action="{:U('AdminCoursetype/listorders')}">
+<div class="table_list">
+<table width="100%" class="table table-hover">
+	<thead>
+		<tr>
+			<th width="80">排序</th>
+			<th width="100">ID</th>
+			<th>分类名称</th>
+			<th width="150">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		{$taxonomys}
+	</tbody>
+</table>
+</div>
+<div class="form-actions">
+<button class="btn btn-primary js-ajax-submit" type="submit">排序</button>
+</div>
+</form>
+</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

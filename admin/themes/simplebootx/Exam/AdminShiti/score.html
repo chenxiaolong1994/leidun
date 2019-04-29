@@ -1,0 +1,117 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <form class="well form-search" method="post" action="{:u('AdminShiti/shitilist')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">类别：
+			<select id='first'  name="top_id" class="form-control" required="required">       
+				<option>==请选择==</option>  
+				<foreach name="type" item="vo">
+					<option  value="{$vo['term_id']}">{$vo['name']}</option>       
+				</foreach>
+			</select> 
+			    &nbsp; &nbsp;年级：
+			<select id="label"  name="type_id" class="form-control">       
+				<option>==请选择==</option>       
+			</select> 
+               &nbsp; &nbsp;课程：			
+			<select id="class"  name="course_id" class="form-control">       
+				<option>==请选择==</option>       
+			</select> 
+			&nbsp; &nbsp;<input type="submit" class="btn" value="查询"/>
+        </span>
+      </div>
+    </div>
+  </form>
+    <php>
+		$type=array("1"=>"选择题","2"=>"填空","3"=>"判断","4"=>"解答题","5"=>"材料题");
+	</php>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list" >
+        <thead>
+	          <tr id="chengji">
+	            <th width="60">学员</th>
+	            <th width="100">类别</th>
+	            <th width="90">年级</th>
+				<th width="150">身份证号</th>
+	          </tr>
+        </thead>
+		<foreach name="baoming_ks" item="vo" key="k">
+			<tr > 
+				<td><span>{$vo.username}</span></td>
+				<td>{$vo.toptype}</td>
+				<td>{$vo.childtype}</td>
+				<td>{$vo.idnumber}</td>
+			    <volist name="vo['papers']" id="sub" key="i">
+				    <td  width="90" id="{$sub.papersid}">
+					   <if condition="($k eq 0)">
+					    <input type="hidden"  value="{$sub.papersid}">
+						<script language="javascript"> 
+							document.write(addtd());
+						</script>
+					   </if>
+				     {$sub.score}
+				    </td>
+				</volist>	 
+			</tr>
+		</foreach>
+        
+      </table>
+      <div class="pagination">{$Page}</div>   
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script language="javascript"> 
+    function addtd(){
+	   id=$('table input').val();
+	   $("#chengji").append("<th>"+id+"</th>") ;
+	}
+	$(function(){ 
+		$("#first").change(function(){  
+		var parentId=$("#first").val();
+		 if(null!= parentId && ""!=parentId){
+		    $.getJSON("{:U('Exam/AdminShiti/getsontype')}",{id:parentId},function(myJSON){
+			var options=""; 
+			if(myJSON.length>0){ 
+				options+="<option value='-1'>==请选择=</option>"; 
+					for(var i=0;i<myJSON.length;i++){ 
+					options+="<option value="+myJSON[i].term_id+">"+myJSON[i].name+"</option>"; 
+				} 
+				$("#label").html(options); 
+			} 
+			else if(myJSON.length<=0){ 
+			   options+="<option value='-1'>==请选择==</option>"; 
+			    $("#class").html(options); 
+			} 
+			}); 
+		} 
+		else{ 
+			} 
+		});
+    	$("#label").change(function(){  
+		var parentId=$("#label").val();
+		 if(null!= parentId && ""!=parentId){
+		    $.getJSON("{:U('Exam/AdminShiti/getcourse')}",{id:parentId},function(myJSON){
+			var options=""; 
+			if(myJSON.length>0){ 
+				options+="<option value='-1'>==请选课程==</option>"; 
+					for(var i=0;i<myJSON.length;i++){ 
+					options+="<option value="+myJSON[i].id+">"+myJSON[i].cs_name+"</option>"; 
+				} 
+				$("#class").html(options); 
+			} 
+			else if(myJSON.length<=0){ 
+			    options+="<option value='-1'>==请选择课程==</option>"; 
+			    $("#class").html(options); 
+			} 
+			}); 
+		} 
+		else{ 
+			} 
+		});	
+	}); 
+	
+</script>
+</body>
+</html>

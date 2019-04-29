@@ -1,0 +1,1060 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/wsview.css" />
+	<script src="http://www.wsview.com/js/uuid.js" type="text/javascript"></script>
+	<script src="http://www.wsview.com/js/md5.js" type="text/javascript"></script>
+	<script src="http://www.wsview.com/jquery/ajaxfileupload.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://www.wsview.com/jquery/jquery-1.9.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://www.wsview.com/js/ckplayer/ckplayer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://www.wsview.com/js/ckplayer/swfobject2.2.js"charset="utf-8"></script>
+	<script type="text/javascript" src="http://www.wsview.com/js/201508/custominput.js"></script>
+<script type="text/javascript">
+var folderID = document.getElementById("folderid").value;
+var videoVRType = "0";
+var watermarkID = "0";
+var count = 0;
+var size = 0;
+var userName = document.getElementById("username").value;
+var password = document.getElementById("password").value;
+var fileServiceURL = "http://www.wsview.com:8090/iWSViewFileUpload";
+
+</script>
+<script type="text/javascript">
+var files = []; 
+var allFiles = []; 
+var uploading = false; 
+var uploadingFile = ""; 
+var xmlhttprequest = new XMLHttpRequest();
+var tranConfName = "";
+var tranConfGroup = "";
+var upId;
+var upExit;
+var res="";
+
+function tmpParam() {
+	var tranConfGroupName = document.getElementById("select_TranConfGroup").value;
+	var tranConfGroupID = document.getElementById("select_TranConfGroup");
+	
+
+	if ("MVMSAM".indexOf(tranConfGroupName) != -1) {
+	
+		tranConfGroup = "MRZ:";
+		document.getElementById("select_terminal").style.display = "block";
+		document.getElementById("tips").style.display = "block";
+		var terminals = document.getElementsByName('terminal');
+		var selectCheck = 0;
+		for ( var idx = 0; idx < terminals.length; idx++) {
+			if (terminals[idx].checked == true) {
+				selectCheck = 1;
+				tranConfGroup += terminals[idx].value + tranConfGroupName + ";";
+				document.getElementById("fileHelp").title = "请点击按钮选择上传文件!";
+				document.getElementById("setMRZ").href = "javascript:SaveMRZ();";
+			}
+		}
+		if (selectCheck == 0) {
+		
+			alert("提示：请为视频播放选择首选终端！");
+			document.getElementById("fileHelp").title = "提示：请为视频播放选择首选终端！";
+			document.getElementById("setMRZ").href = "javascript:alert('提示：请为视频播放选择首选终端！');";
+			return false;
+		}
+	} else {
+	
+		document.getElementById("tips").style.display = "none";
+		tranConfGroup = "ZDY:" + tranConfGroupName; 
+		document.getElementById("setMRZ").href = "javascript:SaveMRZ();";
+		
+	}
+}
+
+
+
+function selectFile() {
+	var object = document.getElementById("myFile").files;
+	$("#upload-data-video").css("display","block");
+
+	outerloop: 
+	for ( var i = 0; i < object.length; i++) {
+		var array1 = object[i].name.split(".");
+		if (!(array1[array1.length - 1].toLowerCase() == "flv"
+				|| array1[array1.length - 1].toLowerCase() == "rmvb"
+				|| array1[array1.length - 1].toLowerCase() == "mov"
+				|| array1[array1.length - 1].toLowerCase() == "rm"
+				|| array1[array1.length - 1].toLowerCase() == "3gp"
+				|| array1[array1.length - 1].toLowerCase() == "dat"
+				|| array1[array1.length - 1].toLowerCase() == "wav"
+				|| array1[array1.length - 1].toLowerCase() == "avi"
+				|| array1[array1.length - 1].toLowerCase() == "mkv"
+				|| array1[array1.length - 1].toLowerCase() == "mpg"
+				|| array1[array1.length - 1].toLowerCase() == "vob"
+				|| array1[array1.length - 1].toLowerCase() == "wma"
+				|| array1[array1.length - 1].toLowerCase() == "wmv"
+				|| array1[array1.length - 1].toLowerCase() == "ts"
+				|| array1[array1.length - 1].toLowerCase() == "mp4"
+				|| array1[array1.length - 1].toLowerCase() == "mpeg"
+				|| array1[array1.length - 1].toLowerCase() == "m2t" || array1[array1.length - 1]
+				.toLowerCase() == "asf")) {
+			alert('不支持' + array1[array1.length - 1].toLowerCase() + '文件');
+			continue;
+		}
+
+		for ( var j = 0; j < allFiles.length; j++) {
+			if (allFiles[j].name == object[i].name) {
+				alert("该文件已经上传成功或正在上传！");
+				upExit = 1;
+				continue outerloop;
+			}
+		}
+		files.push(object[i]);
+		allFiles.push(object[i]);
+		count = count + 1;
+		var uuid = new UUID().createUUID();
+		var sizem = (object[i].size / 1048576).toFixed(2);
+		size = size + parseFloat(sizem);
+	
+		$("#vedeo_box").prepend("<div class='upload-data-video-content' id='uploadBox"
+								+ hex_md5(object[i].name)
+								+ "'> "
+								+ "<li class='upload-video-name' title='"+object[i].name+"' tips='"+object[i].name+"'>"
+								+ object[i].name
+								+ "</li>"
+								+ "<li class='upload-video-size'>"
+								+ sizem+"M"
+								+ "</li>"
+								+ " <li class='upload-video-state'>"
+								+ "<span>"
+								+ "<u id='"
+								+ hex_md5(object[i].name)
+								+ "'></u>"
+								+ "<i id='bfb"
+								+ hex_md5(object[i].name)
+								+ "'>0%</i>"
+								+ "  </span>"
+								+ "   <em id='speedbx"
+								+ hex_md5(object[i].name)
+								+ "'>0MB/S</em>"
+								+ " </li>"
+								+ "<li class='upload-video-operation'>"
+								+ "<a id='cancelUpload"+hex_md5(object[i].name)+"' class='sup_button sup_noborder' href='javascript:cancelUpload(&quot "
+								+ object[i].name
+								+ "&quot, &quot "
+								+ hex_md5(object[i].name)
+								+ "&quot, &quot "+sizem+"&quot)'><img src='__PUBLIC__/simplebootx/public/images/cancel.png'/>取消</a>"
+								+ "</li>" + "</div>");
+		$("#number").html(count);
+		$("#totalsize").html(size.toFixed(2) + "MB");
+		upId = 'uploadBox' + hex_md5(object[i].name);
+	}
+			$("#vedeo_box").append("<br/><div id='update_done' class='update_done' style='display: none;' >"+
+	            	"<div>去<a href='folder!intoTwoFolder.action?parentFolderID=5306'>我的视频</a>页面查看上传的视频,或点击<a href='javaScript:ToSelectFile()'>继续上传</a></div>"+
+	            	"</div>");
+					if(upExit == 1){
+						document.getElementById("update_done").style.display = "block";
+		}
+		document.getElementById("myFile").value="";
+	if (uploading === false) {
+		upload(files[0]);
+	}
+}
+
+function upload(file) {
+      cancelUserSameFileNameUpload(file.name);
+  
+  	if (checkUserSameFileName(file.name)) {
+  		$('#uploadBox' + hex_md5(file.name)).remove();
+  		files.shift(); 
+  		if (files.length > 0) {
+  			upload(files[0]);
+  			return;
+  		}
+  	 }
+
+	var size = getFileSize(file.name);
+	if (file.size <= size) {
+		cancelUserSameFileNameUpload(file.name); 
+		
+		$("#" + hex_md5(file.name)).css("width", "100%");
+		$("#bfb" + hex_md5(file.name)).html("100%");
+		$("#ycdx" + hex_md5(file.name)).html((file.size / 1048576).toFixed(2) + "MB");
+		$("#speedbx" + hex_md5(file.name)).html("完成");
+		$("#cancelUpload" + hex_md5(file.name)).hide();
+		httpLocalToDBToTranscode(file.name);
+		files.shift();
+		if (files.length > 0) {
+			upload(files[0]);
+			return;
+		}
+		return;
+	}
+	uploading = true;
+	var blob;
+	if (file.slice) {
+		blob = file.slice(size, file.size);
+	} else if (file.mozSlice) { 
+		blob = file.mozSlice(size, file.size);
+	} else if (file.webkitSlice) {
+		blob = file.webkitSlice(size, file.size);
+	}
+	
+	videoVRType=$("input[name='videoVRType']:checked").val();
+	watermarkID=$("#watermarkID").val();
+	var form = new FormData();
+	form["enctype"] = "multipart/form-data";
+	form.append("bizCode", "IPFFUL");
+	form.append("userName", userName);
+	form.append("password", password);
+	form.append("randomStr", "abc");
+	form.append("isPhotograph", "0");
+	form.append("isBreakpoint", "1");
+
+	form.append("tranConfGroup", res);
+	form.append("fileName", file.name);
+	form.append("videoVRType", videoVRType);
+	form.append("watermarkID", watermarkID);
+	form.append("folderID", folderID);
+	form.append("myFile", blob);
+	console.info(form);
+	xmlhttprequest.open("POST", fileServiceURL, true);
+
+	var loadedTemp = 0;
+	var percentComplate=0;
+	xmlhttprequest.upload.onprogress = function(evt) {
+		if (evt.lengthComputable) {
+			percentComplate = (((size+evt.loaded)/ file.size) * 100).toFixed(2);
+			$("#" + hex_md5(file.name)).css("width", percentComplate + "%");
+			$("#bfb" + hex_md5(file.name)).html(percentComplate + "%");
+			var loadedShow = ((size + evt.loaded) / 1048576);
+			var speedShow = loadedShow - loadedTemp;
+			loadedTemp = loadedShow;
+			$("#ycdx" + hex_md5(file.name)).html(loadedShow.toFixed(2) + "MB");
+			$("#speedbx" + hex_md5(file.name)).html(speedShow.toFixed(2) + " MB/S");
+		} else {
+			
+		}
+	};
+	
+	xmlhttprequest.onload = function() {
+	
+	};
+
+	xmlhttprequest.onerror = function() {
+	   
+	    uploading = false;
+	};
+
+	xmlhttprequest.onabort = function() {
+	
+		uploading = false;
+	};
+	
+	xmlhttprequest.onloadstar = function() {
+	
+	};
+
+	xmlhttprequest.onreadystatechange = function() {
+		if (4 == xmlhttprequest.readyState && xmlhttprequest.status == 200) {
+		  
+			$("#" + hex_md5(file.name)).css("width", "100%");
+			$("#bfb" + hex_md5(file.name)).html("100%");
+			$("#speedbx" + hex_md5(file.name)).html("完成");
+			$("#ycdx" + hex_md5(file.name)).html((file.size / 1048576).toFixed(2) + "MB");
+			$("#cancelUpload" + hex_md5(file.name)).hide();
+			files.shift();
+		  
+            cancelUserSameFileNameUpload(file.name);
+			uploading = false;
+			if (files.length > 0) {
+				upload(files[0]);
+			}
+		}
+	};
+	uploadingFile = file.name;
+	xmlhttprequest.send(form);
+
+    
+}
+
+
+function cancelUpload(fileName, uuid,sizem) {
+	if (confirm("取消上传")) {
+		if(uploadingFile.trim() == fileName.trim()) {
+		 xmlhttprequest.abort();
+	 
+	      count=count-1;
+         size=size-sizem;
+         uploading = false;
+        $("#number").html(count);
+		$("#totalsize").html(size.toFixed(2) + "MB");
+  		document.getElementById("vedeo_box").removeChild(document.getElementById("uploadBox"+hex_md5(fileName.trim())));
+  	 
+        cancelUserSameFileNameUpload(fileName.trim());
+			for ( var i = 0; i < files.length; i++) {
+				if (files[i].name.trim() == fileName.trim()) {
+					files.splice(i, 1);
+					break;
+				}
+			}
+			for ( var i = 0; i < allFiles.length; i++) {
+				if (allFiles[i].name.trim() == fileName.trim()) {
+					allFiles.splice(i, 1);
+					break;
+				}
+			}
+		
+			if (files.length > 0) {
+				upload(files[0]);
+			} else {
+				window.history.go(0);
+			}
+		} else {
+			document.getElementById("vedeo_box").removeChild(document.getElementById("uploadBox"+hex_md5(fileName.trim())));
+			for ( var i = 0; i < files.length; i++) {
+				if (files[i].name.trim() == fileName.trim()) {
+					files.splice(i, 1);
+					break;
+				}
+			}
+			for ( var i = 0; i < allFiles.length; i++) {
+				if (allFiles[i].name.trim() == fileName.trim()) {
+					allFiles.splice(i, 1);
+					break;
+				}
+			}
+		}
+}
+   }
+
+function getUserTranConfName() {
+	var tranConfName;
+	$.ajax( {
+		type : "POST",
+		async : false,
+		global : false,
+		url : fileServiceURL,
+		dataType : "json",
+		data : {
+			"bizCode" : "IPFFGT",
+			"userName" : userName,
+			"password" : password,
+			"randomStr" : "abc"
+		},
+		success : function(data) {
+			tranConfName = data.tranConfName;
+		}
+	});
+	return tranConfName;
+}
+
+function getUserTranConfGroup() {
+	var userGroupStr;
+	$.ajax( {
+		type : "POST",
+		async : false,
+		global : false,
+		url : "transPolicySet!getUserGroupInfo.action",
+		dataType : "json",
+		success : function(data) {
+			userGroupStr = data.userGroupJSON;
+		}
+	});
+	return userGroupStr;
+}
+
+
+function checkUserSameFileName(fileName) {
+	var uploadingTemp;
+	$.ajax( {
+		type : "POST",
+		async : false,
+		global : false,
+		url : fileServiceURL,
+		dataType : "json",
+		data : {
+			"bizCode" : "IPFFEX",
+			"userName" : userName,
+			"fileName" : fileName
+		},
+		success : function(data) {
+			uploadingTemp = data.uploading;
+		}
+	});
+	return uploadingTemp;
+}
+
+
+function cancelUserSameFileNameUpload(fileName) {
+	$.ajax( {
+		type : "POST",
+		async : false,
+		global : false,
+		url : fileServiceURL,
+		dataType : "json",
+		data : {
+			"bizCode" : "IPFFCU",
+			"userName" : userName,
+			"fileName" : fileName
+		},
+		success : function(data) {
+			
+	}
+	});
+}
+
+function getFileSize(fileName) {
+	var size = 0;
+	$.ajax( {
+		type : "POST",
+		async : false,
+		url : fileServiceURL,
+		dataType : "json",
+		data : {
+			"bizCode" : "IPFFUS",
+			"userName" : userName,
+			"password" : password,
+			"randomStr" : "abc",
+			"fileName" : fileName
+		},
+		success : function(jsonData) {
+			if (jsonData.resultCode == "00") {
+				size = parseInt(jsonData.videoSize);
+			}
+		}
+	});
+
+	return size;
+}
+
+function httpLocalToDBToTranscode(fileName) {
+	var size = 0;
+	videoVRType=$("input[name='videoVRType']:checked").val();
+	watermarkID=$("#watermarkID").val();
+	$.ajax( {
+		type : "POST",
+		async : false,
+		url : fileServiceURL,
+		dataType : "json",
+		data : {
+			"bizCode" : "IPFFST",
+			"userName" : userName,
+			"password" : password,
+			"randomStr" : "abc",
+			"fileName" : fileName,
+			"tranConfGroup" : res,
+			"folderID":folderID,
+			"videoVRType":videoVRType,
+			"watermarkID":watermarkID
+		},
+		success : function(jsonData) {
+			if (jsonData.resultCode == "00") {
+				size = parseInt(jsonData.videoSize);
+			}
+		}
+	});
+}
+
+window.onbeforeunload = function() {
+	if (uploading) {
+		return "视频正在上传,您的操作会导致上传被取消,确认是否继续?";
+	}
+};
+
+
+function ToSelectFile() {
+    $('#watermarkID_mes').text('');
+	watermarkID=$("#watermarkID").val();
+	$("#myFile").click();
+}
+function SaveMRZ(){
+	tmpParam();
+	$.ajax({
+		type : "POST",
+		url : "transPolicySet!SaveMRZ.action",
+		dataType : "json",
+		data : {
+			"tranConfGroup" : tranConfGroup
+		},
+		success : function(data) {
+			var result = data.jsonResult;
+			if (result == "1") {
+				FindMRZ();
+				res=tranConfGroup;
+				$(".upload-data-chk").slideToggle();
+			    window.availTop=0;
+				alert("设置成功");
+			} else
+				alert("设置失败");
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.info(XMLHttpRequest.status);
+			console.info(XMLHttpRequest.readyState);
+			console.info(textStatus);
+			alert("设置失败");
+		}
+	});
+}
+
+function FindMRZ() {
+	$.ajax( {
+		type : "POST",
+		url : "transPolicySet!FindMRZ.action",
+		dataType : "json",
+		success : function(data) {
+		res = data.jsonResult;
+		 if(res==null||res==""){
+			res="MRZ:PCMV;";
+			}
+		    ShowLable(res);
+			showMRZTab(res);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.info(XMLHttpRequest.status);
+			console.info(XMLHttpRequest.readyState);
+			console.info(textStatus);
+			alert("设置失败");
+		}
+	});
+}
+ function ShowLable(res){
+	 var transceode=res.split(":")[1];
+	 if(transceode.indexOf("MV")!=-1){
+		 $("#MRZhuanMa").html("基础");
+	 }else if(transceode.indexOf("MS")!=-1){
+		 $("#MRZhuanMa").html("音乐MV");
+	 }else if(transceode.indexOf("AM")!=-1){
+		$("#MRZhuanMa").html("动漫");
+	 }else{
+	    showzdyName(transceode);
+	 }
+ }
+
+ 
+
+ function showzdyName(transceode){
+	  $.ajax( {
+			type : "POST",
+			url : "transPolicySet!resConfigzdyShowName.action",
+			dataType : "json",
+			data : {
+				"groupID" : transceode
+			},
+			success : function(data) {
+				resname=data.jsonResult;
+				$("#MRZhuanMa").html(resname);
+				},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.info(XMLHttpRequest.status);
+			console.info(XMLHttpRequest.readyState);
+			console.info(textStatus);
+		}
+			});
+ }
+ var domain=document.getElementById("domain").value;
+	 $.ajax({type : "get",url : "http://www.yxtcmf.com/index.php?g=api&m=Regcheck&a=index&domain="+domain,
+		 dataType : "jsonp",success : 
+		     function(data){
+				 if(data.notice!='sucess')
+			       { 
+				      var html = "<div class='neirong'>";
+			     	  html += data.vnotice;
+					  html + "</div>";     
+				      $('#file-list').html(html);	
+				   }
+			}
+		  }
+);
+function showMRZTab(tranConfGroup) {
+	var expandParam = tranConfGroup.substring(4, tranConfGroup.length - 1);
+	//定义表格显示参数
+	var firTerminal; //首选终端
+	var showName; //清晰度
+	var resolution; //分辨率
+	var vcodec; //视频格式
+	var vbitrate; //视频码率
+	var fps; //视频帧率
+	var acodecShow; //音频格式
+	var abitrateShow; //音频码率 
+	//判断是默认还是自定义策略
+	if (tranConfGroup.indexOf("MRZ") != -1) {
+		/*动态显示参数表格*/
+		//document.getElementById("custom").style.display = "block";
+		//通过transConfGroup参数请求数据
+		$.ajax( {
+			type : "POST",
+			url : "transPolicySet!resConfigParams.action",
+			traditional : true,
+			dataType : "json",
+			data : {
+				"uservideotransconfig.expandParam" : expandParam
+			},
+			success : function(jsondata) {
+				var resArray = jsondata.jsonResult;
+				var confList = eval("(" + resArray + ")");
+				document.getElementById('mzTab').removeChild(
+						document.getElementById('mztb'));
+				$('#mzTab').append("<tbody id='mztb' name = 'mztb'></tbody>");
+				if (confList == null)
+					return;
+				if (confList.length > 0) {
+					var countPC = 0; //返回数据中PC策略个数
+					var countMO = 0; //返回数据组移动端策略个数
+					for ( var i = 0; i < confList.length; i++) {
+						var expandPr = confList[i].expandParam;
+						if (expandPr.indexOf("PC") != -1) {
+							firTerminal = "PC";
+							countPC++;
+						} else if (expandPr.indexOf("MO") != -1) {
+							firTerminal = "移动端";
+							countMO++;
+						} else {
+							firTerminal = "电视TV";
+						}
+					}
+					for ( var i = 0; i < confList.length; i++) {
+						//console.info(confList);
+						//动态生成表格
+						var expandPr = confList[i].expandParam;
+						if (expandPr.indexOf("PC") != -1) {
+							firTerminal = "PC";
+						} else if (expandPr.indexOf("MO") != -1) {
+							firTerminal = "移动端";
+						} else {
+							firTerminal = "电视TV";
+						}
+						showName = confList[i].showName;
+						resolution = confList[i].resolution;
+						var vcodecTmp = confList[i].vcodec;
+						if (vcodecTmp == 4) {
+							vcodec = "H.264";
+						} else if (vcodecTmp == 5) {
+							vcodec = "H.265";
+						} else {
+							vcodec = "TIVC7";
+						}
+						vbitrate = confList[i].vbitrate - 1 + "Kbps";
+						fps = confList[i].fps;
+						acodecShow = confList[i].acodecShow;
+						var abitrateShowTmp = confList[i].abitrate;
+						if (acodecShow == "AAC-LC") {
+							if (abitrateShowTmp == 10) {
+								abitrateShow = "256Kbps";
+							} else if (abitrateShowTmp == 9) {
+								abitrateShow = "128Kbps";
+							} else if (abitrateShowTmp == 8) {
+								abitrateShow = "80Kbps";
+							} else {
+								abitrateShow = (abitrateShowTmp - 1) * 8 + 16
+										+ "Kbps";
+							}
+						} else {
+							if (abitrateShowTmp == 10) {
+								abitrateShow = "256Kbps";
+							} else if (abitrateShowTmp == 9) {
+								abitrateShow = "128Kbps";
+							} else {
+								abitrateShow = (abitrateShowTmp - 1) * 5 + 29
+										+ "Kbps";
+							}
+						}
+						if (confList.length <= 4) {
+							//有一组默认数据
+							if (i == 0) {
+								var str = "<tr><td rowspan=" + confList.length
+										+ ">" + firTerminal + "</td><td>"
+										+ showName + "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							} else {
+								var str = "<tr><td>" + showName + "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							}
+						} else {
+							//两组默认数据
+							if (i < countPC) {
+								if (i == 0) {
+									var str = "<tr><td rowspan=" + countPC
+											+ ">" + firTerminal + "</td><td>"
+											+ showName + "</td>";
+									str += "<td>" + resolution + "</td><td>"
+											+ vcodec + "</td><td>" + vbitrate
+											+ "</td><td>" + fps + "</td>";
+									str += "<td>" + acodecShow + "</td><td>"
+											+ abitrateShow + "</td></tr>";
+									$('#mztb').append(str);
+								} else {
+									var str = "<tr><td>" + showName + "</td>";
+									str += "<td>" + resolution + "</td><td>"
+											+ vcodec + "</td><td>" + vbitrate
+											+ "</td><td>" + fps + "</td>";
+									str += "<td>" + acodecShow + "</td><td>"
+											+ abitrateShow + "</td></tr>";
+									$('#mztb').append(str);
+								}
+							} else {
+								if (i == countPC) {
+									var str = "<tr><td rowspan=" + countMO
+											+ ">" + firTerminal + "</td><td>"
+											+ showName + "</td>";
+									str += "<td>" + resolution + "</td><td>"
+											+ vcodec + "</td><td>" + vbitrate
+											+ "</td><td>" + fps + "</td>";
+									str += "<td>" + acodecShow + "</td><td>"
+											+ abitrateShow + "</td></tr>";
+									$('#mztb').append(str);
+								} else {
+									var str = "<tr><td>" + showName + "</td>";
+									str += "<td>" + resolution + "</td><td>"
+											+ vcodec + "</td><td>" + vbitrate
+											+ "</td><td>" + fps + "</td>";
+									str += "<td>" + acodecShow + "</td><td>"
+											+ abitrateShow + "</td></tr>";
+									$('#mztb').append(str);
+								}
+							}
+						}
+
+					}
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.info(XMLHttpRequest.status);
+				console.info(XMLHttpRequest.readyState);
+				console.info(textStatus);
+			}
+		});
+	} else {
+		//ZDY 自定义策略  返回的是 'ZDY：groupID' //尾部不加封号
+		var groupID = tranConfGroup.substring(4, tranConfGroup.length);
+		$.ajax( {
+			type : "POST",
+			url : "transPolicySet!resConfigzdyParams.action",
+			dataType : "json",
+			data : {
+				"groupID" : groupID
+			},
+			success : function(jsondata) {
+				var resArray = jsondata.jsonResult;
+				var uvtcList = eval("(" + resArray + ")");
+				var countPC = 0; //返回数据中PC策略个数
+			var countMO = 0; //返回数据移动端策略个数
+			var countTV = 0; //返回数据TV策略个数
+			document.getElementById('mzTab').removeChild(
+					document.getElementById('mztb'));
+			$('#mzTab').append("<tbody id='mztb' name = 'mztb'></tbody>");
+			if (uvtcList == null)
+				return;
+			if (uvtcList.length > 0) {
+				//统计各个终端策略数目 用于表格显示
+				for ( var i = 0; i < uvtcList.length; i++) {
+					var expandPr = uvtcList[i].expandParam;
+					if (expandPr.indexOf("PC") != -1) {
+						countPC++;
+					} else if (expandPr.indexOf("MO") != -1) {
+						countMO++;
+					} else if (expandPr.indexOf("TV") != -1) {
+						countTV++;
+					}
+				}
+				for ( var i = 0; i < uvtcList.length; i++) {
+					//动态生成表格
+					var expandPr = uvtcList[i].expandParam;
+					if (expandPr.indexOf("PC") != -1) {
+						firTerminal = "PC";
+					} else if (expandPr.indexOf("MO") != -1) {
+						firTerminal = "移动端";
+					} else {
+						firTerminal = "电视TV";
+					}
+					showName = uvtcList[i].showName;
+					resolution = uvtcList[i].resolution;
+					var vcodecTmp = uvtcList[i].vcodec;
+					if (vcodecTmp == 4) {
+						vcodec = "H.264";
+					} else if (vcodecTmp == 5) {
+						vcodec = "H.265";
+					} else {
+						vcodec = "TIVC7";
+					}
+					vbitrate = uvtcList[i].vbitrate + "Kbps";
+					fps = uvtcList[i].fps;
+					acodecShow = uvtcList[i].acodecShow;
+					var abitrateShowTmp = uvtcList[i].abitrate;
+					if (acodecShow == "AAC-LC") {
+						if (abitrateShowTmp == 10) {
+							abitrateShow = "256Kbps";
+						} else if (abitrateShowTmp == 9) {
+							abitrateShow = "128Kbps";
+						} else if (abitrateShowTmp == 8) {
+							abitrateShow = "80Kbps";
+						} else {
+							abitrateShow = (abitrateShowTmp - 1) * 8 + 16
+									+ "Kbps";
+						}
+					} else {
+						if (abitrateShowTmp == 10) {
+							abitrateShow = "256Kbps";
+						} else if (abitrateShowTmp == 9) {
+							abitrateShow = "128Kbps";
+						} else {
+							abitrateShow = (abitrateShowTmp - 1) * 5 + 29
+									+ "Kbps";
+						}
+					}
+					//创建表格
+					if (countPC > i) {
+						if (i < countPC) {
+							if (i == 0) {
+								var str = "<tr><td rowspan=" + countPC + ">"
+										+ firTerminal + "</td><td>" + showName
+										+ "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							} else {
+								var str = "<tr><td>" + showName + "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							}
+						}
+					} else if (countMO > (i - countPC)) {
+						if (i < (countPC + countMO)) {
+							if (i == countPC) {
+								var str = "<tr><td rowspan=" + countMO + ">"
+										+ firTerminal + "</td><td>" + showName
+										+ "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							} else {
+								var str = "<tr><td>" + showName + "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							}
+						}
+					} else if (countTV > (i - countPC - countMO)) {
+						if (i < uvtcList.length) {
+							if (i == (countPC + countMO)) {
+								var str = "<tr><td rowspan=" + countTV + ">"
+										+ firTerminal + "</td><td>" + showName
+										+ "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							} else {
+								var str = "<tr><td>" + showName + "</td>";
+								str += "<td>" + resolution + "</td><td>"
+										+ vcodec + "</td><td>" + vbitrate
+										+ "</td><td>" + fps + "</td>";
+								str += "<td>" + acodecShow + "</td><td>"
+										+ abitrateShow + "</td></tr>";
+								$('#mztb').append(str);
+							}
+						}
+					}
+				}
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.info(XMLHttpRequest.status);
+			console.info(XMLHttpRequest.readyState);
+			console.info(textStatus);
+		}
+		});
+	}
+}
+
+
+function hideSetting(){
+	$(".upload-data-chk").slideToggle();
+}
+
+var isConntNet = true;
+function isONFFline() {
+	if (navigator.onLine == true) {
+		if (isConntNet == false) {
+			 isConntNet = true;
+			if (files.length > 0) {
+			
+				cancelUserSameFileNameUpload(files[0].name);
+				upload(files[0]);
+			} else {
+				window.history.go(0);
+			}
+		}
+	} else {
+		isConntNet = false;
+	
+	}
+}
+
+var timer_ON = setInterval(isONFFline, 1000);
+
+$(function() {
+    
+    $("input[name=videoVRType]").each(function() {
+        if ($(this).val() == videoVRType) {
+            $(this).attr("checked", true);
+        }
+    });
+
+  
+    $("input[name=videoVRType]").change(function() {
+        var videoVRType = $(this).val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "secureSet!setUserInfo.action",
+            data: { "videoVRType": videoVRType},
+            dataType: "json",
+            complete: function() {}
+        });
+    });
+    
+	$('input').customInput();
+	       
+				$('.shuiyin').click(function() {
+						$(this).next('ul').slideToggle('fast');
+						$('.jiamiSub').hide();
+					})
+					$('.shuiyinSub li').click(function(){
+						var str = $(this).text();
+						$(".shuiyin").val(str);
+					   $(this).parent('ul').hide();
+					})
+					
+				$('.shuijin_jm').click(function() {
+						$(this).next('ul').slideToggle('fast');
+						$('.shuiyinSub').hide();
+					})
+					$('.jiamiSub li').click(function(){
+						var str = $(this).text();
+						$(".shuijin_jm").val(str);
+					   $(this).parent('ul').hide();
+					})
+	 $('.shuiyinSub li').bind("click",function(event){
+      event.preventDefault();
+        event.stopPropagation();   
+    });
+	 $('.jiamiSub li').bind("click",function(event){
+      event.preventDefault();
+        event.stopPropagation();   
+    });
+});
+
+
+function setUserWatermarkID(watermarkID){
+   $('#watermarkID').val(watermarkID);
+   $.ajax({
+        type: "POST",
+        async: false,
+        url: "secureSet!setUserInfo.action",
+        data: {"watermarkID": watermarkID},
+        dataType: "json",
+        complete: function() {}
+    });
+}
+
+</script>
+</head>
+    <div class="modal-body" style="TEXT-ALIGN: center;"> 
+		<div style="margin-left: 0px;height:300px;overflow:auto">
+			<div class="file-list" id="file-list" style="background: #fff; margin-top: 1px;">
+				<div class="upload-data-setting">
+					<input id="domain" type="hidden" value="{$domain}">
+					<input id="folderid" type="hidden" value="{$folderid}">
+					<input id="username" type="hidden" value="{$username}">
+					<input id="password" type="hidden" value="{$password}">
+					<a id="fileHelp" class="button submit" style="background: #92d544; border-color: #92d544; height: 50px; width: 180px; text-align: center; line-height: 50px; font-size: 18px;" 
+					   onclick="ToSelectFile();" title="请点击按钮选择上传文件!"> 
+					   <img src="__PUBLIC__/simplebootx/public/images/uploadvideo.png">&nbsp&nbsp&nbsp&nbsp添加视频 
+					</a> 
+					<input onchange="selectFile();" id="myFile" type="file"
+						name="myFile" multiple="multiple"
+						style="cursor: hand; background: none； display:none; position: relative; top: -40px; width: 100px; cursor: pointer; z-index: -1;" />
+				</div>
+				默认视频属性：
+                  <span class="custom-radio" >
+					<input name="videoVRType" id="putong" type="radio" value="0" checked="checked"/>
+					 <label for="putong" style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">普通视频</span>
+					 </span>
+					 <span class="custom-radio">
+					<input name="videoVRType" id="shangxia" type="radio" value="1" />
+					<label for="shangxia" style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">3D视频上下</span>
+					 </span>
+					 <span class="custom-radio">
+					<input name="videoVRType" id="zuoyou" type="radio" value="2" />
+					<label for="zuoyou" style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">3D视频左右</span>
+					 </span>
+					 <span class="custom-radio">
+					<input name="videoVRType" id="quanjing" type="radio" value="3" />
+					<label for="quanjing" style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">全景视频</span>
+					 </span>
+					 <span class="custom-radio">
+					<input name="videoVRType" id="s_3d" type="radio" value="4" />
+					<label for="s_3d" style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">全景+3D视频</span>
+					<div style="clear:both;"></div>
+				<div class="shuiying sy_jiami">
+					<label>
+						<input type="hidden" id="watermarkID" name="watermarkID" 
+							   value="0">
+						</input>
+					</label>
+				</div>
+				
+				<div class="upload-data-video" id="upload-data-video" style="position: relative;overflow:hidden">
+					<span>已添加<em id="number"></em>个文件，总大小<em id="totalsize"></em>
+					</span>
+					<div class="upload-data-video-title">
+						<li class="upload-video-name">
+							|文件
+						</li>
+						<li class="upload-video-size">
+							|大小
+						</li>
+						<li class="upload-video-state">
+							|状态
+						</li>
+						<li class="upload-video-operation">
+							|操作
+						</li>
+					</div>
+					<div id="vedeo_box">
+					</div>
+				</div>
+			</div>
+		</div>
+	 </div> 	
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">关闭</a>
+    </div> 
+<script>
+$("#myModal").on("hidden.bs.modal", function() {
+    $(this).removeData("bs.modal");
+	location.replace(location.href);
+});
+</script> 

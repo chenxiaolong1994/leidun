@@ -1,0 +1,43 @@
+<admintpl file="header"/>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+           <li><a href="{:U('AdminSection/add',array('cs_id'=>$cs_id))}"  target="_self">视频课程</a></li>
+           <li><a href="{:U('AdminMaterial/add',array('cs_id'=>$cs_id))}"  target="_self">资料</a></li>
+           <li><a href="{:U('Card/AdminCard/add_jihuo_cs',array('cs_id'=>$cs_id,'type_id'=>2))}"  target="_self">激活卡</a></li>
+        </ul>
+  <form name="myform" id="myform" action="{:u('AdminSection/add_post')}" method="post" class="form-horizontal js-ajax-form">
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>课件名称</label>
+           <input type="hidden" name="cs_id" value="{$cs_id}">
+           <input type="text" style="width:400px;" name="sc_name" id="sc_name"   value="" style="color:" class="input input_hd J_title_color" placeholder="课件标题" />       
+       </div>
+       <div class="checkbox" style="margin-bottom:10px;">
+        <label>
+          <input type="checkbox" name="is_free" value="1" >免费课程
+        </label>
+      </div>
+       
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>播放时长</label>
+           <input type='text' name='sc_time' id='sc_time'  value='' style='width:400px;'   class='input' placeholder="课件的播放时长，单位分钟"  >
+       </div>
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>播放次数</label>
+           <input type='text' name='playtimes' id='playtimes'  value='' style='width:400px;;'   class='input' placeholder="针对学员的学习次数，防止账号共享，单位次">       
+       </div>
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>视频地址</label>
+           <input type='text' name='yun_url' id='yun_url' value='' style='width:400px;'   class='input' placeholder="又拍云的视频地址">
+       </div>
+   <div class="form-action" style="margin-top:40px;">
+        <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.all.min.js"></script>
+        <button class="btn btn-primary js-ajax-submit"type="submit">提交</button>
+        <a class="btn" href="{:U('AdminCourse/index')}">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+		
+		<form class="form-horizontal js-ajax-form" action="{:u('AdminCenter/requery_post')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+		          		<table cellpadding="2" cellspacing="2" width="100%">
+							<tbody>
+								<tr>
+									<td width="140">姓名:</td>
+									<td>{$data['t_name']}</td>
+								</tr>
+								<tr>
+									<td>职称证:</td>
+									<td><img src='{$data['zigezheng']}' id='thumb_preview' width='500' height='500' style='cursor:hand' /></td>
+								</tr>
+								<br>
+								
+							</tbody>
+							<input type="hidden" name="id" value="{$data['id']}" />
+							<input type="hidden" name="tid" value="{$data['user_id']}" />
+						</table>
+		          </div>
+		              
+		        </div>
+		    </div>
+		      <div class="form-actions">
+		           <input type="radio" name="radio"  value="1" checked >审核通过
+                   <input type="radio" name="radio"  value="2" >不合格
+		           <button class="btn btn-primary js-ajax-submit" type="submit" style="margin-left:20px;">提交</button>
+		      </div>
+		</form>
+	</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

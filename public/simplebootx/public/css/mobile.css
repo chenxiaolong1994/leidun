@@ -1,0 +1,250 @@
+
+@media only screen and (max-width: 600px) {
+    blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,input,legend,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0}body,button,input,select,textarea{font:12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif}h1,h2,h3,h4,h5,h6{font-size:100%}
+
+    .tx-main{
+        position: relative;
+        width: 100% !important;
+        /* background: #000; */
+    }
+
+    .button-over{
+        display: none;
+    }
+
+    #J_Player{
+        height: 100% !important;
+    }
+
+    #J_Player > div{
+        /*height: 120% !important;*/
+        position: relative;
+        right: 8px;
+    }
+
+    /* 头部标题 */
+    .tx-banner{
+        width: 100%;
+        height: 30px;
+        background: #2eb8aa;
+        display: flex;
+    }
+    .tx-banner .tx-banner-title{
+        height: 30px;
+        line-height: 30px;
+        font-size: 13px;
+        color: #fff;
+        border-left: solid 1px #fff;
+        padding-left: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tx-banner-left >a > img{
+        height: 30px;
+    }
+
+    /* 中间主体 */
+    .tx-main-inner{
+        display: flex;
+        flex-direction: column;
+    }
+    .tx-player-wrapper{
+        width: 100% !important;
+    }
+/*     .tx-player-wrapper .hd{
+        height: 54px;
+        padding-top: 10px;
+        padding-left: 20px;
+        color: #fff;
+        position: relative;
+    } */
+    .tx-player-wrapper .bd{
+        width: 100%;
+        /*height: 300px;*/
+        height: 60%;
+        min-height: 200px;
+    }
+    .tx-player-wrapper .container{
+        background: #000;
+        position: relative;
+    }
+    .tx-player-wrapper .bd .poster{
+        width: 100% !important;
+        height: 300px !important;
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+    }
+    .tx-player-wrapper .container button{
+        height: 30px;
+        width: 100px;
+        background: #fff;
+        margin: 5px 0;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        float: right;
+        margin-right: 10px;
+    }
+    .button-clear{
+        clear: both;
+    }
+
+    /* 讨论、目录 */
+    .tx-sidebar-wrapper.ks-sidebar{
+        width: 100% !important;
+    }
+    .right_bigbox .live_rightbox ul.tab_name{
+        width: 100%;
+        height: 30px;
+        background: #323639;
+        display: flex;
+        justify-content: center;
+        border-bottom: 3px solid #000;
+    }
+    .right_bigbox .live_rightbox ul.tab_name li{
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+    }
+    #tab1.curr , #tab2.curr{
+        border-bottom: 3px solid #34bd74;
+    }
+    .action.J_Fold.unfold{
+        display: none;
+    }
+    /* 讨论界面 */
+    #tab_discuss{
+        width: 100%;
+        height: auto;
+        background: #323639;
+        color: #fff;
+    }
+
+    .discuss_list{
+        overflow-y: scroll;
+    }
+
+    ul#showuserask li{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+    ul#showuserask li > span{
+        display: none;
+    }
+    ul#showuserask li > div.sendbox{
+        box-sizing: border-box;
+        padding: 5px 15px;
+        background: #E4A03C;
+        border-radius: 5px;
+    }
+    ul#showuserask li > div.discuss_img > img{
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        margin-left: 30px;
+    }
+    /* 讨论界面 下输入框 */
+    .right_bigbox > div.discuss{
+        width: 100% !important;
+        background: #f3f2f2;
+        box-sizing: border-box;
+        height: 10% !important;
+        /*padding: 15px 0;*/
+    }
+    .right_bigbox > div.discuss button{
+        width: 35px;
+        height: 30px;
+        line-height: 25px;
+        background: #FF9B00;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        font-size: 12px;
+        margin: 8px 0 0 10px;
+    }
+    /* 章节界面 */
+    #J_OutlineInner{
+        position: relative;
+    }
+    #J_OutlineInner .chapter h4 {
+        overflow: hidden;
+        padding-left: 20px;
+        line-height: 70px;
+        height: 70px;
+        font-size: 18px;
+        color: #333;
+        cursor: default;
+    }
+    #J_OutlineInner .chapter h4 .num {
+        position: absolute;
+        z-index: 2;
+        top: 22px;
+        left: 66px;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border: 3px solid #ccc;
+        text-align: center;
+        font-size: 14px;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+    #J_OutlineInner .chapter li.course {
+        text-decoration: none;
+        position: relative;
+        height: 56px;
+        padding-top: 14px;
+        padding-left: 20px;
+        line-height: 24px;
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+    }
+    #J_OutlineInner .chapter h4 .name {
+        margin-left: 52px;
+    }
+
+    #J_OutlineInner .chapter li.course .info {
+        float: left;
+        width: 88px;
+    }
+    #J_OutlineInner .chapter li.course .detail {
+        margin-left: 88px;
+    }
+    #J_OutlineInner .chapter li.course .progress {
+        position: absolute;
+        z-index: 2;
+        top: 18px;
+        left: 73px;
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        font-size: 0;
+        border: 3px solid #ccc;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+    #J_OutlineInner .bar {
+        position: absolute;
+        z-index: 1;
+        left: 80px;
+        top: 52px;
+        width: 3px;
+        height: 100%;
+        background-color: #ccc;
+    }
+
+}

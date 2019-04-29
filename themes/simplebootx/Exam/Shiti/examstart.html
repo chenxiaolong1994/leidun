@@ -1,0 +1,66 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title" id="myModalLabel">考试信息</h4>
+</div>
+<if condition="$data['state']==1">
+	<div class="modal-body">
+		<div class="form-group">
+			<if condition="$isdo">
+				<div class="col-sm-9 controls">
+					<span class="control-text text-muted">试卷：<a href="{:u('Exam/Shiti/result',array('id'=>$data['id']))}">{$data['title']}</a></span></br>
+					<span class="control-text text-muted">已经考完</span></br>
+					<span class="control-text text-muted">总得分:
+					<if condition="$result['readover'] neq 0">
+					    {$result['score']}分
+					<else/> 
+                        正在批阅中	...			
+					</if> </span></br>
+					<span class="control-text text-muted">批阅教师:{$result['teacherid']|getusername}</span></br>
+				</div>
+			<else/>	
+				<div class="col-sm-9 controls">
+					 <span class="control-text text-muted">试卷：{$data['title']}</span></br>
+					 <if condition="$choicecount gt 0">
+						<span class="control-text text-muted">选择题：{$choicecount}个，每个小题 {$data['single_choice_score']}分，总共：{$choicescore}分</span></br>
+					 </if>
+					 <if condition="$fillcount gt 0">
+						<span class="control-text text-muted">填空题：{$fillcount}个，每个小题 {$data['fill_score']}分，总共：{$fillscore}分</span></br>
+					 </if>
+					 <if condition="$determinecount gt 0">
+						<span class="control-text text-muted">判断题：{$determinecount}个，每个小题 {$data['determine_score']}分，总共：{$determinescore}分</span></br>
+					 </if>
+					 <if condition="$essaycount gt 0">
+						<span class="control-text text-muted">简答题：{$essaycount}个，每个小题 {$data['essay_score']}分，总共：{$essayscore}分</span></br>
+					 </if>
+					 <if condition="$materialcount gt 0">
+						<span class="control-text text-muted">材料题：{$materialcount}个，每个小题 {$data['material_score']}分，总共：{$materialscore}分</span></br>
+					 </if>
+					<span class="control-text text-muted">总分：{$titlescore}分</span></br>
+					<if condition="$data['limitedtime'] neq 0">
+						<span class="control-text text-muted">考试时间：{$data['limitedtime']}分钟</span></br>
+					<else/>   
+						<span class="control-text text-muted">考试时间：无时间限制</span></br>
+					</if>   
+				</div>
+			</if>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		<if condition="$isdo">
+			<a  href="{:u('Exam/Shiti/result',array('id'=>$data['id']))}" class="btn btn-primary">查看考试结果</a>
+		<else/>	
+			<a  href="{:u('Exam/Shiti/dopapers',array('id'=>$data['id']))}" class="btn btn-primary">确定参加考试</a>
+		</if>
+	</div>
+<else/>	
+    <div class="modal-body">
+		<div class="form-group">
+			试卷已经关闭，无法进行考试!
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	</div>
+</if>	
+<tc_include file="Public:scripts" />

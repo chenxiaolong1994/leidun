@@ -1,0 +1,67 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+     <li ><a href="{:U('AdminCenter/index')}"  target="_self">教师列表</a></li>
+     <li class="active"><a href="{:U('AdminCenter/tixian')}"  target="_self">提现管理</a></li>
+	 <li><a href="{:U('AdminCenter/setbili')}"  target="_self">分成比例设置</a></li>
+  </ul>
+  
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="40">编号</th>
+	            <th>姓名</th>
+	            <th width="160">提现金额</th>
+	            <th width="160">提现账户</th>
+	            <th width="100">状态</th>
+	            <th width="160">时间</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"<font color='green'>已经支付</font>","0"=>"<font color='blue'>等待支付</font");
+        		$recommend_status=array("1"=>"已推荐","0"=>"未推荐");
+        	</php>
+        	<foreach name="tixian" item="vo">
+	        	<tr> 
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.name}</span></td>
+    	            <td>{$vo.money}</td>
+		            <td>{$vo.count}</td>
+		            <td>{$status[$vo['state']]}</td>{$status[$vo['teacstate']]}
+		            <td>{$vo.addtime}</td>
+		            <td>
+		                <div class="btn-group">
+		                   <a  class="btn btn-default btn-sm" >操作</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a onclick="zhifu(this,'{$vo['id']}')" href="">已经支付</a></li>
+                           </ul>
+                         </div>
+					</td>
+	          	</tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>   
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+ function zhifu(obj,id){
+	 $.ajax({ url:'{:u('Teacher/AdminCenter/trequery')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+}
+ </script>  
+</body>
+</html>

@@ -1,0 +1,87 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+    <ol class="breadcrumb breadcrumb-o" style="margin-top:-18px">
+		<li class="active"><a href="{:u('Forum/Plate/index')}">论坛主页</a></li>
+		<li><a href="{:u('Forum/Plate/thread',array('id'=>$plate['id']))}">{$plate['name']}</a></li>
+	</ol>
+	<div class="row">
+      <div class="col-md-12 group-main">
+			<div class="panel panel-default panel-heading" style="height:150px;">
+				<div class="panel-heading" style="height:50px;">
+				    <div class="col-md-9">  
+						<h3 class="panel-title ">板块介绍</h3>
+					</div>
+					<div class="col-md-3 "> 
+					<if condition="$usertype==1 or $adminplate==1" >
+						<a href="{:u('Forum/Plate/del',array('id'=>$plate['id']))}" class="btn pull-right js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？"><i class="es-icon es-icon-delete mrs text-xlg"></i>删除板块</a>
+					</if>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="well editor-text">
+						{$plate['brief']}
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="{:u('Forum/Plate/topic',array('id'=>$plate['id']))}">话题</a></li>
+						<if condition="$usertype==1 or $adminplate==1" >
+							<li ><a  href="{:u('Forum/Plate/edit',array('id'=>$plate['id']))}">设置</a></li>
+						</if>
+					</ul>
+					<div class="nav-filter clearfix mbl">
+						<ul class="nav nav-pills nav-pills-sm">
+							<li class="active"><a class="js-nav" href="">全部</a></li>
+						</ul>
+						<ul class="nav nav-pills nav-pills-sm pull-right">
+						    <li class="mbm "><a href="{:u('Forum/Plate/threadcreate',array('plateid'=>$plate['id']))}" class="btn"><i class="es-icon es-icon-comment mrs text-xlg"></i>发表话题</a></li>
+						</ul>
+						
+					</div>
+					<ul class="media-list thread-list">
+						<foreach name="topic" item="vo">
+							<li class="media">
+								<div class="media-left">
+									<span class="reply-num">
+										<strong> {$vo['reply']} </strong> 回复
+									</span>
+								</div>
+								<div class="media-body pts">
+									<div class="media-heading">
+										<a class="title gray-darker" href="{:u('Forum/Plate/topic',array('id'=>$vo['id']))}">{$vo['topictltle']}</a>
+									    <if condition="$vo['istop']==1">
+											<span class="label label-primary">置顶</span>
+										</if>	
+										<if condition="$vo['iscream']==1">
+											<span class="label label-danger">精华</span>
+										</if>
+									</div>
+									<div class="metas">
+										<a class="userImg js-user-card" href="">
+										    <if condition="empty($vo['userpic'])"> 
+											    <img class="avatar-xxs" src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg">
+											<else /> 
+												<img class="avatar-xxs" src="{:sp_get_user_avatar_url($vo['userpic'])}">
+											</if>	
+										</a>
+										<a class="link-dark pls" href="">{$vo['username']}</a>发起了问题
+										<span class="divider">•</span>
+											<if condition="empty($vo['time'])"> 
+												{$vo['addtime']}
+											<else /> 
+												<font color="green">{$vo['time']}</font>
+											</if>	
+									</div>
+								</div>
+							</li>
+						</foreach>		
+					</ul>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

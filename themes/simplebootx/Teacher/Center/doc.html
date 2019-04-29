@@ -1,0 +1,110 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+             <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item active"><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item" ><a href="{:u('user/center/index')}">我的课程</a></li>
+               <li class="list-group-item"  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">
+				<span class="pull-right">
+				    <a class="btn btn-primary btn-sm" href="{:u('Teacher/Center/createcourse')}" ><span class="glyphicon glyphicon-plus"></span>创建课程</a>
+				</span>
+				在教课程
+			</div>
+			<ul class="nav nav-tabs">
+				<li class=""><a href="{:u('teacher/Center/index')}">视频课程</a></li>
+				<li class=""><a href="{:u('teacher/Center/live')}">直播课程</a></li>
+				<li class="active"><a href="{:u('teacher/Center/doc')}">文本课程</a></li>
+			</ul>
+	         <div class="panel-body">
+  		  	      	<div class="wrap js-check-wrap">
+                       <form class="js-ajax-form" action="" method="post">
+                         <table width="100%" class="table table-hover  table-list">
+                          <thead>
+	                        <tr>
+	                          <th>课程名称</th>
+	                          <th width="100">所属分类</th>
+	                          <th width="100">标签</th>
+	                          <th width="80">学员数</th>
+	                          <th width="160"><span>发布时间</span></th>
+	                          <th width="60">状态</th>
+	                          <th width="100">操作</th>
+	                       </tr>
+                         </thead>
+        	             <php>$status=array("1"=>"<font color='green'>已审核</font>","0"=>"未审核");</php>
+        	             <foreach name="courselist" item="vo">
+	        	           <tr> 
+	        	             <td><span>{$vo.cs_name}</span></td>
+	        	             <td>{$vo.coursetype_name}</td>
+    	                     <td>{$vo.labelid|getlablename}</td>
+    	                     <td>{$vo.xueyuaunshu}</td>
+		                     <td>{$vo.cs_addtime}</td>
+		                     <td>{$status[$vo['cs_state']]}<br>{$recommend_status[$vo['is_tuijian']]}</td>
+		                     <td>
+		                          <div class="btn-group">
+		                             <a  class="btn btn-sm btn-default" href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$vo['id']))}">管理</a>
+                                     <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only"></span>                             
+                                     </button>                          
+                                     <ul class="dropdown-menu pull-right" role="menu" >
+                                        <li><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$vo['id']))}" >课时列表</a></li>
+                                        <li><a href="{:u('Teacher/Center/material',array('cs_id'=>$vo['id']))}" >资料列表</a></li>
+                                        <li><a href="{:U('Teacher/Center/xueyuanlist',array('cs_id'=>$vo['id']))}">学员列表</a></li>
+                                        <li><a href="{:U('Teacher/Center/pinglun',array('cs_id'=>$vo['id']))}" >评论列表</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{:U('Teacher/Center/courseedit',array('id' => $vo['id']))}">修改课程</a></li>
+                                        <li><a href="{:U('Teacher/Center/coursedel',array('id' => $vo['id']))}" class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？">删除课程</a></li>
+                                     </ul>                     
+                                 </div>
+					         </td>
+	          	           </tr>
+                        </foreach>
+                      </table>
+                 </form>
+                 <nav class="text-center"><div class="pagination text-center">{$Page}</div></nav>  
+               </div> 		     			   
+		      </div>
+	        </div>
+         </div>
+     </div>
+   </div>
+
+
+<tc_include file="Public:scripts" />          
+<tc_include file="Public:footer" />

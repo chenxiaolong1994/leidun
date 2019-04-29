@@ -1,0 +1,85 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <form class="well form-search" method="post" action="{:u('AdminShiti/shitilist')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">分类：
+         <select class="form-control" name="typeid">
+			<option value="0">--按题型--</option>
+			<option value="1">选择题</option>
+			<option value="2">填空题</option>
+			<option value="3">判断题</option>
+			<option value="4">问答题</option>
+			<option value="5">材料题</option>
+		  </select>
+            &nbsp; &nbsp;关键字：
+        <input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词">
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+    <php>
+		$type=array("1"=>"选择题","2"=>"填空","3"=>"判断","4"=>"解答题","5"=>"材料题");
+	</php>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>题干</th>
+	            <th width="150">类型</th>
+	            <th width="120">操作</th>
+	          </tr>
+        </thead>
+        	
+        	<foreach name="shiti" item="vo">
+	        	<tr> 
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.stem}</span></td>
+		            <td>{$type[$vo['typeid']]}</td>
+		            <td>
+		                <div class="btn-group">
+						   <a  class="btn btn-default btn-sm" href="{:u('AdminShiti/preview',array('id'=>$vo['id'],'type'=>$vo['typeid']))}" data-toggle="modal" data-target="#myModal">预览</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a href="{:u('AdminShiti/delshiti',array('id'=>$vo['id']))}" class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？">删除</a></li>
+                           </ul>
+                          </div>
+					</td>
+	          	</tr>
+          </foreach>
+          <thead>
+	           <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>题干</th>
+	            <th>类型</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$Page}</div>   
+      <div class="form-actions">                       
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminShiti/delshiti')}">删除</button>
+      </div>
+  </form>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

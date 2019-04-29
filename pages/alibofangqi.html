@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <title>Aliplayer功能展示</title>
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.7.2/skins/default/aliplayer-min.css" />
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.7.2/aliplayer-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://player.alicdn.com/aliplayer/presentation/js/aliplayercomponents.min.js"></script>
+</head>
+<body>
+<div id="player-con"></div>
+<script>
+    /* 关闭广告的自定义事件, 可自行修改代码从而满足不同的功能, 参数为视频广告组件本身 */
+    var videoAdClose = function (videoAd) {
+        /* 调用视频广告组件的暂停事件来暂停广告 */
+        videoAd.pauseVideoAd()
+        var result = confirm('确定开通会员关闭广告吗？')
+        if (result) {
+            /* 调用视频广告组件关闭事件来关闭广告 */
+            videoAd.closeVideoAd()
+        } else {
+            /* 调用视频广告组件的播放事件来播放广告 */
+            videoAd.playVideoAd()
+        }
+    }
+    var player = new Aliplayer({
+        id: "player-con",
+        source: "http://file.leidun.site/videos/es_28/1elasticsearch服务讲解与VMware开发环境搭建.flv",
+        width: "100%",
+        height: "500px",
+        autoplay: true,
+        isLive: false,
+        components: [{
+            name: 'VideoADComponent',
+            type: AliPlayerComponent.VideoADComponent,
+            /* 视频广告四个参数 adVideoSource, adLink, adCloseFunction, closeText
+             * adVideoSource {@String 广告视频的视频地址 必须参数}
+             * adLink {@String 广告视频的链接地址 必须参数}
+             * adCloseFunction {@Function 关闭广告的点击事件处理函数, 可选参数, 不传则默认关闭广告视频}
+             * closeText {@String 关闭广告的文字内容, 可选参数, 不传则默认为 '关闭广告'}
+             */
+            args: ['http://img.ksbbs.com/asset/Mon_1703/d30e02a5626c066.mp4', 'https://et.aliyun.com/brain/city', videoAdClose, 'VIP关闭广告']
+        }]
+    }, function (player) {
+        console.log("播放器创建成功");
+    });
+</script>
+</body>
+</html>

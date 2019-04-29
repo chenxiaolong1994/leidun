@@ -1,0 +1,713 @@
+<html class="ks-webkit537 ks-webkit ks-chrome42 ks-chrome">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <style>
+        .li_style {
+            list-style-type: none;
+        }
+    </style>
+
+
+    <meta charset="utf-8">
+    <meta name="keywords" content="{$site_seo_keywords}">
+    <meta name="description" content="{$site_seo_description}"/>
+    <link rel="icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon"
+          media="screen"/>
+
+    <title>{$lession['sc_name']} {$title}</title>
+    <link href="__PUBLIC__/js/artDialog_v6/ui_dialog.css" rel="stylesheet"/>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <script src="__PUBLIC__/js/artDialog_v6/dialogmin.js"></script>
+    <script src="__PUBLIC__/js/ckplayer/ckplayer/ckplayer.js"></script>
+
+
+    <script type="text/javascript">
+        if (window.screen.width < 600) {
+            document.write('<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">')
+            document.write('<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/mobile.css"> ')
+        } else {
+            document.write('<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/play01.css"> ')
+        }
+    </script>
+</head>
+<body>
+<div class="tx-main">
+    <div class="tx-banner mobile-banner">
+        <div class="tx-banner-left">
+            <a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}" id="J_goBack">
+                <img src="__PUBLIC__/simplebootx/public/images/play_1.png" alt="">
+            </a>
+        </div>
+        <div class="tx-banner-title" id="J_CourseTitle">{$lession['csname']}</div>
+        <!-- <div class="tx-banner-logo"><a href="#"><img src="/public/simplebootx/public/images/logo.png" alt=""></a></div> -->
+    </div>
+    <div class="tx-main-inner" id="J_Content">
+
+
+        <div class="tx-player-wrapper ks-player" style="display: block;  transition: 1s;">
+            <div class="hd"></div>
+            <div class="bd">
+                <div class="container" id="J_Container" style="transition: 1s;-webkit-transition: 1s;">
+                    <input type="hidden" id="cs_id" value="{$lession['cs_id']}"></input>
+                    <input type="hidden" id="sc_id" value="{$lession['id']}"></input>
+                    <if condition="$isstart">
+                        <if condition="$live_state eq 3 OR $live_state eq 5">
+                            <if condition="$isbuy==1 or $lession['is_free']==1">
+                                <div class="" id="J_Player"
+                                     style="transition: 1s;-webkit-transition:1s;width:100%; height:85%;">
+
+                                    <script type="text/javascript">
+                                        var nowD = document.getElementById("sc_id").value;
+
+                                        var videoObject = {
+                                            container: '#J_Player', //容器的ID或className
+                                            variable: 'player', //播放函数名称
+                                            poster: '{$lession[pic]}', //封面图片
+                                            config: '', //指定配置函数
+                                            debug: true, //是否开启调试模式
+                                            //flashplayer: true, //强制使用flashplayer
+                                            drag: 'start', //拖动的属性
+
+                                            promptSpot: [ //提示点
+                                                {
+                                                    words: '提示点文字01',
+                                                    time: 30
+                                                },
+                                                {
+                                                    words: '提示点文字02',
+                                                    time: 150
+                                                }
+                                            ],
+                                            video: [
+                                                ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '中文标清', 0],
+                                                ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '中文高清', 0],
+                                                ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '英文高清', 10],
+                                                ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '英文超清', 0]
+                                            ]
+                                        };
+                                        var player = new ckplayer(videoObject);
+
+                                        if (is_mobile()) {
+                                            changeVideo("{$mobile_play_url}");
+                                        } else {
+                                            //changeVideo("{$mobile_play_url}");
+                                            changeVideo("{$pc_play_url}");
+                                        }
+                                        //changeVideo('http://file.leidun.site/videos/es_28/1elasticsearch服务讲解与VMware开发环境搭建.flv');
+
+                                        function changeVideo(videoUrl) {
+                                            if (player == null) {
+                                                return;
+                                            }
+
+                                            var newVideoObject = {
+                                                container: '#J_player', //容器的ID
+                                                variable: 'player',
+                                                autoplay: true, //是否自动播放
+                                                //loaded: 'loadedHandler', //当播放器加载后执行的函数
+                                                video: videoUrl
+                                            }
+                                            //判断是需要重新加载播放器还是直接换新地址
+
+                                            if (player.playerType == 'html5video') {
+                                                if (player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
+                                                    player.removeChild();
+                                                    player = null;
+                                                    player = new ckplayer();
+                                                    player.embed(newVideoObject);
+                                                } else {
+                                                    player.newVideo(newVideoObject);
+                                                }
+                                            } else {
+                                                if (player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
+                                                    player = null;
+                                                    player = new ckplayer();
+                                                    player.embed(newVideoObject);
+                                                } else {
+                                                    player.newVideo(newVideoObject);
+                                                }
+                                            }
+                                        }
+
+
+                                        function is_mobile() {
+                                            var sUserAgent = navigator.userAgent.toLowerCase();
+                                            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+                                            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+                                            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+                                            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+                                            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+                                            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+                                            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+                                            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+                                            if (!(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM)) {
+                                                return false;
+                                            } else {
+                                                return true;
+                                            }
+                                        }
+
+
+                                    </script>
+                                </div>
+                                <button class="button button-over">我学完了</button>
+                                <div class="button-clear"></div>
+                                <else/>
+                                <div class="poster" id="J_Poster" style="transition: 1s;-webkit-transition: 1s;">
+                                    <div class="poster-wrapper-outer">
+                                        <div class="poster-wrapper-inner">
+                                            <div class="icon"></div>
+                                            <div class="detail-wrapper">
+                                                <p>您还没购买此课程，请购买后再观看学习。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </if>
+                            <elseif condition="$vo['live_state']==4"/>
+                            <div class="poster" id="J_Poster" style="transition: 1s;-webkit-transition: 1s;">
+                                <div class="poster-wrapper-outer">
+                                    <div class="poster-wrapper-inner">
+                                        <div class="icon"></div>
+                                        <div class="detail-wrapper">
+                                            <p>直播已经结束，请关注下节课内容或观看录播！</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button button-over">我学完了</button>
+                            <div class="button-clear"></div>
+
+                            <else/>
+                            <div class="poster" id="J_Poster" style="transition: 1s;-webkit-transition: 1s;">
+                                <div class="poster-wrapper-outer">
+                                    <div class="poster-wrapper-inner">
+                                        <div class="icon"></div>
+                                        <div class="detail-wrapper">
+                                            <p>直播已经结束，请关注下节课内容或观看录播！</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button button-over">我学完了</button>
+                            <div class="button-clear"></div>
+                        </if>
+                        <else/>
+                        <div class="poster" id="J_Poster" style="transition: 1s;-webkit-transition: 1s;">
+                            <div class="poster-wrapper-outer">
+                                <div class="poster-wrapper-inner">
+                                    <div class="icon"></div>
+                                    <div class="detail-wrapper">
+                                        <p>直播将于{$lession['live_starttime']}开始，请提前进入教室！</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="button button-over">我学完了</button>
+                        <div class="button-clear"></div>
+                    </if>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tx-sidebar-wrapper ks-sidebar" id="J_SideBar" style="transition: all 1s ease 0s; width: 22%;">
+            <div class="right_bigbox" style="height: 911px;">
+                <div class="live_rightbox" style="">
+                    <ul class="tab_name clearfix">
+                        <li id="tab1" class="curr">讨论</li>
+                        <li id="tab2">目录</li>
+                    </ul>
+
+
+                    <div class="tab_con" id="tab_discuss" style="">
+                        <div class="tabbox" style="display: block;">
+                            <div class="discuss_list" style="">
+                                <ul id="showuserask" class="discuss_listbox">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pannel" style="display:none">
+                        <div class="tx-outline ks-outline" data-guid="2" data-initialized="true" style="height: 100%;">
+                            <div class="outline-inner" id="J_OutlineInner">
+                                <div class="chapter J_Chapter">
+
+                                    <h4>章节<span class="num"></span><span class="name">{$lession['csname']}</span></h4>
+                                    <input type="hidden" id="count" value="{$count}">
+
+
+                                    <ul>
+                                        <volist name="sc_list" id="sub" key="k">
+                                            <if condition="$cid eq $sub['id']">
+                                                <a href="{:u('course/Course/study',array('id'=>$sub['id']))}"
+                                                   title="{$sub['sc_name']} " style='text-decoration:none;color:#333;'>
+                                                    <li class="course J_Course head active">
+                                                        <else/>
+                                                        <a href="{:u('course/Course/study',array('id'=>$sub['id']))}"
+                                                           title="{$sub['sc_name']}"
+                                                           style='text-decoration:none;color:#333;'>
+                                                    <li class="course J_Course head" id="{$sub['id']}"
+                                                        onmousemove="addhover(this.id)" onmouseout="delhover(this.id)">
+                                            </if>
+                                            <div class="info">
+                                                <p>课时 {$k}</p>
+                                                <p class="time">{$sub['sc_time']}</p>
+                                            </div>
+                                            <div class="detail">
+                                                <p>{$sub['sc_name']}</p>
+                                                <div class="resources-wrapper">
+																<span class="resources video">
+																	<span class="icon"></span>
+																</span>
+                                                </div>
+                                            </div>
+                                            <if condition="(isstudy($sub['id']) eq 1) or ($cid eq $sub['id'])">
+                                                <span class="progress done"></span>
+                                                <else/>
+                                                <span class="progress"></span>
+                                            </if>
+
+                                            </li>
+                                            </a>
+                                        </volist>
+                                    </ul>
+
+
+                                </div>
+                                <div class="bar" style="height: 55px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="discuss" style="height:70px;width:300px;">
+                    <input id="sentcontet" class="discussinner" name="content"
+                           style="height:30px;width:80%;margin-top:5px;margin-left:10px;">
+                    <input type="hidden" name="cs_id" class='cs_id' value="{$lession['id']}"></input>
+                    <input type="hidden" name="uid" class='uid' value="{$uid}"></input>
+                    <input type="hidden" name="channel_id" class='channel_id' value="{$channel_id}"></input>
+                    <button type="submit" class="submit tjbutton">发送</button>
+                </div>
+            </div>
+            <div class="action J_Fold unfold">
+                <span class="tx-learn-iconfont unfold-icon"> >> </span>
+                <span class="tx-learn-iconfont fold-icon"> << </span>
+            </div>
+        </div>
+    </div>
+    <div id="extwaiimpotscp" style="display:none" v="{f6bd"
+         f="ZTJZMlltUmpaVFEwTFROa05XRXROR1k0T0MwNVlUWTBMV1V6T1daallqUm1NRGN4TjMwPQ==" q="75df30a1" c="52.09" i="57.90"
+         u="55.21" s="bcba796b" w="false" m="BMe=" vn="0youd"></div>
+</div>
+
+
+<script type="text/javascript">
+    var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+
+    function msg_to_bottom() {
+        var chat_msg_pos = $(".discuss_list");
+        console.log(chat_msg_pos[0].scrollHeight);
+        chat_msg_pos.scrollTop(chat_msg_pos[0].scrollHeight);
+        //alert(chat_msg_pos[0].scrollHeight)
+    }
+
+    $("input").keydown(function (event) {
+        if (event.keyCode == "13") {
+            $('.submit').click();
+        }
+    });
+    $(document).ready(function () {
+
+        $('.submit').click(function () {
+            var name = $('.discussinner').val();
+            var csid = $('.cs_id').val();
+            var channelid = $('.channel_id').val();
+            var uid = $('.uid').val();
+            if (name.length == 0) {
+                alert('请输入聊天内容');
+            } else {
+                $.post("{:U('course/Course/chatsent')}", {
+                    content: name,
+                    cs_id: csid,
+                    channel_id: channelid
+                }, function (msg) {
+
+                    var dat = eval(msg);
+                    $("#showuserask").empty();
+                    $.each(dat, function (neirongIndex, datt) {
+                        if (datt['uid'] == uid) {
+                            var html = "<li class='discussme clearfix'>";
+                        } else {
+                            var html = "<li class='discussme clearfix discussother'>";
+                        }
+                        html += "<span class='userid'>"
+                        if (datt['sender'] == null) {
+                            datt['sender'] = '匿名';
+                        }
+                        html += datt['sender'] + "</span>";
+                        if (datt['pic'] == null) {
+                            html += "<div class='discuss_img'><img src='__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg' class='img-circle pull-left'></div>"
+                        } else {
+                            if (datt.pic.indexOf("http") == -1) {
+
+                                html += "<div class='discuss_img'><img src=" + '/data/upload/avatar/' + datt.pic + " class='img-circle pull-left'></div>"
+
+                            } else {
+                                html += "<div class='discuss_img'><img src=" + datt.pic + " class='img-circle pull-left'></div>"
+
+                            }
+//                            html +="<div class='discuss_img'><img src="+'/data/upload/avatar/'+datt.pic+" class='img-circle pull-left'></div>"
+                        }
+                        html += "<div class='sendbox clearfix'><div class='send'><div class='sendinfo'>"
+                        html += datt['content'] + "</div>";
+                        html += " </div> </div> </li>";
+                        $('#showuserask').append(html);
+                        $('#sentcontet').focus();
+                        msg_to_bottom();
+                    });
+                    $(".discussinner").val('');
+                });
+            }
+        });
+    });
+    var first_fresh = true;
+    function fresh() {
+        var csid = $('.cs_id').val();
+        var channelid = $('.channel_id').val();
+        var uid = $('.uid').val();
+        $.get("{:U('course/Course/fresh')}", {cs_id: csid, channel_id: channelid}, function (mess) {
+            var dat = eval(mess);
+            $("#showuserask").empty();
+            $.each(dat, function (neirongIndex, datt) {
+                console.log(datt);
+                if (datt['uid'] == uid) {
+                    var html = "<li class='discussme clearfix'>";
+                } else {
+                    var html = "<li class='discussme clearfix discussother'>";
+                }
+                html += "<span class='userid'>"
+                if (datt['sender'] == null) {
+                    datt['sender'] = '匿名';
+                }
+                html += datt['sender'] + "</span>";
+                //console.log(html)
+                if (datt['pic'] == null) {
+                    html += "<div class='discuss_img'><img src='__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg' class='img-circle pull-left'></div>"
+                } else {
+
+                    if (datt.pic.indexOf("http") == -1) {
+
+                        html += "<div class='discuss_img'><img src=" + '/data/upload/avatar/' + datt.pic + " class='img-circle pull-left'></div>"
+
+                    } else {
+                        html += "<div class='discuss_img'><img src=" + datt.pic + " class='img-circle pull-left'></div>"
+
+                    }
+//                    html +="<div class='discuss_img'><img src="+'/data/upload/avatar/'+datt.pic+" class='img-circle pull-left'></div>"
+                    // html += "<div class='discuss_img'><img src=" + datt.pic + " class='img-circle pull-left'></div>"
+                }
+                html += "<div class='sendbox clearfix'><div class='send'><div class='sendinfo'>"
+                html += datt['content'] + "</div>";
+                html += " </div> </div> </li>";
+                $('#showuserask').append(html);
+
+            });
+
+            if (first_fresh == true) {
+                msg_to_bottom();
+                first_fresh = false;
+            }
+
+            // msg_to_bottom()
+
+        });
+
+
+    }
+    setInterval("fresh()", 3000);
+
+    //setTimeout("fresh()",3000);
+</script>
+<script type="text/javascript">
+    $('#tab1').click(function () {
+        $("#tab1").addClass('curr');
+        $("#tab2").removeClass('curr');
+        $("#id")
+        $("#tab_discuss").css('display', 'block');
+        $(".discuss").css('display', 'block');
+        $(".tab-pannel").css('display', 'none');
+    });
+    $('#tab2').click(function () {
+        $("#tab2").addClass('curr');
+        $("#tab1").removeClass('curr');
+        $("#tab_discuss").css('display', 'none');
+        $(".discuss").css('display', 'none');
+        $(".tab-pannel").css('display', 'block');
+    });
+</script>
+<script type="text/javascript">
+    $(".button-over").click(function () {
+        var sid = document.getElementById("sc_id").value;
+        var cid = document.getElementById("cs_id").value;
+        var d = dialog({
+            title: '正在提交...',
+            content: '恭喜你，已经学完本节课程！'
+
+        });
+        d.width(300)
+        d.showModal();
+        setTimeout(function () {
+            d.close().remove();
+        }, 2000);
+        $.ajax({
+                    url: "{:u('Course/Course/studied')}",
+                    type: "post", data: {
+                        'sc_id': sid, 'cs_id': cid
+                    }
+                    ,
+                    dataType: 'json',
+                    success: function (data) {
+                    }
+                }
+        )
+        ;
+    });
+</script>
+<script type="text/javascript">
+
+    $(function () {
+
+
+        function is_mobile() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            if (!(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        $('#sentcontet').focus();
+        var count = $("#count").val();
+        var width = $(window).width() + 17;
+        var height = $(window).height();
+
+        if (is_mobile()) {
+            height = height - 900;
+            $(".right_bigbox").css("height", "");
+        } else {
+            $(".right_bigbox").css("height", height - 50);
+        }
+
+        $(".bar").css("height", 20 + count * 70 - 35);
+        $(".tx-main").css("width", width);
+        $(".tx-main").css("height", height);
+        $(".J_Container").css("height", height - 130);
+        $(".J_Container").css("width", width - 320);
+        $(".player").css("height", height - 160);
+        $(".player").css("width", width - 340);
+        $("#player_iframe").css("height", height - 160);
+        $("#player_iframe").css("width", width - 340);
+        $("#J_tab").css("height", height - 130);
+        $(".poster").css("height", height - 160);
+        $(".poster").css("width", width - 340);
+        $(".ks-player").css("width", "78%");
+        $(".ks-sidebar").css("width", "22%");
+
+        $(".discuss_list").css("height", height - 160);
+
+        var onf = true;
+        $('.J_Fold').click(function () {
+            if (onf) {
+                $(".ks-player").css("width", width);
+                $(".ks-sidebar").css("width", 0);
+                $(".player").css("width", width - 40);
+                $("#player_iframe").css("width", width - 40);
+                $(".poster").css("width", width - 40);
+                $(".J_Fold").removeClass("unfold");
+                onf = false;
+            } else {
+                //$(".ks-player").css("width",width-300);
+                $(".ks-player").css("width", '78%');
+                $(".player").css("width", width - 340);
+                $("#player_iframe").css("width", width - 340);
+                $(".poster").css("width", width - 340);
+                //$(".ks-sidebar").css("width",300);
+                $(".ks-sidebar").css("width", '22%');
+                $(".J_Fold").addClass("unfold");
+                onf = true;
+            }
+        });
+    })
+    function addhover(id) {
+        $("#" + id).addClass('hover');
+        $("#" + id + "a").css('color', 'red');
+    }
+    function delhover(id) {
+        $("#" + id).removeClass('hover');
+    }
+
+</script>
+
+<audio controls="controls" style="display: none;"></audio>
+
+
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>

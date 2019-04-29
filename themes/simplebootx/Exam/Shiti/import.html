@@ -1,0 +1,115 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>			   
+			   <li class="list-group-item active"><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>			   
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>			   
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+         <div class="col-md-9">           
+			<div class="panel panel-default panel-col">				
+				<div class="panel-heading">	题目批量导入/导出</div>				
+				<div class="panel-body">					
+					<ul class="nav nav-tabs">					  
+						<li class="active"><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入</a></li>					  
+						<li class=""><a href="{:u('Exam/Shiti/export',array('cs_id'=>$cs_id))}">导出</a></li>					
+				    </ul><br>
+					<style>  
+					.testpaper-question-seq-wrap {    width: 80px;  }  
+					.testpaper-question-choices {    margin-left: 90px;  }  
+					.testpaper-question-result {    margin-left: 90px;  }  
+					.testpaper-question-analysis {    margin-left: 90px;      }
+					</style>				 
+					<form class="form-horizontal js-ajax-form" name="myform" id="myform" method="post" action="{:u('Exam/Shiti/importpost')}" enctype="multipart/form-data">					
+						<div class="form-group">					
+							<div class="col-md-2 control-label">						
+								<label for="type">导入模板</label>					  
+							</div>					
+							<div class="col-md-8 controls">						
+								<div class="radio">						
+									<label>	<a class="pull-right" href="/data/moban.zip" target="_blank">下载试题导入模板</a>	</label>						
+								</div>					
+							</div>					
+						</div>
+						<div class="form-group">					
+							<div class="col-md-2 control-label">						
+								<label for="type">教师 I D </label>					  
+							</div>					
+							<div class="col-md-8 controls">						
+								<div class="radio">						
+									<label>{$uid}</label>						
+								</div>					
+							</div>					
+						</div>	
+						<div class="form-group">					
+							<div class="col-md-2 control-label">						
+								<label for="type">课程 I D </label>					  
+							</div>					
+							<div class="col-md-8 controls">						
+								<div class="radio">						
+									<label>{$cs_id}</label>						
+								</div>					
+							</div>					
+						</div>	
+						<div class="form-group">					
+							<div class="col-md-2 control-label">				
+								<label for="file">选择文件</label>					 
+							</div>					
+							<div class="col-md-8 controls">			
+								<input type="file" id="import-file" name="importFile">				
+							</div>				
+						</div>				
+						<div class="form-group">		
+							<div class="col-md-2 control-label">	
+								<label for="type">导入范围</label>			
+							</div>					
+							<div class="col-md-8 controls">	
+								<select class="form-control width-input width-input-large" id="import-target" name="target" data-role="target">			
+									<option value="course-45">本课程</option>					
+								</select>					
+							</div>					
+						</div>		
+						<input type="hidden" name="cs_id" value="{$cs_id}">
+						<div class="form-group">			
+							<div class="col-md-offset-2 col-md-8 controls">					
+								<button class="btn btn-fat btn-primary js-ajax-submit"  id="question-import-btn" type="submit">导入</button>					 
+							</div>				
+						</div>				
+					</form>				
+				</div>			
+			</div>      
+		</div>	
+     </div>
+  </div>
+<tc_include file="Public:scripts" /> 
+<tc_include file="Public:footer" />

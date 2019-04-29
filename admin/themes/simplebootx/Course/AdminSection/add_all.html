@@ -1,0 +1,19 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+	  <ul class="nav nav-tabs">
+	     <li><a href="{:U('AdminSection/index')}">所有课时</a></li>
+         <li class="active"><a href="{:U('AdminSection/add',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">批量导入</a></li>
+      </ul>
+	 
+	</div>
+	<script type="text/javascript" src="__ROOT__/public/js/common.js"></script>
+	<script type="text/javascript">
+function formReset()
+  {
+  document.getElementById("myform").reset()
+  }
+</script>
+	
+</body>
+</html>

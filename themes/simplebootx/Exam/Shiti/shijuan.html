@@ -1,0 +1,154 @@
+<tc_include file="Public:header" />
+<link rel="stylesheet" media="screen" href="./themes/simplebootx/public/css/fileinput.css" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+			   <li class="list-group-item "><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>
+			   <li class="list-group-item active"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">
+			<div class="panel panel-default panel-col">
+				<div class="panel-heading">
+					<a href="{:u('Exam/Shiti/createshijuan',array('cs_id'=>$cs_id))}" class="btn btn-info btn-sm pull-right mls"><span class="glyphicon glyphicon-plus"></span>创建试卷</a>
+						试卷管理
+				</div>
+				<div class="panel-body " id="quiz-table-container">
+					<form class="form-inline well well-sm js-ajax-form" action="{:u('Exam/Shiti/delshijuan')}" method="post">
+					  <table class="table table-striped table-hover" id="quiz-table">
+						<thead>
+							<tr>
+							  <th></th>
+							  <th width="38%">名称</th>
+							  <th>状态</th>
+							  <th>时间限制</th>
+							  <th>时间</th>
+							  <th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="list">
+						   <foreach name="data" item="vo">
+								<tr data-role='item'>
+									<td><input value="{$vo['id']}" type="checkbox" name="ids[]"></td>
+									<td><a href="{:u('Exam/Shiti/paperspriew',array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></td>
+									<td><if condition="$vo['state'] eq 1">
+									        <font color="green">已发布</font>		
+										<else/>
+                                            <font color="red">已关闭</font>										
+										</if>
+									 </td>	
+									<td><if condition="$vo['limitedtime'] eq 0">
+										   时间不限{$vo['limitedtime']}
+										<else/>
+										  {$vo['limitedtime']}分钟
+										</if>
+									</td>
+									<td><span class="text-muted text-sm">{$vo['addtime']}</span></td>
+									<td>
+										<div class="btn-group">
+										  <a href="{:u('Exam/Shiti/paperspriew',array('id'=>$vo['id']))}" class="btn btn-default btn-sm" target="_blank">预览</a>
+										  <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+											<ul class="dropdown-menu pull-right">
+												<if condition="$vo['state'] eq 1">
+													<li><a class="close-testpaper" id="{$vo['id']}" href="javascript:" title="关闭试卷"> 关闭试卷</a></li>
+												<else/>
+												    <li><a class="open-testpaper" id="{$vo['id']}" href="javascript:" title="开启试卷"> 开启试卷</a></li>
+												</if>
+											     <li><a class="" href="{:u('Exam/Shiti/renyuan',array('id'=>$vo['id']))}" data-toggle="modal" data-target="#myModal">成绩单</a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>                            
+							</foreach>             	
+						</tbody>
+					  </table>
+					  <div>
+						 <label class="checkbox-inline"><input type="checkbox"  id="all" > 全选</label>
+						 <button class="btn btn-default btn-sm mlm js-ajax-submit" type="submit">删除</button>
+					  </div>
+				  </form>
+				</div>
+			</div>
+		</div>
+     </div>
+   </div>
+ 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+         <div class="modal-body">
+		 
+         </div>
+      </div>
+   </div>
+</div>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+</script>
+<script type="text/javascript"> 
+$("#all").click(function(){    
+    if(this.checked){ 
+        $("#list :checkbox").attr("checked", true);   
+    }else{    
+        $("#list :checkbox").attr("checked", false); 
+    }    
+});
+$(".close-testpaper").click(function(){ 
+   var id=$(this).attr('id');
+   $.ajax({ url:'{:u('Exam/Shiti/closetestpaper')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+
+}); 
+$(".open-testpaper").click(function(){ 
+   var id=$(this).attr('id');
+   $.ajax({ url:'{:u('Exam/Shiti/opentestpaper')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+
+}); 
+</script>       
+<tc_include file="Public:footer" />

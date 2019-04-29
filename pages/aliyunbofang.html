@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <title>Aliplayer在线配置</title>
+    <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.7.2/skins/default/aliplayer-min.css" />
+    <script type="text/javascript" charset="utf-8" src="//g.alicdn.com/de/prismplayer/2.7.2/aliplayer-min.js"></script>
+</head>
+<body>
+<div class="prism-player" id="player-con"></div>
+<script>
+    var player = new Aliplayer({
+                "id": "player-con",
+                "source": "http://videolive.leidun.site/098f6bcd4621d373cade4e832627b4f6/ab31cbcdd775da162cac3febbba01ad6.flv?auth_key=1544343212-0-0-c7fb30ebf89e39903233d67b1792bafe",
+                "width": "100%",
+                "height": "500px",
+                "autoplay": true,
+                "isLive": true,
+                "rePlay": false,
+                "showBuffer": true,
+                "snapshot": false,
+                "showBarTime": 5000,
+                "useFlashPrism": true,
+                "skinLayout": [
+                    {
+                        "name": "bigPlayButton",
+                        "align": "blabs",
+                        "x": 30,
+                        "y": 80
+                    },
+                    {
+                        "name": "errorDisplay",
+                        "align": "tlabs",
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "name": "infoDisplay"
+                    },
+                    {
+                        "name": "controlBar",
+                        "align": "blabs",
+                        "x": 0,
+                        "y": 0,
+                        "children": [
+                            {
+                                "name": "liveDisplay",
+                                "align": "tlabs",
+                                "x": 15,
+                                "y": 25
+                            },
+                            {
+                                "name": "fullScreenButton",
+                                "align": "tr",
+                                "x": 10,
+                                "y": 25
+                            },
+                            {
+                                "name": "volume",
+                                "align": "tr",
+                                "x": 10,
+                                "y": 25
+                            }
+                        ]
+                    }
+                ]
+            }, function (player) {
+                console.log("播放器创建了。");
+            }
+    );
+</script>
+</body>

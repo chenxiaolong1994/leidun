@@ -1,0 +1,29 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+           <li class="active"><a href="{:U('Course/AdminMaterial/add',array('cs_id'=>$cs_id))}"  target="_self">添加资料</a></li>
+           <li><a href="{:U('Card/AdminCard/add_jihuo_cs',array('cs_id'=>$cs_id,'type_id'=>2))}"  target="_self">激活卡</a></li>
+        </ul>
+		<form class="form-horizontal js-ajax-form" name="myform" id="myform" action="{:u('AdminMaterial/add_post')}" method="post">
+			<div class="form-group" style="margin-bottom:10px;">
+             <label>资料名称</label>
+              <input type="hidden" name="cs_id" value="{$cs_id}">
+              <input type="hidden" name="sc_id" value="{$sc_id}">
+              <input type="text" style="width:400px;" name="name" id="name"  style="color:" class="input input_hd J_title_color" placeholder="资料名称" />       
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>下载地址</label>
+              <input type="text" style="width:400px;" name="url" id="url" value="{$_SESSION["access_url"]}" style="color:" class="input input_hd J_title_color" placeholder="下载地址" />       
+              <a href="javascript:open_iframe_dialog('{:u('Course/AdminSection/add_video',array('cs_id'=>$cs_id))}','上传资料')" style="height:20px;width:50px;margin-left:10px;"><img src="__ROOT__/public/images/tv-expandable.gif"></a>
+            </div>
+            <div class="form-action" style="margin-top:40px;">
+              <button class="btn btn-primary js-ajax-submit"type="submit">提交</button>
+              <a class="btn" href="{:U('AdminCourse/index')}">返回</a>
+            </div>
+		</form>
+	</div>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	
+</body>
+</html>

@@ -1,0 +1,102 @@
+<tc_include file="Public:header" />
+<link rel="stylesheet" media="screen" href="./themes/simplebootx/public/css/fileinput.css" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item active"><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item " ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item"  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+         <div class="col-md-9">
+			<div class="panel panel-default panel-col">
+				<div class="panel-heading">
+					试卷批阅
+				</div>
+				<div class="panel-body">
+					<ul class="nav nav-tabs">
+						<li class=""><a href="{:u('teacher/Center/checkpaper')}">未批阅</a></li>
+						<li class="active"><a href="{:u('teacher/Center/checkpaperfinished')}">已批阅</a></li>
+					</ul>
+					<br>
+					<table class="table table-striped table-hover">
+						<tbody>
+							<foreach name="papers" item="vo">
+								<tr>
+									<td>
+										<a href="{:u('Exam/Shiti/result',array('id'=>$vo['papersid']))}" target="_blank">{$vo['title']|default="<font color='blue'>课程已删除</font>"}</a>
+										
+									</td>
+									<td style="width:25%">
+										<a class="link-dark " href="#">{$vo['userid']|getusername}</a><br>
+										<small class="text-muted">{$vo['addtime']}交卷</small>
+									</td>
+									<td style="width:15%">
+										<a class="link-dark " href="#">成绩</a><br>
+										<small class="text-muted">{$vo['score']}分</small>
+									</td>
+									<td style="width:10%">
+										<a href="{:u('Exam/Shiti/result',array('id'=>$vo['papersid']))}" class="btn btn-default btn-sm pull-right" target="_blank">查看</a>
+			
+									</td>
+								</tr>
+							</foreach> 
+						</tbody>
+					</table>
+					 <nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+				</div>
+			</div>
+		</div>
+     </div>
+  </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+</script>   
+<tc_include file="Public:footer" />

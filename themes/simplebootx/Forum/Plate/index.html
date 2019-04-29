@@ -1,0 +1,107 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+	<ol class="breadcrumb breadcrumb-o" style="margin-top:-18px">
+		<li class="active"><a href="{:u('Forum/Plate/index')}">论坛主页</a></li>
+	</ol>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+			
+				<div class="panel-heading" style="height:50px;">
+				    <div class="col-md-9">  
+						<h3 class="panel-title ">论坛板块</h3>
+					</div>
+					<div class="col-md-3 "> 
+					<if condition="$usertype==1 or $adminplate==1" >
+						<a href="{:u('Forum/Plate/add')}" class="btn pull-right"><i class="es-icon es-icon-addcircle mrs text-xlg"></i>创建板块</a>
+					</if>
+					</div>
+				</div>
+				
+				
+				<div class="panel-body">
+					<div class="row media-group-list">
+						<foreach name="plate" item="vo">
+							<div class="media media-group col-md-4 col-sm-4">
+								<div class="media-left">
+									<a href="{:u('Forum/Plate/thread',array('id'=>$vo['id']))}" title="{$vo['name']}">
+									    <if condition="empty($vo['pic'])">
+											<img src='__PUBLIC__/images/group.png' id='thumb_preview'  alt="{vo['name']}" class="avatar-square-md"  /></a>
+										<else/>
+											<img src='{$vo['pic']}' id='thumb_preview'  alt="{vo['name']}" class="avatar-square-md"  /></a>
+										</if>
+									</a>
+								</div>
+								<div class="media-body">
+									<div class="title">
+										<a class="gray-darker" href="{:u('Forum/Plate/thread',array('id'=>$vo['id']))}" title="{$vo['name']}">
+											{$vo['name']}
+										</a>
+									</div>
+									<div class="metas">
+										<span><i class="es-icon es-icon-textsms"></i>{$vo['count']}</span>
+									</div>
+								</div>
+							</div>
+						</foreach>		
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><h3 class="panel-title">最近话题</h3></div>
+				<div class="panel-body">
+					<ul class="media-list thread-list">
+					    <foreach name="topic" item="vo">
+							<li class="media">
+								<div class="media-left">
+									<span class="reply-num">
+										<strong>{$vo['reply']}</strong> 回复
+									</span>
+								</div>
+								<div class="media-body pts">
+									<div class="media-heading ">
+										<a class="title gray-darker" href="{:u('Forum/Plate/topic',array('id'=>$vo['id']))}">{$vo['topictltle']}</a>
+										<if condition="$vo['istop']==1">
+											<span class="label label-primary">置顶</span>
+										</if>	
+										<if condition="$vo['iscream']==1">
+											<span class="label label-danger">精华</span>
+										</if>
+										
+									</div>
+
+									<div class="metas">
+										<a class="userImg js-user-card" href="">
+											<if condition="empty($vo['userpic'])"> 
+											    <img class="avatar-xxs" src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg">
+											<else /> 
+												<img class="avatar-xxs" src="{:sp_get_user_avatar_url($vo['userpic'])}">
+											</if>	
+										</a>
+
+										<a class="link-dark pls" href="">{$vo['username']}</a>
+												发起了问题
+											<span class="divider">•</span>
+											    <if condition="empty($vo['time'])"> 
+													{$vo['addtime']}
+												<else /> 
+													<font color="green">{$vo['time']}</font>
+												</if>	
+											<span class="divider">•</span>
+												<a class="gray-darker" href="{:u('Forum/Plate/thread',array('id'=>$vo['plateid']))}" title="{$vo['thread']}" >{$vo['thread']}</a>
+									</div>
+								</div>
+							</li>
+						</foreach>
+					</ul>       
+				</div>
+				 <nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<tc_include file="Public:scripts" />          
+<tc_include file="Public:footer" />
+        

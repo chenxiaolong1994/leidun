@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="64209858-36f2-42c5-863f-dc0c67bf2643" name="yixuetang" url="http://120.24.175.148">
+        <fileTransfer host="120.24.175.148" port="22" accessType="SFTP" password="df92df9ddf99df9bdf9ddf92df9d" username="chenxiaolong">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

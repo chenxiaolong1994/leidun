@@ -1,0 +1,55 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap jj">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="{:U('AdminLabel/index')}">标签列表</a></li>
+     <li><a href="{:U('AdminLabel/add')}">添加标签</a></li>
+  </ul>
+  <div class="common-form">
+    <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>标签名称</th>
+	            <th>所属分类</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	
+        	<foreach name="label" item="vo">
+	        	<tr> 
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><input name="listorders[{$vo.id}]" class="input input-order"  type='text' size='3' value='{$vo.listorder}'></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td>{$vo.labelname}</td>
+                    <td>{$vo.typename}
+    	            </td>
+		            <td><a class="js-ajax-delete" href="{:u('AdminLabel/delete',array('id'=>$vo['id']))}">删除</a> 
+		            </td>                              
+	          	</tr>
+          </foreach>
+          <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>课程名称</th>
+	            <th>所属分类</th>           
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$Page}</div>   
+      <div class="form-actions">                       
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminLabel/listorders')}">排序</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminLabel/delete')}">删除</button>
+      </div>
+  </form>
+  </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

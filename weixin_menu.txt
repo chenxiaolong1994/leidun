@@ -1,0 +1,96 @@
+{
+    "menu": {
+        "button": [
+            {
+                "name": "推荐课程",
+                "sub_button": [
+
+                    {
+                        "type": "view",
+                        "name": "就业班介绍",
+                        "url": "https://mp.weixin.qq.com/s/DaUoN-g2OUEIPeCRtHyhaA",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "大数据精品课",
+                        "url": "https://ke.qq.com/course/343598",
+                        "sub_button": [ ]
+                    },
+                    {
+                         "type": "view",
+                         "name": "微博大数据可视化",
+                          "url": "http://www.leidun.site/courseinfo/31.html",
+                          "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "张三IT教程",
+                        "url": "http://think.eduplus.site/Index/m_index.html",
+                        "sub_button": [ ]
+                    }
+                ]
+            },
+            {
+                "name": "免费课程",
+                "sub_button": [
+
+                    {
+                        "type": "view",
+                        "name": "电商数据仓库",
+                        "url": "http://www.leidun.site/courseinfo/25.html",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "MapReduce",
+                        "url": "http://www.leidun.site/courseinfo/15.html",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "Kafka",
+                        "url": "http://www.leidun.site/courseinfo/19.html",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "SparkSql编程",
+                        "url": "http://www.leidun.site/courseinfo/21.html",
+                        "sub_button": [ ]
+                    }
+                ]
+            },
+            {
+                "name": "特殊服务",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "招聘求职",
+                        "url": "http://www.leidun.site/Forum/Plate/thread/id/2.html",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "资料分享",
+                        "url": "http://www.leidun.site/Forum/Plate/thread/id/3.html",
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view",
+                        "name": "阅读时刻",
+                        "url": "http://www.leidun.site/article.html",
+                        "sub_button": [ ]
+                    },
+
+                    {
+                        "type": "view",
+                        "name": "关于我们",
+                        "url": "http://www.leidun.site/about.html",
+                        "sub_button": [ ]
+                    }
+                ]
+            }
+        ]
+    }
+}

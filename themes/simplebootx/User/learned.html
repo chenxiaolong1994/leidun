@@ -1,0 +1,91 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+       <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item active" ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item"  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <!--<li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          -->
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+           </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">我的课程</div>
+	          <div class="panel-body">
+  		  	    <ul class="nav nav-pills">
+	              <li><a href="{:u('user/center/index')}">学习中</a></li>
+	              <li  class="active"><a href="{:u('user/center/learned')}">已学完</a></li>
+	              <li><a href="{:u('user/center/collect')}">收藏</a></li>
+                </ul>	  	 		     
+                <ul class="course-grids">
+                   <volist name="learning" id="sub" key="key">
+                    <if condition="$sub['bili']==100">
+                      <li class="course-grid " style="border:1px solid #F0F0F0";>
+                       <a href="{:u('course/Course/courseinfo',array('id'=>$sub['course_id']))}" class="grid-body">
+                         <if condition="empty($sub['cs_picture'])">
+							<img class="img-responsive thumb" src="__PUBLIC__/images/course.png">
+						<else /> 
+							<img src="{$sub['cs_picture']}"  class="img-responsive thumb">
+						</if> 
+                         <span class="title" style="height:30px;line-height:30px;;margin-bottom:5px;">{$sub['cs_name']}</span>
+                            <div class="learn-status" style="height:50px;">
+                               <div class="progress" style="margin-bottom:15px;">
+                                 <div class="progress-bar progress-bar-success" style="width:{$sub['bili']}%;">{$sub['bili']}%</div>
+                               </div>
+							</div>   
+                        </a>
+                       </li>
+                      <else/>                     
+                      </if>
+                    </volist> 
+                   </ul>
+				    <if condition="empty($learning)">
+				     <div class="empty">暂无学完的课程</div>
+				   </if>
+				   <nav class="text-center"><div class="pagination text-center">{$Page}</div></nav>
+		        </div>
+	         </div>
+          </div>
+     </div>
+   </div>
+   <style>
+.classroomPicture{
+  width: 24px;
+  height: 24px;
+}
+</style>    
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

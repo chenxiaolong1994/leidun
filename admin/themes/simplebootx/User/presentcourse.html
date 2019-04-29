@@ -1,0 +1,46 @@
+<admintpl file="header" />
+</head>
+<body  class="J_scroll_fixed">
+    <form class="js-ajax-form" method="post">
+		<div class="wrap js-check-wrap">
+		
+					<select name="ty_id" id='first' class="form-control" style="width:225px;float:left;margin-right:17px;">{$taxonomys}</select>
+					<span id="second"> <select id="label" class="form-control" style="width:225px;" name="courseid"> </select> </span> 
+					<input type="hidden" name="userid" value="{$id}"></input>
+			
+		</div>
+		<div class="wrap">
+		     <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('User/Indexadmin/presentcourse_post')}">赠送</button>
+		</div>
+	</form>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script language="javascript"> 
+		$(function(){ 
+		$("#second").hide(); 
+		$("#first").change(function(){  
+		var parentId=$("#first").val(); 
+		if(null!= parentId && ""!=parentId){
+			
+		$.getJSON("{:U('Course/Course/selectcourse')}",{id:parentId},function(myJSON){
+		var options=""; 
+		if(myJSON.length>0){ 
+		options+="<option value='-1'>==请选择课程==</option>"; 
+		for(var i=0;i<myJSON.length;i++){ 
+		options+="<option value="+myJSON[i].id+">"+myJSON[i].cs_name+"</option>"; 
+		} 
+		$("#label").html(options); 
+		$("#second").show(); 
+		} 
+		else if(myJSON.length<=0){ 
+		$("#second").hide(); 
+		} 
+		}); 
+		} 
+		else{ 
+		$("#second").hide(); 
+		} 
+		}); 
+		}); 
+	</script>
+</body>
+</html>

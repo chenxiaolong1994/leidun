@@ -1,0 +1,432 @@
+<tc_include file="Public:header" />   
+ <section class="course-detail-header before">
+   <div class="container">
+     <ol class="breadcrumb breadcrumb-o">
+        <li><a href="/">首页</a></li>
+        <li><a href="{:u('course/Course/coursecenter',array('typeid'=>$course_type['term_id']))}">{$course_type.name}</a></li>
+        <li class="active">{$cs_data.cs_name}</li>
+     </ol>
+     <div class="es-section clearfix">
+       <div class="course-img">
+	   <if condition="$cs_data['course_type']=='live'">
+			<span class="tags">
+			   <span class="tag-live"></span>
+			</span>
+		  <else /> 
+			 <if condition="$cs_data['isover']==0">
+				<span class="tags"><span class="tag-serialing"></span></span>
+			 <else />
+			    <span class="tags">
+					<span class="tag-finished"></span>
+				</span>	
+			 </if>
+		</if>
+         <if condition="empty($cs_data['cs_picture'])">
+		   <img class="img-responsive " src="__PUBLIC__/images/course.png">
+		 <else /> 
+		   <img class="img-responsive" src="{$cs_data.cs_picture}" alt="{$cs_data.cs_name}">
+		 </if> 
+         <div class="tags"></div>
+       </div>
+       <div class="course-info">
+         <h2 class="title">{$cs_data.cs_name}
+           <span class="es-qrcode top">
+             <i class="es-icon es-icon-qrcode"></i>
+           </span>
+         </h2>
+         <div class="subtitle"></div>
+         <div class="metas">
+            <div class="score"> 
+              <i class="es-icon es-icon-star"></i>
+              <i class="es-icon es-icon-star"></i>
+              <i class="es-icon es-icon-star"></i>
+              <i class="es-icon es-icon-star"></i>
+              <i class="es-icon es-icon-star"></i>
+              <span>({$buynum}人)</span>
+           </div>
+           <if condition="$cs_data.cs_price eq 0">
+             <p class="discount-price"><label>价格</label>
+               <span class="course-price-widget">
+                  <span class="price">
+                     <span class="text-success">免费</span>  
+                  </span>
+               </span>        
+             </p>
+			 
+				<if condition="$cs_data.course_type == 'normal'">
+					<div class="discount-price" style="margin-top:10px;"> 
+						<label>课程有效期 {$cs_data.youxiaoqi}天</label>
+					</div>
+				<else/> 
+				   
+    			</if> 	
+			  
+           <else/>
+             <p class="discount-price"><label>价格</label>
+               <span class="course-price-widget"><span class="price">{$cs_data.cs_price}元 </span></span>
+             </p>
+				<if condition="$cs_data.course_type == 'normal'">
+					<div class="discount-price" style="margin-top:10px;"> 
+						<label>课程有效期 {$cs_data.youxiaoqi}天</label>
+					</div>
+				<else/> 
+				   
+    			</if> 	
+           </if>  
+         </div>
+       </div>
+       <div class="course-operation clearfix">
+         <ul class="course-data clearfix active">
+          <if condition="!empty($favorite)">
+           <li id="unfavorite-btn" data-url=""><a onclick="favorite(this,'{$favorite['id']}','{$favorite['object_id']}')" href="#" class="color-primary">
+              <p><i class="es-icon es-icon-bookmark"></i></p>
+              <p>已收藏</p></a>
+          </li>
+           <else/>
+             <li id="favorite-btn" data-url="" ><a onclick="favorite(this,'{$favorite['id']}','{$cs_data.id}')"  href="#">
+               <p><i class="es-icon es-icon-bookmarkoutline"></i></p>
+               <p>收藏</p></a>
+            </li>
+          </if> 
+          <div class="student-num hidden-xs" style="border-bottom:0px;">
+            <i class="es-icon es-icon-people"></i>{$buynum}人
+          </div>          
+         </li>
+        </ul></br>
+        <div class="bdsharebuttonbox"><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqf" data-cmd="tqf" title="分享到腾讯朋友"></a></div></br>
+        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","bdxc","kaixin001","tqf","tieba","douban","bdhome","sqq","ibaidu","huaban","hx","isohu","ty"],"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+         
+      <div class="buy">
+      <if condition="!session('?user')">
+          <a class="btn btn-primary btn-lg" href="{:u('User/Login/index')}">购买课程</a>
+      <else/>
+        <if condition="$isbuy eq 0">
+           <if condition="($isfree eq 0) OR ($is_mem eq 2)">
+             <a class="btn btn-primary btn-lg" href="{:u('course/Course/buycourse',array('id'=>$cs_data['id']))}"  data-toggle="modal" data-target="#myModal" >加入课程</a>
+           <else/>
+             <a class="btn btn-primary btn-lg" href="{:u('course/Course/buycourse',array('id'=>$cs_data['id']))}"  data-toggle="modal" data-target="#myModal">购买课程</a>
+           </if>
+        <else/> 
+            <a class="btn btn-primary btn-lg">已经购买</a>
+        </if>
+      </if>	
+      </div>
+    </div>
+   </div>
+  </div>
+ </section>
+ <div id="content-container" class="container">    
+    <div class="course-detail row">
+       <div class="col-lg-9 col-md-8  course-detail-main">
+          <section class="es-section">
+            <div class="nav-btn-tab">
+              <ul class="nav nav-tabs" id="myTab">
+                 <li role="presentation"   class="active"><a href="#list" data-toggle="tab">课时列表</a></li>
+                 <li role="presentation"><a href="#gaikuang" data-toggle="tab">课程概览</a></li>
+                 <li role="presentation" ><a href="#pingjia" data-toggle="tab">课程评价</a></li>
+
+                 <if condition="$isbuy eq 1">
+                   <li role="presentation" ><a href="#ziliao" data-toggle="tab">资料下载</a></li>
+				   <li role="presentation" ><a  href="#exam" data-toggle="tab">在线考试</a></li>
+                 <else/>
+                 </if>   
+              </ul>
+            </div>    
+            <div id="myTabContent" class="tab-content" >
+               <div class="course-detail-content tab-pane fade in active"  id="list">
+                  <div class="course-detail-content">
+                     <div class="es-piece">
+                        <div class="piece-body">
+                           <ul class="period-list" id="course-item-list">
+						   
+                             <if condition="($isbuy eq 1) OR ($u_id eq $cs_data['cs_teacher'])"> 
+							    <volist name="sc_list" id="vo">
+                                       <li class="chapter clearfix">
+                                         <i class="es-icon es-icon-toc"></i>
+                                         <span class="title">{$vo['sc_name']}</span>
+                                         <span class="period-show"><i class="es-icon es-icon-remove"></i></span>
+                                       </li>
+                                      <volist name="vo['voo']" id="sub"> 
+                                        <li class="period lesson-item">
+                                          <a href="{:u('course/Course/study',array('id'=>$sub['id']))}" title="{$sub['sc_name']}">
+                                            <if condition="isstudy($sub['id']) eq 1">
+                                              <i class="es-icon es-icon-done1 color-primary status-icon"></i>
+                                            <else/>
+                                              <i class="es-icon es-icon-undone status-icon"></i>
+                                            </if>
+                                            <if condition="$sub['is_free'] eq 1">
+		                                       <span class="label label-success mrm">免费</span>
+		                                    <else/>
+		                                    </if> 
+                                            <span class="title">{$sub['sc_name']}</span>
+                                            <span class="date" title="视频时长{$vo['sc_time']}">{$sub['sc_time']}</span>
+                                            <span class="course-type"><i class="es-icon es-icon-videoclass" data-toggle="tooltip" data-placement="top" title="视频课程"></i></span>
+                                           </a>
+                                         </li>
+                                       </volist> 
+                                </volist> 
+                                 
+                              <else/>
+                                  <volist name="sc_list" id="vo">                                  
+                                      <li class="chapter clearfix">
+                                        <i class="es-icon es-icon-toc"></i>
+                                        <span class="title">{$vo['sc_name']}</span>
+                                        <span class="period-show"><i class="es-icon es-icon-remove"></i></span>
+                                      </li>
+                                    <volist name="vo['voo']" id="sub">
+                                      <li class="period lesson-item">
+                                        <if condition="$sub['is_free'] eq 1">
+                                           <a href="{:u('course/Course/study',array('id'=>$sub['id']))}"  title="{$sub['sc_name']}">
+                                           <i class="es-icon es-icon-undone status-icon"></i>
+		                                   <span class="label label-success mrm">免费</span>
+		                                <else/>
+		                                  <a href="{:u('course/Course/buycourse',array('id'=>$cs_data['id']))}" data-toggle="modal" data-target="#myModal" data-backdrop="static" title="{$sub['sc_name']}">
+                                            <i class="es-icon es-icon-undone status-icon"></i>
+		                                 </if> 
+                                            <span class="title">{$sub['sc_name']}</span>
+                                            <span class="date" title="视频时长{$vo['sc_time']}">{$sub['sc_time']}</span>
+                                            <span class="course-type"><i class="es-icon es-icon-videoclass" data-toggle="tooltip" data-placement="top" title="视频课程"></i></span>
+                                          </a>
+                                       </li>
+                                      </volist>  
+                                  </volist> 
+                               </if> 
+                             </ul>                           
+                          </div>
+                     </div>
+                  </div>
+              </div>
+              <div class="course-detail-content tab-pane fade"  id="gaikuang">
+		        <div class="es-piece">
+                  <div class="piece-header">课程介绍</div>
+                    <div class="piece-body p-lg clearfix">
+                     {$cs_data['cs_brief']}
+                    </div>
+                </div>
+                <div class="es-piece" >
+                 <div class="piece-header"> 课程目标</div>
+                   <div class="piece-body">
+                      <ul class="piece-body-list">
+                          <li>
+                              <i class="es-icon es-icon-chevronright"></i> {$cs_data['mubiao']}
+                          </li>
+                      </ul>
+                  </div>
+               </div>
+               <div class="es-piece">
+                 <div class="piece-header">适合人群</div>
+                 <div class="piece-body">
+                   <ul class="piece-body-list">
+                      <li><i class="es-icon es-icon-chevronright"></i>{$cs_data['shihe']}</li>
+                   </ul>
+                  </div>
+                </div>       
+             </div>
+             <div class="course-detail-content tab-pane fadee"  id="pingjia">
+                <if condition="$ispinglun eq 1">
+                   <div class="clearfix" id="reping" style="display:block;">
+                     <button class="btn btn-primary btn-sm pull-right js-show-review-form"  onclick="show()">重新评价</button>
+                   </div>
+                   <form id="review-form" class="js-ajax-form" method="post" action="{:u('course/Course/pinglunadd')}" style="display:none">
+                     <div class="form-group controls">
+                       <textarea class="form-control" rows="6"  name="pinglun"></textarea>
+                     </div>
+                     <div class="form-group clearfix">
+                       <button type="submit" class="btn btn-primary pull-right  js-ajax-submit">保存</button>
+                     </div>
+                     <input type="hidden" name="c_id" value="{$c_id}">
+                   </form>
+                    <div class="js-reviews">
+                     <div class="media media-evaluate">
+                      <div style="float:left;margin-right:10px;">
+                        <a class=" js-user-card" href="">
+                          <if condition="empty($avatar)">
+				            <img src=".__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="avatar-sm"/>
+			              <else/>
+				            <img src="{:sp_get_user_avatar_url($avatar)}?t={:time()}" class="avatar-sm"/>
+			              </if>     
+                        </a>
+                      </div>
+                      <div class="media-body">
+                         <div class="title">    <a class="link-dark " href="">{$user_nicename}</a>{$mypinglun['addtime']}</div>
+                         
+                         <div class="content">
+                           <div class="short-content">{$mypinglun['pinglun']}</div>
+                         </div>
+                         
+                      </div>
+                     </div> 
+				   </div>
+                  </if>
+                  <if condition="($ispinglun eq 0) and($isbuy eq 1)">
+                     <form class="form-horizontal js-ajax-form" id="review-form" method="post" action="{:u('course/Course/pinglunadd')}" style="display:block;">
+                      <div class="form-group controls">
+                         <textarea class="form-control" rows="6" placeholder="请留下您宝贵的意见，谢谢！" name="pinglun"></textarea>
+                      </div>
+                      <div class="form-group clearfix">
+                         <button type="submit" class="btn btn-primary pull-right js-ajax-submit">保存</button>
+                      </div>
+                      <input type="hidden" name="c_id" value="{$c_id}">
+                    </form>
+                  </if>
+                 
+                 <volist name="pinglunlist" id="vo">
+                  <if condition="!empty($vo['pinglun'])">
+                   <div class="js-reviews">
+                     <div class="media media-evaluate">
+                      <div style="float:left;margin-right:10px;">
+                        <a class=" js-user-card" href="">
+                          <if condition="empty($avatar)">
+				            <img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="avatar-sm"/>
+			              <else/>
+				            <img src="{:sp_get_user_avatar_url($vo['avatar'])}?t={:time()}" class="avatar-sm"/>
+			              </if>     
+                        </a>
+                      </div>
+                      <div class="media-body">
+                         <div class="title">    <a class="link-dark " href="">{$vo['user_nicename']}</a>{$vo['addtime']}</div>
+                         
+                         <div class="content">
+                           <div class="short-content">{$vo['pinglun']}</div>
+                         </div>
+                         
+                      </div>
+                     </div> 
+				   </div>
+                  </if> 
+                 </volist>
+               </div> 
+               <div class="course-detail-content tab-pane fadee"  id="ziliao">
+                 <ul class="period-list" id="course-item-list">
+                    <volist name="material" id="vo">
+                       <li class="period lesson-item">
+                          <a href="{:u('course/Course/downmaterial',array('id'=>$vo['id']))}" title="{$vo['name']}">
+                            <i class="es-icon es-icon-undone status-icon"></i>
+		                    <span class="title">{$vo['name']}</span>
+                            <span class="course-type"><i class="es-icon es-icon-lesson" data-toggle="tooltip" data-placement="top" title="下载资料"></i></span>
+                          </a>
+                      </li>
+                    </volist>  
+                 </ul>   
+               </div> 
+			   <div class="course-detail-content tab-pane fadee"  id="exam">
+                 <ul class="period-list" id="course-item-list">
+                    <volist name="exam" id="vo">
+                       <li class="period lesson-item">
+						  <a  href="{:u('Exam/Shiti/examstart',array('id'=>$vo['id']))}"  data-toggle="modal" data-target="#exammodel">
+                             <if condition="$vo[ustate]==1">
+							    <i class="es-icon es-icon-done1 color-primary status-icon"></i>
+		                     <else/>
+							    <i class="es-icon es-icon-undone status-icon"></i>
+							 </if>    
+		                    <span class="title">{$vo['title']}</span>
+                            <span class="course-type"><i class="es-icon es-icon-lesson" data-toggle="tooltip" data-placement="top" title="在线考试"></i></span>
+                          </a>
+                      </li>
+                    </volist>  
+                 </ul>   
+               </div>  
+             </div>
+         </section>
+        </div>
+        <div class="col-lg-3 col-md-4  course-sidebar">
+          <div class="panel panel-default">
+             <div class="panel-heading">
+                <h3 class="panel-title"> <i class="es-icon es-icon-assignmentind"></i>授课教师</h3>
+             </div>
+             <div class="panel-body">
+                <div class="media media-default">
+                  <div class="media-left">
+                      <if condition="empty($teacher['avatar'])">
+				          <a href="{:u('Teacher/Teacher/about',array('id'=>$teacher['id']))}"><img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="avatar-sm"/></a>
+			            <else/>
+				          <a href="{:u('Teacher/Teacher/about',array('id'=>$teacher['id']))}"><img src="{:sp_get_user_avatar_url($teacher['avatar'])}" class="avatar-sm"/></a>
+			         </if>        
+                  </div>
+                 <div class="media-body">
+                      <div class="title"><a class="link-dark link-light" href="{:u('Teacher/Teacher/about',array('id'=>$teacher['id']))}">{$teacher['user_nicename']}</a></div>
+                      <div class="content">{$teacher['signature']}</div>
+                 </div>
+                </div>
+            </div>
+        </div>
+       <div class="panel panel-default">
+           <div class="panel-heading">
+              <h3 class="panel-title"><i class="es-icon es-icon-personadd"></i>最新学员</h3>
+           </div>
+          <div class="panel-body">
+             <ul class="user-avatar-list clearfix">
+               <volist name="newstud" id="vo">
+                 <li>
+                    <if condition="empty($vo['avatar'])">
+				        <img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="avatar-sm"  title="{$vo['user_nicename']}">
+			          <else/>
+				        <img src="{:sp_get_user_avatar_url($vo['avatar'])}" class="avatar-sm"  title="{$vo['user_nicename']}">
+			        </if>       
+               </volist> 
+             </ul>
+          </div>
+        </div>
+        <div class="panel panel-default student-dynamic">
+          <div class="panel-heading"><h3 class="panel-title"><i class="es-icon es-icon-recentactors"></i>学员动态</h3></div>
+          <div class="panel-body">
+            <volist name="dongtai" id="vo">
+             <div class="media media-number-o color-gray text-overflow">
+                <a class="link-dark " title="{$vo['username']}">{$vo['username']}&nbsp&nbsp&nbsp</a>加入课程&nbsp&nbsp&nbsp<a  class="link-dark" href="{:u('course/Course/courseinfo',array('id'=>$vo['courseid']))}" title="{$vo['coursename']}">{$vo['coursename']|default="<font color='blue'>课程已删除</font>"}</a>
+             </div>
+            </volist> 
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+   
+ <script>
+ function show()
+ {
+   document.getElementById('review-form').style.display='block';
+   document.getElementById('reping').style.display='none';
+ }
+ </script>
+ <script>
+ function favorite(obj,id,cid){
+ 
+	 $.ajax({ url:'{:u('course/Course/favorite')}', 
+		 type:"post", data:{'id':id,'cid':cid}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); },
+			  }
+	  );
+}
+ </script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<div class="modal fade" id="exammodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="modal-content">
+			 <div class="modal-body">
+			  
+			 </div>
+      </div>
+    </div>
+</div>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />
+<script>
+$("#myModal").on("hidden.bs.modal", function() {
+    $(this).removeData("bs.modal");
+});
+ </script>
+  <script>
+$("#exammodel").on("hidden.bs.modal", function() {
+    $(this).removeData("bs.modal");
+});
+ </script>

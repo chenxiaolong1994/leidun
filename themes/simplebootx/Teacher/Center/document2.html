@@ -1,0 +1,83 @@
+  <script src="__PUBLIC__/simplebootx/public/js/fileinput.js"></script>
+ <style>
+.neirong{
+	text-align:center;
+	height:300px;
+	line-height:300px;
+	font-size: 16pt;
+}
+</style>
+ <div class="modal-header">
+   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+   <h4 class="modal-title" id="myModalLabel">选择文件</h4>
+ </div>
+ <input type="hidden" name="domain" id="domain" value={$domain} />
+<div class="tab-pane active" id="video-chooser-disk-pane">
+        <div class="file-browser-list-container" id="domain" style="height:350px;">
+		  <ul class="file-browser-list" id="parent">
+		   <foreach name="result" item="vo" key="k">
+			 <li class="file-browser-item clearfix" data-index="0">
+			    <span class="filename">{$vo['name']}</span>
+				<span class="yun_url hidden">{$vo['access_url']}</span>
+				<span class="filesize">{$vo['filesize']}MB</span>
+				<span class="filetime">{$vo['ctime']}</span>
+		     </li>
+		    </foreach>
+		   </ul>
+		</div>
+</div>
+<script>
+var ul = document.getElementById('parent');
+var lis = ul.getElementsByTagName('li');
+for(var i=0;i<lis.length;i++){
+    lis[i].onclick = function(){
+	
+		var span=this.getElementsByTagName("span");
+		 document.getElementById("name").value =GetFileNameNoExt(span[0].innerHTML);
+		 document.getElementById("url").value =span[1].innerHTML;
+		
+       $(function () 
+	      { 
+		   $('#myModal').modal('hide');
+		  }
+		);
+	}
+    
+}
+ function setCookie(name,value){
+　　var exp = new Date();
+　　exp.setTime(exp.getTime() + 1*1*60*1000);//有效期1小时
+　　document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+ function strturn(str) {
+            if (str != "") {
+            var str1 = "";
+            for (var i = str.length - 1; i >= 0; i--) {
+                str1 += str.charAt(i);
+            }
+            return (str1);
+            }
+        }
+ function GetFileExt(filepath) {
+            if (filepath != "") {
+                var pos = "." + filepath.replace(/.+\./, "");
+                return pos;
+            }
+  }
+ function GetFileNameNoExt(filepath) {
+            var pos = strturn(GetFileExt(filepath));
+            var file = strturn(filepath);
+            var pos1 =strturn( file.replace(pos, ""));
+            var pos2 = GetFileName(pos1);
+            return pos2;
+
+  }	
+ function GetFileName(filepath) {
+            if (filepath != "") {
+                var names = filepath.split("\\");
+                return names[names.length - 1];
+            }
+ }  
+</script>
+
+

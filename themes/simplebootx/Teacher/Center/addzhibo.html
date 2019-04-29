@@ -1,0 +1,29 @@
+ <form id="user-profile-form" class="form-horizontal js-ajax-form" method="post" action="{:U('Teacher/Center/addzhibo_post')}">
+	<div class="form-group" style="margin-top:30px;">
+	  <label class="col-md-2 control-label">频道名称</label>
+		<div class="col-md-7 controls">
+		     
+			<input type="text" name="cs_name" class="form-control" value="{$name}">
+		    <input type="hidden" name="cs_id" class="form-control" value="{$id}">
+		</div>
+	</div>		
+	<div class="form-group" style="margin-top:30px;">	
+	  <label class="col-md-2 control-label">开启直播录制</label>
+	     <div class="col-md-7 controls">
+			<span class="custom-radio" >
+				<input name="isRecord"  type="radio" value="1" checked="checked"/>
+				<label  style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">是</span>
+			</span>
+			<span class="custom-radio">
+				<input name="isRecord" type="radio" value="0" />
+				<label  style="width:auto;line-height:13px;padding-right:20px;padding-left:20px">否</span>
+			</span>
+		</div></br>
+	</div>				      
+	
+	<div class="modal-footer">
+        <button class="btn btn-success js-ajax-submit">创建</button>
+        <a href="#" class="btn" data-dismiss="modal">关闭</a>
+   </div>
+</form>
+<tc_include file="Public:scripts" /> 

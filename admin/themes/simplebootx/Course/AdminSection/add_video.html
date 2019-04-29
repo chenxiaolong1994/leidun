@@ -1,0 +1,50 @@
+<admintpl file="header" />
+<style>
+.a-upload {
+    padding: 4px 10px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1
+}
+
+.a-upload  input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}
+</style>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="js-ajax-form" name="myform" id="myform" enctype="multipart/form-data"  action="{:u('AdminSection/cos_upload')}" method="post">
+			<a href="javascript:;" class="a-upload" ><input type="file"  name="upvideo" id="">点击这里上传文件</a>
+			<input type="hidden" name="MAX_FILE_SIZE" value="500000">
+            <div class="form-action" style="margin-top:20px;">
+              <button class="btn btn_submit js-ajax-submit"type="submit">上传</button>
+            </div>
+		</form>
+	</div>
+   
+	<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+</html>

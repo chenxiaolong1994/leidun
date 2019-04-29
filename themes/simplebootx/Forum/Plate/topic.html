@@ -1,0 +1,238 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+    <ol class="breadcrumb breadcrumb-o" style="margin-top:-18px">
+		<li class="active"><a href="{:u('Forum/Plate/index')}">论坛主页</a></li>
+		<li><a href="{:u('Forum/Plate/thread',array('id'=>$topic['plateid']))}">{$topic['plate']}</a></li>
+	</ol>
+	<div class="row">
+		<div class="col-md-12 group-main">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						{$topic['topictltle']}
+					</h3>
+				</div>
+				<div class="panel-body clearfix" id="post-action">
+					<div class="well well-sm text-sm color-gray clearfix" style="line-height:20px">
+						发表于 {$topic['addtime']}
+						<span class="mll">{$topic['hits']} 次查看</span>
+						<span class="mll">话题作者：{$topic['user']}</span>
+					</div>
+					{$topic['topiccontent']}
+
+					<div class="mtl text-right">
+					    <if condition="$userid==$topic['userid'] or $usertype==1  or $adminplate==1" >
+							<a class="btn btn-default btn-sm mrm" href="{:u('Forum/Plate/edittopic',array('id'=>$topic['id']))}"> 编辑</a>
+							<a class="btn btn-default btn-sm mrm js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？" href="{:u('Forum/Plate/deltopic',array('id'=>$topic['id']))}">删除</a>
+						</if>
+						<if condition="$usertype==1 or $adminplate==1" >
+							<if condition="$topic['iscream']==1">
+								<a id="elite"  title="取消加精" class="btn btn-default btn-sm mrm" onclick="iscream(this,'{$topic['id']}')" href="javascript:">取消加精</a>
+							<else />
+								<a id="elite"  title="加精" class="btn btn-default btn-sm mrm" onclick="iscream(this,'{$topic['id']}')" href="javascript:">加精</a>
+							</if>
+							<if condition="$topic['istop']==1">
+								<a id="stick"  title="取消置顶" class="btn btn-default btn-sm mrm" onclick="istop(this,'{$topic['id']}')" href="javascript:">取消置顶</a>
+							<else />
+								<a id="stick"  title="置顶" class="btn btn-default btn-sm mrm" onclick="istop(this,'{$topic['id']}')" href="javascript:">置顶</a>
+							</if>
+						</if>
+					</div>
+				</div>
+			</div>
+			<if condition="!empty($reply)">
+			<div class="panel panel-default group-post-list">
+				<div class="panel-heading">
+					{$count}回复
+				</div>
+				<div class="panel-body">
+					<ul class="media-list">
+						<foreach name="reply" item="vo" key="k">
+							<li id="post-4" class="media"  >
+								<a href="" class="pull-left">
+									<if condition="empty($vo['userpic'])"> 
+										<img class="avatar-sm" src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg">
+									<else /> 
+										<img class="avatar-sm" src="{:sp_get_user_avatar_url($vo['userpic'])}">
+									</if>	
+								</a>
+								<div class="media-body">
+									<div class="metas">
+										<span class="floor">
+										  {$k+1}楼
+										</span>
+										<strong>    
+											<a class="link-dark " href="">{$vo['username']}</a>
+										</strong>
+										<span class="divider mhm">•</span>
+										<span >
+											<if condition="empty($vo['time'])"> 
+												{$vo['addtime']}
+											<else /> 
+												<font color="green">{$vo['time']}</font>
+											</if>
+										</span>
+									</div>
+									<div class="content editor-text">
+										{$vo['content']}
+									</div>
+									<div class="actions text-right">
+										<if condition="!empty($vo['voo'])"> 
+											<div class="reply-24">
+												<div class="well">
+													<div class="reply-post-list-24">
+														<ul class="media-list">
+															<volist name="vo['voo']" id="sub" key="k"> 
+																<li class="media" >
+																	<a href="" class="pull-left">
+																		<if condition="getuserpic($sub['userid'])"> 
+																			<img class="avatar-sm" src="{:sp_get_user_avatar_url(getuserpic($sub['userid']))}">
+																		<else /> 
+																			 <img class="avatar-sm" src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg">
+																		</if>	
+																	</a>
+																	<div class="media-body" style="text-align:left;">
+																		<div class="metas">
+																			<strong> <a class="link-dark " href="">{$sub['userid']|getusername}</a></strong>
+																			<span class="mhm">{$sub['addtime']}</span>
+																		</div>
+																		<div class="content">{$sub['content']}</div>
+																	</div>
+																	<if condition="$userid==$vo['userid'] or $usertype==1 or $adminplate==1">
+																		<a class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？" href="{:u('Forum/Plate/delpraisal',array('id'=>$sub['id']))}">删除</a>
+																   </if>
+																</li>
+															</volist>
+															<div class="actions">
+																
+																<a href="javascript:" class="reply" style="margin-left:20px;"id="{$vo['id']}">回复</a>
+																<a href="javascript:" class="unreply" style="display:none; margin-left:20px;" id="{$vo['id']+10000}" >收起</a>
+																<span class="text-muted">&nbsp;</sapn>
+																<div class="reply-{$vo['id']}">
+																	<div id="reply-{$vo['id']}" style="display:none;">
+																		<form  name="myform" id="myform" class="thread-post-reply-form reply-4 js-ajax-form"  action="{:u('Forum/Plate/praisal')}" method="post">
+																			<div class="form-group">
+																				<label class="control-label hide" for="reply-content-4">回复内容</label>
+																				<div class="controls">
+																					<textarea  class="form-control" name="content"></textarea>
+																				</div>
+																			</div>
+																			<input type="hidden" name="replyid" value={$vo['id']} />
+																			<input type="hidden" name="topicid" value={$vo['topicid']} />
+																			<div class="form-group">
+																				<button type="submit" class="reply-btn btn btn-xs btn-primary pull-right js-ajax-submit" style="margin-top:-10px;">发表</button>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</ul>
+													</div>
+												</div>
+											</div>	
+										<else /> 	
+											<if condition="$userid==$vo['userid'] or $usertype==1 or $adminplate==1">
+												<a class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？" href="{:u('Forum/Plate/delreply',array('id'=>$vo['id']))}">删除</a>
+											</if>
+											<a href="javascript:" class="reply" style="margin-left:20px;"id="{$vo['id']}">回复</a>
+											<a href="javascript:" class="unreply" style="display:none; margin-left:20px;" id="{$vo['id']+10000}" >收起</a>
+										</if>		
+									</div>
+									<div class="reply-{$vo['id']}">
+										<div id="reply-{$vo['id']}" style="display:none;">
+											<form  name="myform" id="myform" class="thread-post-reply-form reply-4 js-ajax-form"  action="{:u('Forum/Plate/praisal')}" method="post">
+												<div class="form-group">
+													<label class="control-label hide" for="reply-content-4">回复内容</label>
+													<div class="controls">
+														<textarea  class="form-control" name="content"></textarea>
+													</div>
+												</div>
+												<input type="hidden" name="replyid" value={$vo['id']} />
+												<input type="hidden" name="topicid" value={$vo['topicid']} />
+												<div class="form-group">
+													<button type="submit" class="reply-btn btn btn-xs btn-primary pull-right js-ajax-submit" style="margin-top:-10px;">发表</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</li>
+						</foreach>
+					</ul>
+				</div>
+				<nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+			</div>
+			</if>
+			<div class="panel panel-default">
+				<div class="panel-heading">发表回复</div>
+				<div class="panel-body">
+					<form name="myform" id="myform" action="{:u('Forum/Plate/reply')}" method="post" class="form-horizontal js-ajax-form">
+						<div class="form-group">
+							<label class="control-label hide" for="post_content">回复内容</label>
+							<div class="controls">
+                              <td><script id="content" type="text/plain"  name="content"></script></td> 
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="controls">
+							     <input type="hidden" name="topicid" value={$topic['id']} />
+								 <button  type="submit" class="btn btn-primary js-ajax-submit pull-right">提交 </button>
+							</div>
+						 </div>
+					</form>
+				</div>
+		  </div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript"> 
+    editorcontent = new baidu.editor.ui.Editor({initialFrameHeight:150});
+	editorcontent.render( 'content' );
+	try{editorcontent.sync();}catch(err){};
+	
+</script> 
+<tc_include file="Public:scripts" />l
+<script>
+ function iscream(obj,id){
+	 $.ajax({ url:'{:u('Forum/Plate/iscream')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+	}
+ </script>
+<script>
+ function istop(obj,id){
+	 $.ajax({ url:'{:u('Forum/Plate/istop')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+	}
+</script> 
+<script type="text/javascript">
+ $(".reply").click(function(){ 
+   var id=$(this).attr('id');
+   var id2=parseInt(id)+parseInt(10000);
+    $("#"+id).css('display','none');
+    $("#"+id2).css('display','');
+	$("#reply-"+id).css('display','block'); 
+}); 
+$(".unreply").click(function(){ 
+   var id=$(this).attr('id');
+   var id2=id-10000;
+    $("#"+id).css('display','none');
+    $("#"+id2).css('display','');
+	$("#reply-"+id2).css('display','none'); 
+}); 
+</script>
+<tc_include file="Public:footer" />
+        

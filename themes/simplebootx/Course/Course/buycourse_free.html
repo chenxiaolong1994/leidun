@@ -1,0 +1,24 @@
+<form id="course-buy-form " class="form-horizontal js-ajax-form" method="post" action="{:u('course/Course/pay_free',array('id'=>$cs_data['id']))}">
+<div class="modal-body">
+ 
+    <div class="form-group">
+      <div class="col-sm-3 control-label">课程名称</div>
+      <div class="col-sm-9 controls">
+      	<span class="control-text text-muted">《{$cs_data['cs_name']}》</span>
+        <input type="hidden" name="lessonId" value=""/>
+      </div>
+    </div>
+
+    <if condition="$ismem eq 2">
+        <div class="alert alert-info">尊敬的金牌会员，您好！此课程您无需购买，可直接加入学习。</div>
+
+        <else /> <div class="alert alert-info">此课程为免费课程，无需购买，可直接加入学习。</div>
+
+    </if>
+
+</div>
+<div class="modal-footer">                    
+  <button id="join-course-btn" class="btn btn-primary js-ajax-submit"  type="submit" >加入学习</button>
+</div>
+</form>  
+<tc_include file="Public:scripts" />        

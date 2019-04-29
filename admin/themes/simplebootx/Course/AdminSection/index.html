@@ -1,0 +1,148 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  
+  <form class="well form-search" method="post" action="{:u('AdminSection/index')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">所属课程：
+        <select class="select_2" name="cs_id">
+          	<option value='0' >全部</option>
+          	<foreach name="course" item="vo">
+          	   <option value='{$vo['id']}' >{$vo.cs_name}</option>
+          	</foreach>
+        </select>
+        &nbsp;&nbsp;时间：
+        <input type="text" name="start_time" class="input length_2 js-date" value="{$formget.start_time|default=''}" style="width:80px;" autocomplete="off">-<input type="text" class="input length_2 js-date" name="end_time" value="{$formget.end_time}" style="width:80px;" autocomplete="off">
+        
+        <!-- 
+        <select class="select_2" name="searchtype" style="width:70px;">
+          <option value='0' >标题</option>
+        </select>
+         -->
+               &nbsp; &nbsp;关键字：
+        <input type="text" class="input length_2" name="keyword" style="width:200px;" value="{$formget.keyword}" placeholder="请输入关键字...">
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>课时名称</th>
+	            <th>所属课程</th>
+	            <th width="80">免费</th>
+	            <th width="60">状态</th>
+	            <th width="130"><span>发布时间</span></th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"已审核","0"=>"未审核");
+        		$free_status=array("1"=>"免费","0"=>"不免费");
+        	</php>
+        	<foreach name="sectionlist" item="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><input name="listorders[{$vo.id}]" class="input input-order"  type='text' size='3' value='{$vo.listorder}'></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.sc_name}</span></td>
+                    <td>{$vo.cs_name} </td>
+		            <td>{$free_status[$vo['is_free']]}</td>
+		            <td>{$status[$vo['state']]}</td>
+		            <td>{$vo.addtime}</td>
+		            <td>
+		                <div class="btn-group">
+                           <button type="button" class="btn btn-default">管理</button>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a href="javascript:open_iframe_dialog('{:u('course/AdminSection/edit',array('id'=>$vo['id']))}','编辑课时')">编辑</a></li>
+                             <li><a href="{:U('AdminSection/delete',array('id' => $vo['id']))}" class="js-ajax-delete" >删除</a></li>
+                           </ul>
+                          </div>
+					</td>
+	          	</tr>
+          </foreach>
+          <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>课时名称</th>
+	            <th>所属课程</th>
+	            <th width="80">免费</th>
+	            <th width="60">状态</th>
+	            <th width="130"><span>发布时间</span></th>
+	            <th width="100">操作</th>
+	          </tr>
+          </thead>
+          </table>
+          <div class="pagination">{$page}</div>
+     <div class="form-actions">
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/listorders')}">排序</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/check',array('check'=>1))}" data-subcheck="true" >审核</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/check',array('uncheck'=>1))}" data-subcheck="true" >取消审核</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/isfree',array('free'=>1))}" data-subcheck="true" >免费</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/isfree',array('unfree'=>1))}" data-subcheck="true" >取消免费</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminSection/delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+        <button class="btn btn-primary" type="button" id="J_Content_remove">批量移动</button>
+    </div>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminCourse/index',$formget)}";
+    }
+}
+setInterval(function(){
+	refersh_window();
+}, 2000);
+$(function () {
+	setCookie("refersh_time",0);
+    Wind.use('ajaxForm','artDialog','iframeTools', function () {
+        //批量移动
+        $('#J_Content_remove').click(function (e) {
+            var str = 0;
+            var id = tag = '';
+            $("input[name='ids[]']").each(function () {
+                if ($(this).attr('checked')) {
+                    str = 1;
+                    id += tag + $(this).val();
+                    tag = ',';
+                }
+            });
+            if (str == 0) {
+				art.dialog.through({
+					id:'error',
+					icon: 'error',
+					content: '您没有勾选信息，无法进行操作！',
+					cancelVal: '关闭',
+					cancel: true
+				});
+                return false;
+            }
+            var $this = $(this);
+            art.dialog.open("__ROOT__/index.php?g=course&m=AdminSection&a=move&ids=" + id, {
+                title: "批量移动",
+                width:"80%"
+            });
+        });
+    });
+});
+
+
+</script>
+</body>
+</html>

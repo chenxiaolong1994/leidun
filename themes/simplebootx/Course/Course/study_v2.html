@@ -1,0 +1,530 @@
+<html class="ks-webkit537 ks-webkit ks-chrome42 ks-chrome">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="keywords" content="{$site_seo_keywords}"/>
+    <meta name="description" content="{$site_seo_description}"/>
+    <title>{$name} {$site_name} {$site_seo_title}</title>
+    <link rel="icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="__PUBLIC__/simplebootx/public/images/favicon.ico" type="image/x-icon"
+          media="screen"/>
+    <link href="__PUBLIC__/js/artDialog_v6/ui_dialog.css" rel="stylesheet"/>
+
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <script src="__PUBLIC__/js/artDialog_v6/dialogmin.js"></script>
+    <script src="__PUBLIC__/js/ckplayer/ckplayer/ckplayer.js"></script>
+
+
+    <script type="text/javascript">
+        if (window.screen.width < 600) {
+            document.write('<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">')
+            document.write('<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/mobile_study.css"> ')
+        } else {
+            document.write('<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/play01.css"> ')
+        }
+    </script>
+</head>
+<body>
+<div class="tx-main" style="overflow: hidden; width: 1922px; ">
+    <div class="tx-banner">
+        <div class="tx-banner-left"><a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}"
+                                       id="J_goBack">
+            <img src="__PUBLIC__/simplebootx/public/images/play_1.png" alt=""> </a></div>
+        <div class="tx-banner-title" id="J_CourseTitle">{$lession['csname']}</div>
+        <!-- <div class="tx-banner-logo"><a href="#"><img src="/public/simplebootx/public/images/logo.png" alt=""></a></div> -->
+    </div>
+    <div class="tx-main-inner" id="J_Content">
+        <div class="tx-player-wrapper ks-player" style="display: block; transition: all 1s ease 0s; width: 78%;">
+            <div class="hd"></div>
+            <div class="bd">
+                <div class="container" id="J_Container" style="transition: 1s;-webkit-transition: 1s;">
+                    <input type="hidden" id="cs_id" value="{$lession['cs_id']}"></input>
+                    <input type="hidden" id="sc_id" value="{$lession['id']}"></input>
+                    <if condition="!$isover">
+                        <if condition="$lession['video_type']==1">
+                            <if condition="$lession['videoid']">
+                                <div class="player" id="J_Player" style="transition: 1s;-webkit-transition:1s;">
+
+                                </div>
+                                <button class="button button-over">我学完了</button>
+                                <else/>
+                                <div id="J_Player" style="transition: 1s;-webkit-transition:1s;width: 100%;height: 85%"></div>
+
+                                <script type="text/javascript">
+                                    var nowD = document.getElementById("sc_id").value;
+
+                                    function playerstop() {
+                                        var sid = document.getElementById("sc_id").value;
+                                        var cid = document.getElementById("cs_id").value;
+                                        $.ajax({
+                                                    url: "{:u('Course/Course/studied')}",
+                                                    type: "post", data: {'sc_id': sid, 'cs_id': cid},
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                    }
+                                                }
+                                        );
+                                        $('#J_Player').hide();
+                                        $('#J_PlayOver').show();
+
+                                    }
+
+
+                                    function playvideo(n) {
+                                        nowD = n;
+                                        $.ajax({
+                                            url: "{:u('Course/Course/chekbuy')}",
+                                            type: "post",
+                                            data: {
+                                                'id': nowD
+                                            }
+                                            ,
+                                            dataType: 'json',
+                                            success: function (res) {
+                                                if (res.isbuy == 1 || res.isfree == 1 || res.isteacher == 1) {
+                                                    var videoObject = {
+                                                        container: '#J_Player', //容器的ID或className
+                                                        variable: 'player', //播放函数名称
+                                                        poster: '{$lession[pic]}', //封面图片
+                                                        config: '', //指定配置函数
+                                                        debug: true, //是否开启调试模式
+                                                        //flashplayer: true, //强制使用flashplayer
+                                                        drag: 'start', //拖动的属性
+
+                                                        promptSpot: [ //提示点
+                                                            {
+                                                                words: '提示点文字01',
+                                                                time: 30
+                                                            },
+                                                            {
+                                                                words: '提示点文字02',
+                                                                time: 150
+                                                            }
+                                                        ],
+                                                        video: [
+                                                            ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '中文标清', 0],
+                                                            ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '中文高清', 0],
+                                                            ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '英文高清', 10],
+                                                            ['http://file.leidun.site/videos/others/leiduncollege.mp4', 'video/mp4', '英文超清', 0]
+                                                        ]
+                                                    };
+                                                    var player = new ckplayer(videoObject);
+                                                    changeVideo('{$lession[yun_url]}');
+                                                    //changeVideo('http://file.leidun.site/videos/es_28/1elasticsearch服务讲解与VMware开发环境搭建.flv');
+
+                                                    function changeVideo(videoUrl) {
+                                                        if (player == null) {
+                                                            return;
+                                                        }
+
+                                                        var newVideoObject = {
+                                                            container: '#J_Player', //容器的ID
+                                                            variable: 'player',
+                                                            autoplay: true, //是否自动播放
+                                                            //loaded: 'loadedHandler', //当播放器加载后执行的函数
+                                                            poster: '{$lession[pic]}',
+                                                            video: videoUrl
+                                                        };
+                                                        //判断是需要重新加载播放器还是直接换新地址
+
+                                                        if (player.playerType == 'html5video') {
+                                                            if (player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
+                                                                player.removeChild();
+
+                                                                player = null;
+                                                                player = new ckplayer();
+                                                                player.embed(newVideoObject);
+                                                            } else {
+                                                                //兼容阿里云视频
+                                                                //alert(22)
+                                                                //player = null;
+                                                                player = new ckplayer();
+                                                                player.embed(newVideoObject);
+
+                                                               // player.newVideo(newVideoObject);
+                                                            }
+                                                        } else {
+                                                            if (player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
+                                                                player = null;
+                                                                player = new ckplayer();
+                                                                player.embed(newVideoObject);
+                                                            } else {
+
+                                                                player.newVideo(newVideoObject);
+
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                                else {
+                                                    $("#J_Player").hide();
+                                                    $("#J_nobuy").show();
+                                                }
+                                            }
+                                        })
+                                        ;
+
+                                    }
+                                    playvideo(nowD);
+                                </script>
+                            </if>
+                            <else/>
+                            <div class="player" id="J_Player" style="transition: 1s;-webkit-transition:1s;">
+                                <embed src="{$lession[yun_url]}" type="application/x-shockwave-flash"
+                                       allowscriptaccess="always" allowfullscreen="true" wmode="opaque" height="100%"
+                                       width="100%"></embed>
+                            </div>
+                        </if>
+
+                        <else/>
+                        <div class="poster" id="J_Poster" style="transition: 1s;-webkit-transition: 1s; display:none;">
+                            <div class="poster-wrapper-outer">
+                                <div class="poster-wrapper-inner">
+                                    <div class="icon"></div>
+                                    <div class="detail-wrapper">
+                                        <p>亲~课程已过期，无法继续学习！</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <div class="poster" id="J_PlayOver" style="transition: 1s;-webkit-transition: 1s; display:none;">
+                        <div class="poster-wrapper-outer">
+                            <div class="poster-wrapper-inner">
+                                <div class="icon"></div>
+                                <div class="detail-wrapper">
+                                    <p>恭喜你，已经学完本节课程，你可以再回顾一下或者继续学习！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster" id="J_nobuy" style="transition: 1s;-webkit-transition: 1s; display:none;">
+                        <div class="poster-wrapper-outer">
+                            <div class="poster-wrapper-inner">
+                                <div class="icon"></div>
+                                <div class="detail-wrapper">
+                                    <p>亲！您还没购买此课程，请购买后再来观看学习！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tx-sidebar-wrapper ks-sidebar" id="J_SideBar" style="transition: all 1s ease 0s; width: 22%;">
+            <div id="J_tab" >
+                <div class="tab-content">
+                    <div class="tab-pannel">
+                        <div class="tx-info"><a class="link" href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}">
+                            <div class="img-wrapper-outer">
+                                <div class="img-wrapper">
+                                    <if condition="empty($lession['pic'])">
+                                        <img class="img" src="__PUBLIC__/images/course.png"
+                                             alt="{$lession.cs_name}">
+                                        <else/>
+                                        <img class="img" src="{$lession.pic}" alt="{$lession.cs_name}">
+                                    </if>
+                                </div>
+                            </div>
+                            <div class="info-wrapper"><h3>{$lession['csname']}</h3> <span></span></div>
+                        </a></div>
+                        <div class="tx-outline ks-outline" data-guid="2" data-initialized="true" >
+                            <div class="outline-inner" id="J_OutlineInner">
+                                <div class="chapter J_Chapter"><h4>章节<span class="num"></span><span class="name">{$lession['csname']}</span>
+                                </h4> <input id="count" value="{$count}" type="hidden">
+
+
+                                    <ul>
+                                        <volist name="sc_list" id="sub" key="k">
+                                            <if condition="$cid eq $sub['id']">
+                                                <a href="{:u('course/Course/study',array('id'=>$sub['id']))}"
+                                                   title="{$sub['sc_name']} " style='text-decoration:none;color:#333;'>
+                                                    <li class="course J_Course head active">
+                                                        <else/>
+                                                        <a href="{:u('course/Course/study',array('id'=>$sub['id']))}"
+                                                           title="{$sub['sc_name']}"
+                                                           style='text-decoration:none;color:#333;'>
+                                                    <li class="course J_Course head" id="{$sub['id']}"
+                                                        onmousemove="addhover(this.id)" onmouseout="delhover(this.id)">
+                                            </if>
+                                            <div class="info">
+                                                <p>课时 {$k}</p>
+                                                <p class="time">{$sub['sc_time']}</p>
+                                            </div>
+                                            <div class="detail">
+                                                <p>{$sub['sc_name']}</p>
+                                                <div class="resources-wrapper">
+																<span class="resources video">
+																	<span class="icon"></span>
+																</span>
+                                                </div>
+                                            </div>
+                                            <if condition="(isstudy($sub['id']) eq 1) or ($cid eq $sub['id'])">
+                                                <span class="progress done"></span>
+                                                <else/>
+                                                <span class="progress"></span>
+                                            </if>
+
+                                            </li>
+                                            </a>
+                                        </volist>
+                                    </ul>
+
+
+                                </div>
+                                <div class="bar" style="height: 335px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action J_Fold unfold">
+                <span class="tx-learn-iconfont unfold-icon"> >> </span>
+                <span class="tx-learn-iconfont fold-icon"> << </span>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div id="extwaiimpotscp" style="display:none" v="{f6bd"
+         f="ZTJZMlltUmpaVFEwTFROa05XRXROR1k0T0MwNVlUWTBMV1V6T1daallqUm1NRGN4TjMwPQ==" q="75df30a1" c="52.10" i="57.90"
+         u="0.063" s="bcba796b" w="false" m="BMe=" vn="0youd"></div>
+</div>
+<script type="text/javascript">
+    $(".button-over").click(function () {
+        var sid = document.getElementById("sc_id").value;
+        var cid = document.getElementById("cs_id").value;
+        var d = dialog({
+            title: '正在提交...',
+            content: '恭喜你，已经学完本节课程！'
+
+        });
+        d.width(300)
+        d.showModal();
+        setTimeout(function () {
+            d.close().remove();
+        }, 2000);
+        $.ajax({
+                    url: '/course / _course / studied_        .html',
+                    type: "post", data: {
+                        'sc_id': sid, 'cs_id': cid
+                    }
+                    ,
+                    dataType: 'json',
+                    success: function (data) {
+                    }
+                }
+        )
+        ;
+    });
+</script>
+<script type="text/javascript">    $(function () {
+    var count = $("#count").val();
+    var width = $(window).width() + 17;
+    var height = $(window).height();
+    $(".bar").css("height", 20 + count * 70 - 35);
+    $(".tx-main").css("width", width);
+    //$(".tx-main").css("height", height);
+    //$(".tx-main").css("height", '100%');
+    $(".J_Container").css("height", height - 130);
+    $(".J_Container").css("width", width - 320);
+    $(".player").css("height", height - 160);
+    $(".player").css("width", width - 340);
+    $("#player_iframe").css("height", height - 160);
+    $("#player_iframe").css("width", width - 340);
+    //$("#J_tab").css("height", height - 130);
+    $(".poster").css("height", height - 160);
+    $(".poster").css("width", width - 340);
+    $(".ks-player").css("width", "78%");
+    $(".ks-sidebar").css("width", "22%");
+
+    var onf = true;
+    $('.J_Fold').click(function () {
+        if (onf) {
+            $(".ks-player").css("width", width);
+            $(".ks-sidebar").css("width", 0);
+            $(".player").css("width", width - 40);
+            $("#player_iframe").css("width", width - 40);
+            $(".poster").css("width", width - 40);
+            $(".J_Fold").removeClass("unfold");
+            onf = false;
+        } else {
+            //$(".ks-player").css("width", width - 300);
+            $(".ks-player").css("width", '78%');
+            $(".player").css("width", width - 340);
+            $("#player_iframe").css("width", width - 340);
+            $(".poster").css("width", width - 340);
+            //$(".ks-sidebar").css("width", 300);
+            $(".ks-sidebar").css("width", '22%');
+            $(".J_Fold").addClass("unfold");
+            onf = true;
+        }
+    });
+})
+function addhover(id) {
+    $("#" + id).addClass('hover');
+    $("#" + id + "a").css('color', 'red');
+}
+function delhover(id) {
+    $("#" + id).removeClass('hover');
+}
+</script>
+<audio controls="controls" style="display: none;"></audio>
+<div class="menuchfgdzbsedre"
+     style="background-color: rgb(255, 255, 255); padding: 5px; position: absolute; left: 10px; top: 20px; display: none; z-index: 999; color: rgb(161, 169, 190); box-shadow: rgb(170, 170, 170) 2px 2px 3px;">
+    <p style="height: 30px; line-height: 30px; margin: 0px; font-size: 12px; padding-left: 10px; padding-right: 30px;">
+        <a href="http://www.leidun.site/" undefined="" style="color: rgb(0, 0, 0); text-decoration: none;">雷顿学院</a></p>
+    <p style="height: 30px; line-height: 30px; margin: 0px; font-size: 12px; padding-left: 10px; padding-right: 30px; border-bottom: 1px solid rgb(233, 233, 233);">
+        1.0</p></div>
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>

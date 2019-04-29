@@ -1,0 +1,126 @@
+<tc_include file="Public:header" />
+<style>
+    .nav.nav-tabs {
+        position: relative;
+        margin-bottom: 15px;
+    }
+    .nav-tabs {
+        border-bottom: 0px solid #ddd;
+    }
+    .nav {
+        margin-bottom: 0;
+        padding-left: 0;
+        list-style: none;
+
+    }
+    .nav-tabs > li{
+        border: 1px solid #ccc;
+        margin-left:20px;
+    }
+    .nav-tabs > li > a {
+        line-height: 1.42857143;
+        border-radius: 4px 4px 0 0;
+    }
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 1px 2px;
+    }
+    .nav.nav-tabs > li.active > a, .nav.nav-tabs > li:hover > a {
+        border:1px solid #82d867;
+        background: url('../images/pay_check_status.png') no-repeat;
+
+    }
+
+</style>
+
+<div id="content-container" class="container">
+    <div class="order-pay">
+        <div class="es-section">
+            <ul class="es-step es-step-3 clearfix">
+                <li><span class="number"><i class="es-icon es-icon-done"></i></span>订单确认</li>
+                <li class="doing"><span class="number">2</span>订单支付</li>
+                <li><span class="number">3</span>订单完成</li>
+            </ul>
+            <div class="order-pay-body">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    订单已提交，请及时付款。
+                </div>
+                <div class="order-detail-bg  checkout" style="border:none">
+                    <div class="order-detail  clearfix">
+
+                        <div class="order-info">
+                            <p>订单名称：雷顿学院金牌会员充值</p>
+                            <p>订单号：{$out_trade_no}</p>
+                            <p>会员价格：<span class="pay-rmb">￥{$member_charge}.00</span></p>
+                        </div>
+
+                        <div class="order-img">
+                            <img alt="扫码支付" src="{:u('course/Course/wxPayQrcode',array('data'=>$wx_code))}" style="width:150px;height:150px;"/>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="es-piece" style="margin-bottom:20px;"><div class="piece-header">使用微信扫描上方二维码支付</div></div>
+                <form class="form-paytype " method="post" action="{:u('course/Course/payment',array('id'=>$cs_data['id']))}">
+
+                    <input type="hidden" name="orderId" value="{$out_trade_no}" id="orderId">
+
+
+                    <div class="form-group order-detail-bg">
+
+                        <div class="check active" id="wxpay" >
+                            <img src="__PUBLIC__/simplebootx/public/images/wxpay.png" />
+                            <span class="icon"></span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function pay_status(){
+        $.ajax({
+            url:'{:u("user/Center/pay_status_check")}',
+            dataType:'json',
+            type:'post',
+            success:function(data){
+                if(data == '2' ){
+                    window.clearInterval(int); //销毁定时器
+                    swal({
+                        title: "支付成功！",
+                        text: "3s 后自动跳转到账户中心",
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function(){
+                        //跳转到结果页面
+                        window.location.href="{:u('user/Center/count')}";
+                    },3000)
+
+                }else if(data =='1'){
+
+                }
+            },
+            error:function(){
+                console.log('error');
+                //alert("error");
+
+            },
+
+        });
+    }
+    //启动定时器
+    var int=self.setInterval(function(){pay_status()},1000);
+</script>
+
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

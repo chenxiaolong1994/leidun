@@ -1,0 +1,73 @@
+<tc_include file="Public:header" />
+ <section class="index-course-list">
+
+	<div class="user-center-header" style="background:#ccc" >
+		<div class="container clearfix">
+			<div class="user-avatar">
+				<div class="avatar-wrap">
+				    <if condition="empty($teacher['avatar'])"> 
+						<img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="img-circle" />
+					<else /> 
+						<img src="{:sp_get_user_avatar_url($teacher['avatar'])}" class="img-circle" /> 
+					</if>
+					<span class="icon-user-status icon-md"><i class="es-icon es-icon-school"></i></span>
+				</div>
+				<div class="name">
+					{$teacher['user_nicename']}
+				</div>
+				<div class="position">
+					<span class="mrm">中学高级教师</span>
+                    <a href="http://www.edusoho.com/" target="_blank"><i class="es-icon es-icon-link"></i></a>
+                </div>
+				<div class="mates">
+					<span class="mrm">0</span>粉丝<span class="mlm mrm">｜</span><span class="mrm">0</span>关注
+				</div>
+				<div class="actions">
+					<a class="btn btn-primary follow-btn mrl" href="javascript:;" data-url="/user/6/follow" >关注</a>
+					<a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="/user/6/unfollow"  style="display:none;" >已关注</a>
+					<button class="btn btn-ghost-white" data-toggle="modal" data-backdrop="static" data-target="#modal" data-url="/message/create/6">私信</button>
+				</div>
+			</div>
+			<div class="user-about hidden-sm hidden-xs">
+				<div class="user-about-content">
+					点亮万盏灯，照亮求知路！      
+				</div>
+			</div>
+		</div>
+		<div class="mask"></div>
+	</div>
+
+    <div id="content-container" class="container">
+        <ul class="nav nav-tabs clearfix">
+			<li><a href="{:u('Teacher/Teacher/about',array('id'=>$vo['id']))}">个人介绍</a></li>
+  		    <li ><a href="{:u('Teacher/Teacher/teach',array('id'=>$vo['id']))}">在教课程</a></li>
+			<li  class="active"><a href="{:u('Teacher/Teacher/learn',array('id'=>$vo['id']))}">在学课程</a></li>
+			<li ><a href="{:u('Teacher/Teacher/favorited',array('id'=>$vo['id']))}">收藏课程</a></li>
+		</ul>
+		<div class="editor-text">
+			<div class="course-list">
+				<div class="row">
+
+					<div class="col-lg-3 col-md-4 col-xs-6">
+						<div class="course-item">
+							<div class="course-img">
+								<a href="/index.php?g=course&m=Course&a=courseinfo&id=1" target="_blank"><img  alt="集合的含义与表示" class="img-responsive" src="/data/upload/20160727/57978e73f0537.png"/></a>
+							</div>
+							<div class="course-info" style="margin-bottom:10px;">
+								<div class="title"><a href="/index.php?g=course&m=Course&a=courseinfo&id=1">集合的含义与表示</a></div>
+								<div class="metas clearfix">
+									<span class="score">评分：<em>0</em></span>
+									<span class="num">1人在学</span>
+									<span class="price price-num">¥1.00</span>                           
+								</div>
+							</div>
+						</div>          
+					</div>
+			  
+				</div>          
+            </div>
+		</div>
+    </div>
+</section>
+<tc_include file="Public:scripts" />          
+<tc_include file="Public:footer" />

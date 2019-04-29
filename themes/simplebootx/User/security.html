@@ -1,0 +1,80 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+      <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+            <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item " ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item "  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <!--<li class="list-group-item active"><a href="{:u('user/center/security')}">修改密码</a></li>          -->
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">安全设置</div>
+	          <div class="panel-body">
+                <form class="form-horizontal js-ajax-form" method="post" action="{:u('User/Center/securitysave')}">
+                  <div class="form-group">
+                    <div class="col-md-2 control-label"><label for="form_currentPassword" class="required">当前密码</label></div>
+                    <div class="controls col-md-8 controls">
+                      <input type="password" id="form_currentPassword" name="currentPassword" required="required" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-2 control-label"><label for="form_newPassword" class="required">新密码</label></div>
+                    <div class="controls col-md-8 controls">
+                      <input type="password" id="form_newPassword" name="newPassword" required="required" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="col-md-2 control-label"><label for="form_confirmPassword" class="required">确认密码</label></div>
+                     <div class="controls col-md-8 controls">
+                       <input type="password" id="form_confirmPassword" name="confirmPassword" required="required" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-2 control-label"></div>
+                    <div class="controls col-md-8 controls">
+                        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+                    </div>
+                  </div>
+               </form>
+             </div>
+	       </div>
+        </div>
+     </div>
+  </div>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />  

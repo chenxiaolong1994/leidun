@@ -1,0 +1,111 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+             <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/add')}">课程发布</a></li>
+               <li class="list-group-item"><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item active"><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item" ><a href="{:u('user/center/index')}">我的课程</a></li>
+               <li class="list-group-item"  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+		<div class="col-md-9">
+		   <div class="panel panel-default panel-col">
+	         <div class="panel-heading">教学资料库</div>
+	           <div class="panel-body">
+		         <ul class="nav nav-tabs">
+			       <li class=""><a href="{:u('teacher/Center/ziyuanku')}">视频</a></li>
+			       <li class=""><a href="{:u('teacher/Center/document')}">文档</a></li>
+			       <li class="active"><a href="{:u('teacher/Center/ppt')}">PPT</a></li>
+			     </ul>
+		         <br>
+		         
+				 <form class="js-ajax-form" action="" method="post">
+                <div id="material-lib-items-panel">
+                <div id="aticle-table-container">
+                 <div class="course-grids" id="material-item-list">
+			        <li class="course-grid item-material" id="panel-upload-file">
+        	           <div style="width: 180px; height: 180px; padding: 8px;">
+                         <div class="container" style="width: 100%; height: 120px; vertical-align: middle;">
+                           <a class="btn btn-link center-block file-create-btn tip" style="margin-top: 30px;" title="添加"  data-toggle="modal" data-target="#myModal" href="{:u('Teacher/Center/upppt')}" data-placement="bottom" >
+                              <i class="glyphicon glyphicon-plus" style="font-size:40px;"></i>
+                           </a>
+                          </div>
+						  <div>
+							<span class="text-sm">只支持PPT,PPTX为后缀的ppt文件！</span>
+                          </div>
+                       </div>
+                    </li>
+                  <foreach name="result" item="vo">
+                    <li class="course-grid item-material">
+	                   <div id="info"style="width: 180px; height: 180px; padding: 2px;" class="course-item-list-multi">
+                          <div><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.name}"></div>
+   						  <div style="height: 90px;" class="center-block">										
+					        <a style="float: none;" class="item-object item-object-ppt center-block mtm tip" title="预览" data-placement="top" href="#modal" data-toggle="modal" data-url="/material/lib/file/18/preview" >
+							  <i class="fa fa-file-powerpoint-o"></i>
+						      <span class="item-length">PPT</span>
+	                 	    </a>
+	                      </div>
+                          <span  class="file-name-container text-sm">{$vo['name']}</span>
+                    </li>
+				  </foreach>
+                  </div>
+                 </div>
+
+                 <div>
+    	           <button class="btn btn-danger btn-sm mlm js-ajax-submit" type="submit" data-action="{:u('Teacher/Center/zydel',array('type'=>ppt))}" data-subcheck="true" data-msg="你确定删除吗？"><i class="glyphicon glyphicon-trash"></i> 删除</button>
+                  </div>	
+             </div>
+			 </form>
+	       </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="modal fade " id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:640px;">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+ </div>  
+
+<tc_include file="Public:scripts" /> 
+<script>
+$("#myModal").on("hidden.bs.modal", function() {
+    $(this).removeData("bs.modal");
+	location.replace(location.href);
+});
+</script>        
+<tc_include file="Public:footer" />

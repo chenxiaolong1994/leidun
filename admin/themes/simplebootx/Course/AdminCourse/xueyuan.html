@@ -1,0 +1,43 @@
+<admintpl file="header" />
+</head>
+<body style="min-width: 800px;">
+	<div class="wrap js-check-wrap">
+		
+		<form class="js-ajax-form" method="post">
+			
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">编号</th>
+						<th width="150">用户名</th>
+						<th>学习进度</th>
+						<th width="180">购买时间</th>
+					</tr>
+				</thead>
+				<foreach name="xueyuan" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.user_id|getusername}</td>
+					<td> <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: {$vo['bili']}%;">{$vo['bili']}%</div>
+                         </div>
+                    </td>
+					<td>{$vo.addtime}</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="50">编号</th>
+						<th width="150">用户名</th>
+						<th>学习进度</th>
+						<th width="180">购买时间</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

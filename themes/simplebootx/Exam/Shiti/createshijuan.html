@@ -1,0 +1,373 @@
+<tc_include file="Public:header" />
+<link rel="stylesheet" media="screen" href="./themes/simplebootx/public/css/fileinput.css" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>
+			   <li class="list-group-item active"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/addsection',array('cs_id'=>$cs_id))}">作业批改</a></li> 
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">
+    
+			<div class="panel panel-default panel-col test-creator">
+			  <div class="panel-heading clearfix">创建试卷</div>
+
+			  <div class="panel-body">
+
+				<ol class="breadcrumb">
+				  <li><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+				  <li class="active">创建试卷</li>
+				</ol>
+				<form class="form-horizontal js-ajax-form" method="post" id="myform" action="{:u('Exam/Shiti/shijuanaddshitipost')}">
+
+				  <div class="form-group">
+					  <div class="col-md-2 control-label"><label for="testpaper-name-field">试卷名称</label></div>
+					  <div class="col-md-8 controls">
+						  <input class="form-control" id="title" value="" name="title" onblur="save()"/>
+					  </div>
+				  </div>
+
+					<div class="form-group">
+					  <div class="col-md-2 control-label"><label for="testpaper-limitedTime-field">时间限制</label></div>
+					  <div class="col-md-8 controls">
+						  <input class="form-control width-input width-input-large" name="limitedTime" id="limitedtime" value="0" onblur="save()"/> 分钟
+						  <div class="help-block">0分钟，表示无限制</div>
+					  </div>
+					</div>       
+
+					<div class="form-group">
+						<style>.testpaper-question-option-item{margin-left:-12px;margin-bottom:5px;}</style>
+							<div class="col-md-2 control-label"><label>题目设置</label></div>
+							<div class="col-md-10 controls" id="testpaper-question-options">
+							  <div class="testpaper-question-option-item">
+								  <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+								  <span style="min-width:85px;display:inline-block;_display:inline;">单选题</span>
+								  <span class="mlm">题目数量:</span>
+								  <input type="text" class="form-control width-input width-input-mini input-sm item-number" disabled="disabled" value="{$Think.session.tempxuanze.num}" />/
+								  <span class="text-info question-num" role="questionNum" type="single_choice">{$xuanzhenum}</span>
+								  <span class="mlm">每题分值:</span>
+								  <input type="text" id="single_choice_score" class="form-control width-input width-input-mini input-sm item-score" name="scores[single_choice]"  value="2" onblur="save()" />
+								  <button class="btn btn-success btn-sm mlm glyphicon glyphicon-plus " data-toggle="modal" data-target="#xuanze"></button>
+							  </div>
+
+							  <div class="testpaper-question-option-item">
+								  <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+								  <span style="min-width:85px;display:inline-block;_display:inline;">填空题</span>
+								  <span class="mlm">题目数量:</span>
+								  <input type="text" class="form-control width-input width-input-mini input-sm item-number" disabled="disabled" name="counts[fill]"  value="{$Think.session.temptiankong.num}" />/
+								  <span class="text-info question-num" role="questionNum" type="fill">{$tiankongnum}</span>
+								  <span class="mlm">每题分值:</span>
+								  <input type="text" id="fill_score" class="form-control width-input width-input-mini input-sm item-score" name="scores[fill]"  value="2" onblur="save()"/>
+								  <button class="btn btn-success btn-sm mlm glyphicon glyphicon-plus" data-toggle="modal" data-target="#tiankong"></button>
+							  </div>
+
+							  <div class="testpaper-question-option-item">
+								  <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+								  <span style="min-width:85px;display:inline-block;_display:inline;">判断题</span>
+								  <span class="mlm">题目数量:</span>
+								  <input type="text" class="form-control width-input width-input-mini input-sm item-number" disabled="disabled" name="counts[determine]"  value="{$Think.session.temppanduan.num}" />/
+								  <span class="text-info question-num" role="questionNum" type="determine">{$panduannum}</span>
+								 <span class="mlm">每题分值:</span>
+								 <input type="text" id="determine_score" class="form-control width-input width-input-mini input-sm item-score" name="scores[determine]"  value="2" onblur="save()"/>
+								  <button class="btn btn-success btn-sm mlm glyphicon glyphicon-plus" data-toggle="modal" data-target="#panduan"></button>
+							  </div>
+
+							  <div class="testpaper-question-option-item">
+								  <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+								  <span style="min-width:85px;display:inline-block;_display:inline;">问答题</span>
+								  <span class="mlm">题目数量:</span>
+								  <input type="text" class="form-control width-input width-input-mini input-sm item-number" disabled="disabled" name="counts[essay]"  value="{$Think.session.tempjieda.num}" />/
+								  <span class="text-info question-num" role="questionNum" type="essay">{$jiedanum}</span>
+								  <span class="mlm">每题分值:</span>
+								  <input type="text" id="essay_score" class="form-control width-input width-input-mini input-sm item-score" name="scores[essay]"  value="5" onblur="save()" />
+								  <button class="btn btn-success btn-sm mlm glyphicon glyphicon-plus" data-toggle="modal" data-target="#jieda"></button>
+							  </div>
+
+							  <div class="testpaper-question-option-item">
+								  <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+								  <span style="min-width:85px;display:inline-block;_display:inline;">材料题</span>
+								  <span class="mlm">题目数量:</span>
+								  <input type="text" class="form-control width-input width-input-mini input-sm item-number" disabled="disabled" name="counts[material]"  value="{$Think.session.tempcailiao.num}" />/
+								  <span class="text-info question-num" role="questionNum" type="material">{$cailiaonum}</span>
+								  <span class="mlm">每题分值:</span>
+								  <input type="text" id="material_score" class="form-control width-input width-input-mini input-sm item-score" name="scores[material]"  value="10" onblur="save()"/>
+								  <button class="btn btn-success btn-sm mlm glyphicon glyphicon-plus" data-toggle="modal" data-target="#cailiao"></button>
+							  </div>
+
+							</div>
+					</div>
+				  <input type="hidden" name="cs_id" value="{$cs_id}">
+				  <div class="form-group mbm">
+					<div class="col-md-8 col-md-offset-2 controls">
+					  <button type="submit" class="btn btn-primary js-ajax-submit" >保存</button>
+					  <a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}" class="btn btn-link  ">返回</a>
+					</div>
+				  </div>
+				</form>
+			  </div>
+			</div>
+		</div>
+     </div>
+   </div>
+<div class="modal fade" id="xuanze" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+		<form class="js-ajax-form" action="{:u('Exam/Shiti/shijuanaddshiti')}" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">选择题</h4>
+				</div>
+				<div class="modal-body">
+					<div class="file-browser-list-container" id="content" style="height:280px;">
+						<table class="table table-striped table-hover">
+						   <tbody>
+								<foreach name="xuanzhe" item="vo">
+									<tr >
+										<if condition="in_array($Think.session.tempxuanze.arrayids,$vo['id'])">
+										   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" checked="checked" ></td>
+										<else />
+										   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+										</if>   
+										   <td>{$vo['stem']}</td>
+									</tr>
+								</foreach> 
+							 </tbody>
+						</table>
+					</div>
+				</div>	
+				<div class="modal-footer">
+					<input type="hidden" name="type" value="1">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">确定</button>
+				</div>
+			</div>	
+		</form>
+    </div>
+</div>
+<div class="modal fade" id="tiankong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+	    <form class="js-ajax-form" action="{:u('Exam/Shiti/shijuanaddshiti')}" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">填空题</h4>
+				</div>
+				<div class="modal-body">
+					<div class="file-browser-list-container" id="content" style="height:280px;">
+						 <table class="table table-striped table-hover">
+						   <tbody>
+							<foreach name="tiankong" item="vo">
+								<tr >
+									<if condition="in_array($vo['id'],$Think.session.temptiankong.arrayids)">
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" checked="checked" ></td>
+									<else />
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+									</if>   
+								   <td>{$vo['stem']}</td>
+								</tr>
+							 </foreach> 
+						   </tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="type" value="2">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">确定</button>
+				</div>
+			</div>
+		</form>
+    </div>
+</div>	
+<div class="modal fade" id="panduan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+	    <form class="js-ajax-form" action="{:u('Exam/Shiti/shijuanaddshiti')}" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">判断题</h4>
+				</div>
+				<div class="modal-body">
+				   <div class="file-browser-list-container" id="content" style="height:280px;">
+						 <table class="table table-striped table-hover">
+						   <tbody>
+							<foreach name="panduan" item="vo">
+								<tr >
+								   <if condition="in_array($Think.session.temppanduan.arrayids,$vo['id'])">
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" checked="checked" ></td>
+									<else />
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+									</if>  
+								   <td>{$vo['stem']}</td>
+								</tr>
+							 </foreach> 
+						   </tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="type" value="3">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">确定</button>
+				</div>
+			</div>
+		</form>	
+    </div>
+</div>	
+<div class="modal fade" id="jieda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+	    <form class="js-ajax-form" action="{:u('Exam/Shiti/shijuanaddshiti')}" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">解答题</h4>
+				</div>
+				<div class="modal-body">
+					<div class="file-browser-list-container" id="content" style="height:280px;">
+						 <table class="table table-striped table-hover">
+						   <tbody>
+							<foreach name="jieda" item="vo">
+								<tr >
+								    <if condition="in_array($Think.session.tempjieda.arrayids,$vo['id'])">
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" checked="checked" ></td>
+									<else />
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+									</if>  
+								   <td>{$vo['stem']}</td>
+								</tr>
+							 </foreach> 
+						   </tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="type" value="4">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">确定</button>
+				</div>
+			</div>
+		</form>	
+    </div>
+</div>	
+<div class="modal fade" id="cailiao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+	    <form class="js-ajax-form" action="{:u('Exam/Shiti/shijuanaddshiti')}" method="post">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">材料题</h4>
+				</div>
+				<div class="modal-body">
+					 <div class="file-browser-list-container" id="content" style="height:280px;">
+						 <table class="table table-striped table-hover">
+						   <tbody>
+							<foreach name="cailiao" item="vo">
+								<tr >
+								    <if condition="in_array($Think.session.tempcailiao.arrayids,$vo['id'])">
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" checked="checked" ></td>
+									<else />
+									   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+									</if> 
+								   <td>{$vo['stem']}</td>
+								</tr>
+							 </foreach> 
+						   </tbody>
+						</table>
+					</div>		 
+
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="type" value="5">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">确定</button>
+				</div>
+			</div>
+		</form>	
+    </div>
+</div>		
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+</script>   
+ <script>
+ window.onload=function(){
+	  document.getElementById("title").value=getCookie('title');
+	  document.getElementById("limitedtime").value=getCookie('limitedtime');
+	  document.getElementById("single_choice_score").value=getCookie('single_choice_score');
+	  document.getElementById("fill_score").value=getCookie('fill_score');
+	  document.getElementById("determine_score").value=getCookie('determine_score');
+	  document.getElementById("essay_score").value=getCookie('essay_score');
+	  document.getElementById("material_score").value=getCookie('material_score');
+	}
+ function save(){
+	 var title=document.getElementById("title").value;
+	 var limitedtime=document.getElementById("limitedtime").value;
+	 var single_choice_score=document.getElementById("single_choice_score").value;
+	 var fill_score=document.getElementById("fill_score").value;
+	 var determine_score=document.getElementById("determine_score").value;
+	 var essay_score=document.getElementById("essay_score").value;
+	 var material_score=document.getElementById("material_score").value;
+	 setCookie("title",title);
+	 setCookie("limitedtime",limitedtime);
+	 setCookie("single_choice_score",single_choice_score);
+	 setCookie("fill_score",fill_score);
+	 setCookie("determine_score",determine_score);
+	 setCookie("essay_score",essay_score);
+	 setCookie("material_score",material_score);
+ }
+ 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+function clearCookie(name) {  
+    setCookie(name, "", -1);  
+}  
+
+</script>
+<tc_include file="Public:footer" />

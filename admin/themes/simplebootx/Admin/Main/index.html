@@ -1,0 +1,242 @@
+<admintpl file="header" />
+<style>
+.home_info li em {
+	float: left;
+	width: 120px;
+	font-style: normal;
+}
+li {
+	list-style: none;
+}
+.admin_info1 {
+    height: 250px;
+    width:24%;
+    float: left;
+    margin: 10px 0px;
+    border: 1px #dddddd solid;
+    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: #fff;
+}
+.opb1 {
+    width: 100%;
+    float: left;
+    display: block;
+    font-size: 16px;
+    padding: 10px 0;
+    color: #82d896;
+    border-bottom: 1px #dddddd solid;
+    border-radius: 4px 4px 0px 0px;
+    border-top-left-radius: 4px;
+    border-top-right-radius:4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-bottom: 8px;
+    position: relative;
+}
+.opb3 {
+    background:  #eaeaea ;
+}
+.admin_info2 {
+    width: 100%;
+    float: left;
+    display: block;
+    text-indent: 15px;
+    font-size: 14px;
+    padding: 14px 0;
+    position: relative;
+}
+
+.kong{
+    width:9px;
+    height:200px;
+    float:left;
+}
+</style>
+</head>
+<body>
+   <div class="wrap">
+         <div class="home_info">
+			<ul id="notices">
+				<li><img src="__TMPL__Public/assets/images/loading.gif"style="vertical-align: middle;" /><span style="display: inline-block; vertical-align: middle;">加载中...</span></li>
+			</ul>
+		</div>
+         <div class="col-md-3">
+            <div class="admin_info1 ">
+              <div class="opb1 opb3 text-center">课程统计</div>
+              <div class="admin_info2">总课程数：{$t_course}</div> 
+              <div class="admin_info2">本日新增：{$d_course}</div>  
+              <div class="admin_info2">本周新增：{$z_course}</div> 
+              <div class="admin_info2">本月新增：{$y_course}</div>        	 
+        	</div>
+         </div><div class="kong"></div>
+         <div class="col-md-3">	 
+            <div class="admin_info1">
+               <div class="opb1 opb3 text-center">学员统计</div>
+               <div class="admin_info2">学员总数：{$t_user}</div>	
+   	           <div class="admin_info2">本日新增：{$d_user}</div>  
+              <div class="admin_info2">本周新增：{$z_user}</div> 
+              <div class="admin_info2">本月新增：{$y_user}</div>  
+        	</div>
+        </div> <div class="kong"></div>  
+        <div class="col-md-3">
+            <div class="admin_info1">
+               <div class="opb1 opb3 text-center">订单统计</div>
+            
+               <div class="admin_info2">订单总数：{$t_order}</div>	
+       	       <div class="admin_info2">本日新增：{$d_order}</div>
+               <div class="admin_info2">已支付订单：{$order_1}</div>
+               <div class="admin_info2">未支付订单：{$order_2}</div>  
+        	 
+        	</div>
+      	</div> <div class="kong"></div> 
+         <div class="col-md-4">
+            <div class="admin_info1">
+               <div class="opb1 opb3 text-center">文章统计</div>
+            
+               <div class="admin_info2">文章总数：{$t_article}</div>	
+       	       <div class="admin_info2">本日新增：{$d_article}</div>
+               <div class="admin_info2">本周新增：{$z_article}</div> 
+               <div class="admin_info2">本月新增：{$y_article}</div>  
+        	</div>
+      	</div>
+		<div class="col-md-12">
+            <div class="admin_info1" style="height: 210px;width:100%">
+               <div class="opb1 opb3 text-center">系统版本信息</div>
+			   <div class="admin_info2">当前版本：<span>{$version}</span></div> 
+			   <div id="nextd" class="admin_info2">下一版本：<span id='nextv'></span></div> 
+			   <div class="admin_info2">最新版本：<span id='lastv'></span> 
+			   <button  style="display:none;" class="btn btn-primary btn-sm active" id="upbutton" role="button" data-toggle="modal" data-backdrop="static" data-target="#wuzhicms-upgrade">升级</button></div> 
+			   <input type="hidden" id="nextversion1" value="">
+			   <input type="hidden" id="domain" value="{$domain}">
+			   <input type="hidden" id="version" value="{$version}">
+        	</div>
+      	</div>
+        <div class="col-md-12">
+            <div class="admin_info1" style="height: 490px;width:100%">
+               <div class="opb1 opb3 text-center">服务器信息</div>
+               <volist name="server_info" id="vo">
+                <div class="admin_info2">{$key}：<span>{$vo}</span></div> 
+               </volist>
+			   <div class="admin_info2">官方网站：<span><a href="http://www.yxtcmf.com" target ='_blank' >www.yxtcmf.com</a></span></div> 
+        	</div>
+      	</div>
+        
+ 
+	</div>
+	<div class="modal fade" id="wuzhicms-upgrade" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="wuzhicms-upgrade">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">系统升级</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+						<tr>
+							<th width="60%">应用名称</th>
+							<th width="40%">版本</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>易学堂CMF</td>
+							<td>
+								<strong class="text-success">{$version}</strong>
+								 -&gt; 
+								<strong class="text-success"><span id='nextversion'></span></strong>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div style="background-color: #f5f5f5;padding: 15px 20px;">
+						更新日志:</br></br>
+						<div id="uplogs">
+							<div id="package-update-progress" class="package-update-progress hidden">
+								<div class="progress progress-striped active">
+									<div class="progress-bar progress-bar-success" style="width: 0%"></div>
+								</div>
+								<div class="text-success progress-text"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+						    <span id='bottoncode'>
+							   <button type="button" class="btn btn-primary btn-wuzhicms-upgrade" 
+								   data-check-environment-url="{:u('Admin/Update/checkEnvironment')}"
+								   data-download-package-url="{:u('Admin/Update/downloadPackage',array('packageId'=>$nextversionid))}"
+								   data-proccess-template-url="{:u('Admin/Update/proccessTpl')}"
+								   data-backup-file-url="{:u('Admin/Update/backupUpgradeFile')}"
+								   data-begin-upgrade-url="{:u('Admin/Update/beginUpgrade',array('nextversion'=>$nextversion))}"
+							   >开始升级</button>
+							 </span>  
+							<strong class="text text-danger" id="updating-hint" style="display:none;">正在升级，请不要关闭当前窗口...</strong>
+							<button id="finish-update-btn" data-loading-text="正在完成升级, 请稍等..." style="display:none;" class="btn btn-primary" >完成升级</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>	
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/upgrade.js"></script>
+	<script>
+		$.getJSON("http://www.yxtcmf.com/index.php?g=api&m=Regcheck&a=notice&callback=?",
+		function(data) {
+			var tpl = '<li><em class="title"></em><span class="content"></span></li>';
+			var $notices = $("#notices");
+			$notices.empty();
+			if (data.length > 0) {
+				$.each(data, function(i, n) {
+					var $tpl = $(tpl);
+					$(".content", $tpl).html(n.content);
+					$notices.append($tpl);
+				});
+			} else {
+			}
+		});
+	</script>
+	<script>
+		var version=$("#version").val();
+		var api="http://www.yxtcmf.com/index.php?g=api&m=Regcheck&a=getnextversion&version=";
+		    api+=version;
+			api+="&callback=?";
+		
+		$.getJSON(api,
+		function(data) {
+			var html =data.version;
+			var id =data.id;
+			var uplogs =data.content;
+			   $("#nextversion").empty();
+			if (data) {
+			   $('#nextversion').append(html);
+			   $('#nextv').append(html);
+			   $('#uplogs').append(uplogs);
+			   $("#nextversion1").val(html)
+			} else {
+			   $('#nextversion').append('暂无更新版本');
+			}
+		});
+		alert(html)
+	</script>
+	<script>
+		$.getJSON("http://www.yxtcmf.com/index.php?g=api&m=Regcheck&a=getlastversion&callback=?",
+		function(data) {
+		    var version=$("#version").val();
+			var lastv=data.version;
+			if(lastv!=version){
+			   $("#upbutton").show();
+			}
+			if(lastv==version){
+			   $("#nextd").css('display','none');
+			}
+			if (data) {
+			   $('#lastv').append(lastv);
+			}
+		});
+	</script>
+</body>
+</html>

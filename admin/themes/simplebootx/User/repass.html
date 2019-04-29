@@ -1,0 +1,13 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <form class="js-ajax-form" action="" method="post">
+      <input type="hidden" name="id" value="{$id}" />
+      <input type="text" style="width:350px;margin-top:8px;" name="pass"  value="" class="input " placeholder="请输入新密码"  />
+      <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('User/Indexadmin/repass_post')}">重置</button>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+</html>

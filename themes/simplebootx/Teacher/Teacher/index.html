@@ -1,0 +1,50 @@
+<tc_include file="Public:header" />
+<section class="index-course-list">
+	<div class="es-banner">
+		<div class="container">
+			<div class="title">
+				<i class="es-icon es-icon-permcontactcal"></i>所有教师
+			</div>
+		</div>
+	</div>
+
+    <div id="content-container" class="container">
+        <div class="teacher-list row">
+		    <volist name="teacher" id="vo"> 
+				<div class="col-lg-3 col-md-4 col-xs-6">
+					<div class="teacher-item">
+						<div class="teacher-top">
+							<a class="teacher-img" href="{:u('Teacher/Teacher/about',array('id'=>$vo['id']))}" style="width:150px;height:150px;overflow:hidden;">
+								<if condition="empty($vo['avatar'])"> 
+									<img src="__PUBLIC__/simplebootx/public/images/093958e59110293063.jpg" class="img-circle" style="max-width:150px;width:150px;"/>
+								<else /> 
+									<img src="{:sp_get_user_avatar_url($vo['avatar'])}" class="img-circle" style="max-width:150px;width:150px;"/> 
+								</if>
+							</a>
+							<h3 class="title">
+								<a class="link-dark" href="{:u('Teacher/Teacher/about',array('id'=>$vo['id']))}">{$vo['user_nicename']}</a>
+							</h3>
+							<div class="position">
+								{$vo['zhicheng']|default="该教师没有设置！"}
+							</div>
+						</div>
+						<div class="teacher-bottom">
+							<div class="about">
+								{$vo['signature']|default="该教师没有设置！"}   
+							</div>
+							<div class="metas">
+									<a class="btn btn-primary btn-sm follow-btn" href="{:u('Teacher/Teacher/about',array('id'=>$vo['id']))}">进入教师中心</a>
+							</div>
+						</div>
+					</div>
+				</div>
+            </volist>   
+                  
+                  
+                  
+        </div>
+		<nav class="text-center"><div class="pagination text-center">{$Page}</div></nav>
+    </div>
+</section>	
+<tc_include file="Public:scripts" />          
+<tc_include file="Public:footer" />

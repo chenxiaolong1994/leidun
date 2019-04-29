@@ -1,0 +1,62 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>			   <li class="list-group-item active"><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>			   <li class="list-group-item"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>			   <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">			<div class="panel panel-default panel-col">				<div class="panel-heading">					题目批量导入/导出				</div>				<div class="panel-body">					<ul class="nav nav-tabs">					  <li class=""><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入</a></li>					  <li class="active"><a href="{:u('Exam/Shiti/export',array('cs_id'=>$cs_id))}">导出</a></li>					</ul>					<br>				  <form class="form-horizontal" id="question-export-form" method="post" action="{:u('Exam/Shiti/exportpost')}" target="_blank">					<div class="form-group">					  <div class="col-md-2 control-label">						<label for="type">选择导出范围</label>					  </div>					  <div class="col-md-8 controls">						<select class="form-control width-input width-input-large" name="target" data-role="target">						  <option value="course-45">本课程</option>						</select>											  </div>					</div>					<div class="form-group">					  <div class="col-md-2 control-label">						<label for="file">选择导出题型</label>					  </div>					  <div class="col-md-8 controls">						<select class="form-control width-input" name="type">						  <option value="0">--所有题型--</option><option value="1">选择题</option><option value="2">填空题</option><option value="3">判断题</option><option value="4">问答题</option><option value="5">材料题</option>						</select>					  </div>					</div>					<input type="hidden" name="cs_id" value="{$cs_id}">					<div class="form-group">					  <div class="col-md-offset-2 col-md-8 controls">						<button class="btn btn-fat btn-primary" id="question-export-btn" type="submit">导出</button>					  </div>					</div>				  </form>				</div>			</div>		</div>	  </div>	</div><div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+</script>
+<script type="text/javascript"> 
+$("#all").click(function(){    
+    if(this.checked){ 
+        $("#list :checkbox").attr("checked", true);   
+    }else{    
+        $("#list :checkbox").attr("checked", false); 
+    }    
+});
+
+</script>      
+<tc_include file="Public:footer" />

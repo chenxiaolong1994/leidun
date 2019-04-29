@@ -1,0 +1,21 @@
+ <div class="modal-header">
+   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+   <input type="hidden" name="domain" id="domain" value={$domain} />
+   <h4 class="modal-title" id="myModalLabel">成绩单</h4>
+ </div>
+<div class="tab-pane active" id="video-chooser-disk-pane">
+        <div class="file-browser-list-container" id="content" style="height:350px;">
+		  <ul class="file-browser-list" id="parent">
+		   <foreach name="users" item="vo" key="k">
+			 <li class="file-browser-item clearfix" data-index="0">
+			    <span class="filename">{$vo['userid']|getusername}</span>
+				<span class="filesize">{$vo['score']}分</span>
+				<span class="filetime">{$vo['addtime']}</span>
+		     </li>
+		    </foreach>
+		   </ul>
+		</div>
+</div>
+
+
+

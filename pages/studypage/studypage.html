@@ -1,0 +1,219 @@
+<html class="ks-webkit537 ks-webkit ks-chrome42 ks-chrome"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+<meta charset="utf-8"> 
+<meta name="keywords" content="雷顿学院大数据，大数据，算法，Hadoop,spark,hive"> 
+<meta name="description" content="雷顿学院专注大数据和人工智能技术教育培训"> 
+<title>Spark Session介绍</title> 
+<link rel="icon" href="http://www.leidun.site/public/simplebootx/public/images/favicon.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="http://www.leidun.site/public/simplebootx/public/images/favicon.ico" type="image/x-icon" media="screen"> 
+<link href="studypage_files/ui_dialog.css" rel="stylesheet"> 
+<!-- <link rel="stylesheet" media="screen" href="studypage_files/play.css">  -->
+<script src="studypage_files/jquery.js"></script> <script src="studypage_files/dialogmin.js"></script> 
+<script src="studypage_files/ckplayer.js"></script> 
+<script type="text/javascript">
+    if(window.screen.width<600){
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">')
+        document.write('<link rel="stylesheet" media="screen" href="studypage_files/mobile.css"> ')
+    }else{
+        document.write('<link rel="stylesheet" media="screen" href="studypage_files/play.css"> ')
+    }
+</script>
+</head> 
+<body> <div class="tx-main" style="overflow: hidden; width: 1922px; height: 984px;"> <div class="tx-banner"> <div class="tx-banner-left"> <a href="http://www.leidun.site/course/course/courseinfo/id/21.html" id="J_goBack"> <img src="studypage_files/play_1.png" alt=""> </a> </div> <div class="tx-banner-title" id="J_CourseTitle">Spark SQL编程</div> <!-- <div class="tx-banner-logo"><a href="#"><img src="/public/simplebootx/public/images/logo.png" alt=""></a></div> --> </div> <div class="tx-main-inner" id="J_Content"> <div class="tx-player-wrapper ks-player" style="display: block; transition: all 1s ease 0s; width: 78%;"> <div class="hd"></div> <div class="bd"> <div class="container" id="J_Container" style="transition: 1s;-webkit-transition: 1s;"> <input id="cs_id" value="21" type="hidden"> <input id="sc_id" value="34" type="hidden"> <div id="J_Player" style="transition: all 1s ease 0s; width: 100%; height: 85%; background-color: rgb(0, 0, 0); overflow: hidden; position: relative;"><div class="ckplayerchfuazibpvxwwubwyb" style="background-color: rgb(0, 0, 0); width: 100%; height: 100%;"><video id="chcdzlhkalqrqlhtkn" poster="/data/upload/20181022/5bcd5a5863192.png" x5-playsinline="" playsinline="" webkit-playsinline="true" style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);" src="studypage_files/7.mp4" autoplay="autoplay" width="100%" height="100%"></video><div class="controlbgbarchfgdzbsedre" style="width: 100%; height: 38px; background-color: rgb(0, 0, 0); position: absolute; bottom: 0px; opacity: 0.8; z-index: 90; display: none;"></div><div class="controlbarchfgdzbsedre" style="width: 100%; height: 38px; position: absolute; bottom: 0px; z-index: 90; display: none;"><div class="playchfgdzbsedre" data-title="点击播放" style="width: 38px; height: 38px; float: left; overflow: hidden; cursor: pointer; display: none;"><canvas class="playchfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="pausechfgdzbsedre" data-title="点击暂停" style="width: 38px; height: 38px; float: left; overflow: hidden; cursor: pointer; display: block;"><canvas class="pausechfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="dlinechfgdzbsedre-la" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: left; display: block;"></div><div class="frontchfgdzbsedre" data-title="上一集" style="width: 38px; height: 38px; float: left; overflow: hidden; cursor: pointer; display: none;"><canvas class="frontchfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="dlinechfgdzbsedre-lb" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: left; display: none;"></div><div class="nextchfgdzbsedre" data-title="下一集" style="width: 38px; height: 38px; float: left; overflow: hidden; cursor: pointer; display: none;"><canvas class="nextchfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="dlinechfgdzbsedre-lc" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: left; display: none;"></div><div class="timetextchfgdzbsedre" style="line-height: 38px; color: rgb(255, 255, 255); font-family: arial; font-size: 16px; padding-left: 10px; float: left; overflow: hidden; cursor: default; display: block;">00:19 / 13:51</div><div class="fullchfgdzbsedre" data-title="点击全屏" style="width: 38px; height: 38px; float: right; overflow: hidden; cursor: pointer; display: block;"><canvas class="fullchfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="escfullchfgdzbsedre" data-title="退出全屏" style="width: 38px; height: 38px; float: right; overflow: hidden; cursor: pointer; display: none;"><canvas class="escfullchfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="dlinechfgdzbsedre-ra" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: right; display: block;"></div><div class="definitionchfgdzbsedre" data-title="点击选择清晰度" style="line-height: 38px; color: rgb(255, 255, 255); float: right; font-size: 14px; text-align: center; overflow: hidden; display: none; cursor: pointer; width: 100px;"></div><div class="dlinechfgdzbsedre-rb" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: right; display: none;"></div><div class="playbackratechfgdzbsedre" data-title="点击选择速度" style="line-height: 38px; color: rgb(255, 255, 255); float: right; font-size: 14px; text-align: center; overflow: hidden; display: block; cursor: pointer; width: 80px;">正常</div><div class="dlinechfgdzbsedre-rc" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: right; display: block;"></div><div class="volumechfgdzbsedre" style="width: 110px; height: 38px; overflow: hidden; float: right; display: block;"><div class="volumedbgchfgdzbsedre" style="width: 110px; height: 38px; overflow: hidden; float: right; position: absolute;"><div class="volumebgchfgdzbsedre" style="width: 100px; height: 6px; overflow: hidden; border-radius: 5px; cursor: pointer; position: absolute; top: 16px; background-color: rgb(102, 102, 102);"><div class="volumeupchfgdzbsedre" style="width: 80px; height: 6px; overflow: hidden; border-radius: 5px; cursor: pointer; background-color: rgb(7, 130, 245);"></div></div><div class="volumebochfgdzbsedre" style="width: 12px; height: 12px; overflow: hidden; border-radius: 50%; position: absolute; background-color: rgb(255, 255, 255); top: 13px; left: 74px; cursor: pointer;"><div class="volumebwchfgdzbsedre" style="width: 6px; height: 6px; overflow: hidden; border-radius: 50%; position: absolute; background-color: rgb(7, 130, 245); left: 3px; top: 3px;"></div></div></div></div><div class="mutechfgdzbsedre" data-title="点击静音" style="width: 38px; height: 38px; float: right; overflow: hidden; cursor: pointer; display: block;"><canvas class="mutechfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="escmutechfgdzbsedre" data-title="取消静音" style="width: 38px; height: 38px; float: right; overflow: hidden; cursor: pointer; display: none;"><canvas class="escmutechfgdzbsedre-canvas" width="38" height="38"></canvas></div><div class="dlinechfgdzbsedre-rd" style="width: 0px; height: 38px; overflow: hidden; border-left: 1px solid rgb(48, 48, 48); border-right: 1px solid rgb(21, 21, 21); opacity: 0.9; float: right; display: block;"></div></div><div class="timeprogressbgchfgdzbsedre" style="width: 100%; height: 6px; background-color: rgb(63, 63, 63); overflow: hidden; position: absolute; bottom: 38px; z-index: 88; display: none;"><div class="loadprogresschfgdzbsedre" style="width: 0px; height: 6px; position: absolute; bottom: 38px; top: 0px; z-index: 91; background-color: rgb(111, 111, 111);"></div><div class="timeprogresschfgdzbsedre" style="width: 0px; height: 6px; position: absolute; bottom: 38px; top: 0px; z-index: 91; background-color: rgb(7, 130, 245);"></div></div><div class="timebobgchfgdzbsedre" style="width: 100%; height: 14px; overflow: hidden; position: absolute; bottom: 34px; cursor: pointer; z-index: 92; display: none;"><div class="timebochfgdzbsedre" style="width: 14px; height: 14px; overflow: hidden; border-radius: 50%; background-color: rgb(255, 255, 255); cursor: pointer; position: absolute; top: 0px; z-index: 20; left: 0px;"><div class="timebwchfgdzbsedre" style="width: 8px; height: 8px; overflow: hidden; border-radius: 50%; position: absolute; background-color: rgb(7, 130, 245); left: 3px; top: 3px;"></div></div></div><div class="promptbgchfgdzbsedre" style="height: 30px; line-height: 30px; color: rgb(255, 255, 255); font-size: 14px; text-align: center; position: absolute; border-radius: 5px; padding-left: 5px; padding-right: 5px; bottom: 0px; display: none; z-index: 95; background-color: rgb(0, 0, 0); opacity: 0.5;"></div><div class="promptchfgdzbsedre" style="height: 30px; line-height: 30px; color: rgb(255, 255, 255); font-size: 14px; text-align: center; position: absolute; border-radius: 5px; padding-left: 5px; padding-right: 5px; bottom: 0px; display: none; z-index: 95;"></div><div class="definitionpchfgdzbsedre" style="line-height: 30px; color: rgb(255, 255, 255); overflow: hidden; position: absolute; bottom: 4px; background-color: rgb(0, 0, 0); text-align: center; z-index: 95; cursor: pointer; display: none; width: 100px;"></div><div class="playbackratepchfgdzbsedre" style="line-height: 30px; color: rgb(255, 255, 255); overflow: hidden; position: absolute; bottom: 4px; background-color: rgb(0, 0, 0); text-align: center; z-index: 95; cursor: pointer; display: none; width: 80px;"><p style="color: rgb(255, 255, 255); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">4倍速</p><p style="color: rgb(255, 255, 255); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">2倍速</p><p style="color: rgb(255, 255, 255); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">1.5倍</p><p style="color: rgb(255, 255, 255); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">1.25倍</p><p style="color: rgb(7, 130, 245); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">正常</p><p style="color: rgb(255, 255, 255); margin: 0px; padding: 0px; font-size: 14px; border-bottom: 1px solid rgb(40, 40, 40);">0.5倍</p><p style="color: rgb(7, 130, 245); margin: 0px; padding: 0px; font-size: 14px;">正常</p></div><div class="pausecenterchfgdzbsedre" style="width: 80px; height: 80px; border-radius: 50%; position: absolute; display: none; cursor: pointer; z-index: 100; left: 689px; top: 378px;"><canvas class="pausecenterchfgdzbsedre-canvas" width="80" height="80"></canvas></div><div class="loadingchfgdzbsedre" style="width: 60px; height: 60px; position: absolute; display: none; z-index: 100; left: 699px; top: 388px;"><canvas class="loadingchfgdzbsedre-canvas" width="60" height="60" style="transform: rotate(0deg);"></canvas></div><div class="errortextchfgdzbsedre" style="width: 120px; height: 30px; line-height: 30px; color: rgb(255, 255, 255); font-size: 14px; text-align: center; position: absolute; display: none; z-index: 100; cursor: default; left: 669px; top: 403px;">加载出错</div><div class="logochfgdzbsedre" style="height: 30px; line-height: 30px; color: rgb(255, 255, 255); font-family: Arial; font-size: 28px; text-align: center; position: absolute; float: left; left: 1331px; top: 20px; z-index: 100; opacity: 0.8; cursor: default;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAZCAYAAACxZDnAAAAD7UlEQVR42u1XO2tUQRTOH0grCFYWFhYWgiCoTUAkhYWIIlZBMRBRG1GwUAujqGAQjIhroUgaCw2oiPgiCtHggyhJY5Q1qIlkNWsUszN77z78znhmOTs7u17NgkHmwJCduefxzXnNSUtLoECBAgUKFCjQPyGt1EBe67JZSvUllQPv04qc1v0+nnK53Ar9k8xTipTqmi/39uHXWu/H75P4doSwN83Y3zqC5X5UgObzB718Si3G9zzxED8usmQ+ONmH3zkrAuv6phmMomgllEbsiBwMLk1cCRR9pbqxTpCeqmxhPQjcNgLN4MfmVSU7+CkJgLHAvphuvjFkslGudVqcX4CxrCitEvaj1oH4uwn7CaxPWI8cue8sE+P3V7c8cbFLOP9C+sHfawKi9S7sM1ifrT76xnx0NoT1UbS4J41KG/g2gmfYJhHLKOh8E2u9zsWP/WHPfScg8hZ2FkFmrauPK/R80j51XQC5yWevhMGCDQQr/2CdJc4Gudc/FHLuKlFQ2YFpt+VIHPh+i/WNNtJXr82REynIdeSoJWxw8dPy8ZtAaL3XZroNmMSR9CF8bQXo0lCaEhd+R+VkMoCV2/aCvy+F4R6cHXKcmsLZVsP/6wzVGS2n7HDPCAdljgwI+BaA75vIrseU4eKSJaqCOlWaEo56QTY5mFcoyIyhCj/hEBldwtkpBHIHzjuxnxHnPWzjtpVP8iDQZWbtpeM4bhMPY7lOhHPgWy2cUMR+DfbjgucyZ9YW0fMmuWfvrLQqrg6f8x3ZKfuAiUtTZrbXcXRvTTVRm9D6nLh3FX7n0c7ZRxuOPdrIH4kcLR8qcgQALJRRJedRX+Q1Ttlg2kO1EzKuHPR2eDJrgIFfdVsV+Le7zndkBz14M416NOQfeNsHxlcP/laqZtEix+oEbcZUOfuEqlDlcu+TPIQX5WWcjDHlI4LSgf0IjTz0AAi5IR6LZNkdo6wkELI82dHDojXd5bY0Ys8A/o7LhxZx2oPX2p2QrYT0UVIAbydX1WZqH1X92MHP9m4Ih16rjIDVrTRt25BoRfeSPIS+y9x3sqAgMsO2iWfC+Fm+8FSD8qrMpNKmdyFIXNrZRrJkF1hWiSkg4hFNZqDmxImF/uMufs8/L2XO7n6TCHJycR5DW22/ewgzvuGcy65YY1ip59wmauRoPJIvs+j99DtrMwH8Z5wpJiP21lntorSNLAdzWtrF2mdx2hLmaaLoeVtmqSJYTw1+1lVw7tvN1dxFY6YnMaiVHJjzf05UivTyUvklGhXz+WUwvIemjWbwzYVipdrM1IA7/Ikd078xHiLgK3xjI3DvpjfF9z1QoECBAgUKFCjQf00/Acs+j9Bkqu/ZAAAAAElFTkSuQmCC" border="0"></div></div></div> <script type="text/javascript">
+                                    var nowD = document.getElementById("sc_id").value;
+
+                                    function playerstop() {
+                                        var sid = document.getElementById("sc_id").value;
+                                        var cid = document.getElementById("cs_id").value;
+                                        $.ajax({
+                                                    url: "/course/course/studied.html",
+                                                    type: "post", data: {'sc_id': sid, 'cs_id': cid},
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                    }
+                                                }
+                                        );
+                                        $('#J_Player').hide();
+                                        $('#J_PlayOver').show();
+
+                                    }
+
+
+                                    function playvideo(n) {
+                                        nowD = n;
+                                        $.ajax({
+                                            url: "/course/course/chekbuy.html",
+                                            type: "post",
+                                            data: {
+                                                'id': nowD
+                                            }
+                                            ,
+                                            dataType: 'json',
+                                            success: function (res) {
+                                                if (res.isbuy == 1 || res.isfree == 1 || res.isteacher == 1) {
+                                                    var videoObject = {
+                                                        container: '#J_Player', //容器的ID或className
+                                                        variable: 'player', //播放函数名称
+                                                        poster: '/data/upload/20181022/5bcd5a5863192.png', //封面图片
+                                                        config: '', //指定配置函数
+                                                        debug: true, //是否开启调试模式
+                                                        //flashplayer: true, //强制使用flashplayer
+                                                        drag: 'start', //拖动的属性
+
+                                                        promptSpot: [ //提示点
+                                                            {
+                                                                words: '提示点文字01',
+                                                                time: 30
+                                                            },
+                                                            {
+                                                                words: '提示点文字02',
+                                                                time: 150
+                                                            }
+                                                        ],
+                                                        video: [
+                                                            ['http://img.ksbbs.com/asset/Mon_1703/05cacb4e02f9d9e.mp4', 'video/mp4', '中文标清', 0],
+                                                            ['http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4', 'video/mp4', '中文高清', 0],
+                                                            ['http://img.ksbbs.com/asset/Mon_1703/eb048d7839442d0.mp4', 'video/mp4', '英文高清', 10],
+                                                            ['http://img.ksbbs.com/asset/Mon_1703/d30e02a5626c066.mp4', 'video/mp4', '英文超清', 0]
+                                                        ]
+                                                    };
+                                                    var player = new ckplayer(videoObject);
+                                                    changeVideo('http://file.leidun.site/videos/7spark_sql/7.1SparkSession.mp4');
+                                                    //changeVideo('http://file.leidun.site/videos/es_28/1elasticsearch服务讲解与VMware开发环境搭建.flv');
+
+                                                    function changeVideo(videoUrl) {
+                                                        if (player == null) {
+                                                            return;
+                                                        }
+
+                                                        var newVideoObject = {
+                                                            container: '#J_Player', //容器的ID
+                                                            variable: 'player',
+                                                            autoplay: true, //是否自动播放
+                                                            //loaded: 'loadedHandler', //当播放器加载后执行的函数
+                                                            poster: '/data/upload/20181022/5bcd5a5863192.png',
+                                                            video: videoUrl
+                                                        };
+                                                        //判断是需要重新加载播放器还是直接换新地址
+
+                                                        if (player.playerType == 'html5video') {
+                                                            if (player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
+                                                                player.removeChild();
+
+                                                                player = null;
+                                                                player = new ckplayer();
+                                                                player.embed(newVideoObject);
+                                                            } else {
+                                                                player.newVideo(newVideoObject);
+                                                            }
+                                                        } else {
+                                                            if (player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
+                                                                player = null;
+                                                                player = new ckplayer();
+                                                                player.embed(newVideoObject);
+                                                            } else {
+                                                                player.newVideo(newVideoObject);
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                                else {
+                                                    $("#J_Player").hide();
+                                                    $("#J_nobuy").show();
+                                                }
+                                            }
+                                        })
+                                        ;
+
+                                    }
+                                    playvideo(nowD);
+                                </script> <div class="poster" id="J_PlayOver" style="transition: all 1s ease 0s; display: none; height: 824px; width: 1582px;"> <div class="poster-wrapper-outer"> <div class="poster-wrapper-inner"> <div class="icon"></div> <div class="detail-wrapper"> <p>恭喜你，已经学完本节课程，你可以再回顾一下或者继续学习！</p> </div> </div> </div> </div> <div class="poster" id="J_nobuy" style="transition: all 1s ease 0s; display: none; height: 824px; width: 1582px;"> <div class="poster-wrapper-outer"> <div class="poster-wrapper-inner"> <div class="icon"></div> <div class="detail-wrapper"> <p>亲！您还没购买此课程，请购买后再来观看学习！</p> </div> </div> </div> </div> </div> </div> </div> <div class="tx-sidebar-wrapper ks-sidebar" id="J_SideBar" style="transition: all 1s ease 0s; width: 22%;"> <div id="J_tab" style="height: 854px;"> <div class="tab-content"> <div class="tab-pannel"> <div class="tx-info"> <a class="link" href=""> <div class="img-wrapper-outer"> <div class="img-wrapper"> <img class="img" src="studypage_files/5bcd5a5863192.png" alt=""> </div> </div> <div class="info-wrapper"> <h3>Spark SQL编程</h3> <span></span> </div> </a> </div> <div class="tx-outline ks-outline" data-guid="2" data-initialized="true" style="height: 465px;"> <div class="outline-inner" id="J_OutlineInner"> <div class="chapter J_Chapter"> <h4>章节<span class="num">1</span><span class="name">Spark SQL编程</span></h4> <input id="count" value="5" type="hidden"> <ul> <a href="http://www.leidun.site/course/course/study/id/34.html" title="Spark Session介绍 " style="text-decoration:none;color:#333;"> <li class="course J_Course head active"> <div class="info"> <p>课时</p> <p class="time">13:51</p> </div> <div class="detail"> <p>Spark Session介绍</p> <div class="resources-wrapper"> <span class="resources video"> <span class="icon"></span>点播
+																</span> </div> </div> <span class="progress done"></span> </li> </a> <a href="http://www.leidun.site/course/course/study/id/35.html" title="Rdd与DataFrame转化" style="text-decoration:none;color:#333;"> <li class="course J_Course head" id="35" onmousemove="addhover(this.id)" onmouseout="delhover(this.id)"> <div class="info"> <p>课时</p> <p class="time">19:21</p> </div> <div class="detail"> <p>Rdd与DataFrame转化</p> <div class="resources-wrapper"> <span class="resources video"> <span class="icon"></span>点播
+																</span> </div> </div> <span class="progress"></span> </li> </a> <a href="http://www.leidun.site/course/course/study/id/36.html" title="加载数据和保存数据" style="text-decoration:none;color:#333;"> <li class="course J_Course head" id="36" onmousemove="addhover(this.id)" onmouseout="delhover(this.id)"> <div class="info"> <p>课时</p> <p class="time">24:39</p> </div> <div class="detail"> <p>加载数据和保存数据</p> <div class="resources-wrapper"> <span class="resources video"> <span class="icon"></span>点播
+																</span> </div> </div> <span class="progress"></span> </li> </a> <a href="http://www.leidun.site/course/course/study/id/37.html" title="Spark hive操作表和SparkAPi" style="text-decoration:none;color:#333;"> <li class="course J_Course head" id="37" onmousemove="addhover(this.id)" onmouseout="delhover(this.id)"> <div class="info"> <p>课时</p> <p class="time">22:41</p> </div> <div class="detail"> <p>Spark hive操作表和SparkAPi</p> <div class="resources-wrapper"> <span class="resources video"> <span class="icon"></span>点播
+																</span> </div> </div> <span class="progress"></span> </li> </a> <a href="http://www.leidun.site/course/course/study/id/38.html" title="Spark配置和调优" style="text-decoration:none;color:#333;"> <li class="course J_Course head" id="38" onmousemove="addhover(this.id)" onmouseout="delhover(this.id)"> <div class="info"> <p>课时</p> <p class="time">18:27</p> </div> <div class="detail"> <p>Spark配置和调优</p> <div class="resources-wrapper"> <span class="resources video"> <span class="icon"></span>点播
+																</span> </div> </div> <span class="progress"></span> </li> </a> </ul> </div> <div class="bar" style="height: 335px;"></div> </div> </div> </div> </div> </div> <div class="action J_Fold unfold"> <span class="tx-learn-iconfont unfold-icon"></span> <span class="tx-learn-iconfont fold-icon"></span> </div> </div> </div> <div id="extwaiimpotscp" style="display:none" v="{f6bd" f="ZTJZMlltUmpaVFEwTFROa05XRXROR1k0T0MwNVlUWTBMV1V6T1daallqUm1NRGN4TjMwPQ==" q="75df30a1" c="52.10" i="57.90" u="0.063" s="bcba796b" w="false" m="BMe=" vn="0youd"></div></div>  <script type="text/javascript">
+    $(".button-over").click(function () {
+        var sid = document.getElementById("sc_id").value;
+        var cid = document.getElementById("cs_id").value;
+        var d = dialog({
+            title: '正在提交...',
+            content: '恭喜你，已经学完本节课程！'
+
+        });
+        d.width(300)
+        d.showModal();
+        setTimeout(function () {
+            d.close().remove();
+        }, 2000);
+        $.ajax({url: '/course / _course / studied_        .html',
+                type
+        :
+        "post", data
+        :
+        {
+            'sc_id'
+        :
+            sid, 'cs_id'
+        :
+            cid
+        }
+        ,
+        dataType:'json',
+                success
+        :
+        function (data) {
+        }
+    }
+        )
+        ;
+    });
+</script> <script type="text/javascript">    $(function () {
+        var count = $("#count").val();
+        var width = $(window).width() + 17;
+        var height = $(window).height();
+        $(".bar").css("height", 20 + count * 70 - 35);
+        $(".tx-main").css("width", width);
+        $(".tx-main").css("height", height);
+        $(".J_Container").css("height", height - 130);
+        $(".J_Container").css("width", width - 320);
+        $(".player").css("height", height - 160);
+        $(".player").css("width", width - 340);
+        $("#player_iframe").css("height", height - 160);
+        $("#player_iframe").css("width", width - 340);
+        $("#J_tab").css("height", height - 130);
+        $(".poster").css("height", height - 160);
+        $(".poster").css("width", width - 340);
+        $(".ks-player").css("width", "78%");
+        $(".ks-sidebar").css("width", "22%");
+
+        var onf = true;
+        $('.J_Fold').click(function () {
+            if (onf) {
+                $(".ks-player").css("width", width);
+                $(".ks-sidebar").css("width", 0);
+                $(".player").css("width", width - 40);
+                $("#player_iframe").css("width", width - 40);
+                $(".poster").css("width", width - 40);
+                $(".J_Fold").removeClass("unfold");
+                onf = false;
+            } else {
+                $(".ks-player").css("width", width - 300);
+                $(".player").css("width", width - 340);
+                $("#player_iframe").css("width", width - 340);
+                $(".poster").css("width", width - 340);
+                $(".ks-sidebar").css("width", 300);
+                $(".J_Fold").addClass("unfold");
+                onf = true;
+            }
+        });
+    })
+    function addhover(id) {
+        $("#" + id).addClass('hover');
+        $("#" + id + "a").css('color', 'red');
+    }
+    function delhover(id) {
+        $("#" + id).removeClass('hover');
+    }
+</script> <audio controls="controls" style="display: none;"></audio><div class="menuchfgdzbsedre" style="background-color: rgb(255, 255, 255); padding: 5px; position: absolute; left: 10px; top: 20px; display: none; z-index: 999; color: rgb(161, 169, 190); box-shadow: rgb(170, 170, 170) 2px 2px 3px;"><p style="height: 30px; line-height: 30px; margin: 0px; font-size: 12px; padding-left: 10px; padding-right: 30px;"><a href="http://www.leidun.site/" undefined="" style="color: rgb(0, 0, 0); text-decoration: none;">雷顿学院</a></p><p style="height: 30px; line-height: 30px; margin: 0px; font-size: 12px; padding-left: 10px; padding-right: 30px; border-bottom: 1px solid rgb(233, 233, 233);">1.0</p></div></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(moz-extension://599a5ac4-0c20-0245-bd19-2851473e6cde/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>

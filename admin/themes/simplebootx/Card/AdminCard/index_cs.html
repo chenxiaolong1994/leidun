@@ -1,0 +1,70 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+<ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">{$cs_data}</a></li>
+</ul>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>点卡卡号</th>
+	            <th>类型</th>
+                <th>面值(元)</th>             
+	            <th>销售状态</th>
+	            <th>使用状态</th>
+	            <th>点卡状态</th>
+	            <th>使用者</th>
+	          </tr>
+        </thead>
+        	<php>
+        	    $type=array("1"=>"充值点卡","2"=>"课程激活卡","3"=>"VIP激活卡","4"=>"免费体验卡");
+        		$status=array("1"=>"锁定","0"=>"正常");
+        		$salestatus=array("1"=>"<font color='red'>已出售</font>","0"=>"未出售");
+        		$usestatus=array("1"=>"<font color='red'>已使用</font>","0"=>"未使用");
+        	</php>
+        	<foreach name="cardlist" item="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td>{$vo.id}</td>
+		            <td>{$vo.card_name}</td>
+    	            <td>{$type[$vo['type_id']]}</td>
+    	            <td>{$vo.card_price}</td>
+    	            <td>{$salestatus[$vo['sale_state']]}</td>
+		            <td>{$usestatus[$vo['use_state']]}</td>
+		            <td>{$status[$vo['card_state']]}</td>
+		            <td>{$vo.user_id|getusername}</td>
+	          	</tr>
+          </foreach>
+           <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>点卡卡号</th>
+	            <th>类型</th>
+                <th>面值(元)</th>             
+	            <th>销售状态</th>
+	            <th>使用状态</th>
+	            <th>点卡状态</th>
+	            <th>使用者</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$page}</div>
+     <div class="form-actions">
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/sell',array('sell'=>1))}" data-subcheck="true" >出售</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/sell',array('unsell'=>1))}" data-subcheck="true" >未出售</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/used',array('used'=>1))}" data-subcheck="true" >使用</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/used',array('unused'=>1))}" data-subcheck="true" >未使用</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/lock',array('unlock'=>1))}" data-subcheck="true" >解锁</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/lock',array('lock'=>1))}" data-subcheck="true" >锁定</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCard/delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+    </div>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

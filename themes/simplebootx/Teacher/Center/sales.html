@@ -1,0 +1,164 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+       <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+      <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+              <if condition="$user_type neq 2">
+               <li class="list-group-heading">我的教学</li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/index')}">课程管理</a></li>
+               <li class="list-group-item "><a href="{:u('teacher/Center/createcourse')}">课程发布</a></li>
+               <li class="list-group-item active"><a href="{:u('teacher/Center/sales')}">课程订单</a></li>
+			   <li class="list-group-item "><a href="{:u('teacher/Center/checkpaper')}">试卷批阅</a></li>
+			   <li class="list-group-item"><a href="{:u('teacher/Center/ziyuanku')}">我的资源库</a></li>
+             </if>
+               <li class="list-group-heading" style="margin-top:10px;">我的学习</li>
+               <li class="list-group-item " ><a href="{:u('user/center/index')}">我的课程</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myeaxm')}">我的考试</a></li>
+			   <li class="list-group-item " ><a href="{:u('user/center/myerrors')}">我的错题</a></li>
+               <li class="list-group-item"  ><a href="{:u('user/center/jihuo')}">激活课程</a></li>
+               <li class="list-group-heading" style="margin-top:10px;">个人设置</li>
+               <li class="list-group-item "><a href="{:u('user/center/setting')}"> 基础信息</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/pic')}">头像设置</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/security')}">修改密码</a></li>          
+               <li class="list-group-heading" style="margin-top:10px;">账户中心</li>
+               <li class="list-group-item "><a href="{:u('user/center/count')}">我的账户</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/order')}">我的订单</a></li>
+               <li class="list-group-item "><a href="{:u('user/center/card')}">点卡充值</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">销售记录</div>
+               <div class="es-section">
+                    <span class="label label-primary label-md">课程总收入</span>
+                    <div class="coin-block clearfix">
+                      <div class="coin-text">
+                         <strong>{$inflownum}元</strong>
+                      </div>
+                     
+                      <div class="coin-btn">
+                          <a href="{:u('teacher/Center/tixian')}" class="mll btn btn-default"  data-toggle="modal" data-target="#myModal" >申请提现</a>
+                      </div>
+                    </div>
+	                <form id="user-search-form" class="form-inline well well-sm clearfix" action="" method="get" novalidate>
+                      <div class="form-group">
+                       <div class="nav-btn-tab" style="border:0px;">
+                         <ul class="nav nav-pills" id="myTab">
+                           <li role="presentation"  class="active"><a href="#inflow"  data-toggle="tab">收入流水</a></li>
+                           <li role="presentation" style="margin-left:10px;"><a href="#outflow" data-toggle="tab">提现记录</a></li>
+                         </ul>
+                       </div>    
+                      </div>
+                      <div class="control-label pull-right" style="padding-top: 8px;">
+                                                                  可提现额：<span style="color:#1bb974;">{$keti}</span>&nbsp;RMB
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                  总提现额：<span style="color:#ff7b0e;">{$tixiannum}</span>&nbsp;RMB
+                      </div>
+                   </form>
+                  <div class="table-responsive">
+                   <div id="myTabContent" class="tab-content" >
+                   
+                    <div class="tab-pane fadee active" id="inflow">
+                    <if condition="!empty($sales)">
+                     <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>课程</th>
+                            <th>收入金额</th>
+                            <th>操作时间</th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                         <volist name="sales" id="vo">
+                          <tr style="word-break: break-all;word-wrap: break-word;">
+                           <td><span class="text-muted text-sm">{$vo['scname']|default="<font color='blue'>课程已删除</font>"}</span></td>
+                           <td><span class="money-text">{$vo['money']}</span></td>
+                           <td><span class="text-muted text-sm">{$vo['addtime']}</span></td>
+                          </tr>
+                         </volist>
+                         </tbody>
+                       </table>
+					   <nav class="text-center"><div class="pagination text-center">{$Page1}</div></nav>
+                      <else/> 
+                      <div class="table-responsive">
+                         <table class="table table-striped">
+                           <div class="empty">暂无记录</div>
+                        </table>
+                      </div>
+                      </if> 
+                      </div>  
+                      <div class="tab-pane fadee" id="outflow">
+                      <if condition="!empty($tixian)">
+                        <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>账户姓名</th>
+                            <th>提现金额</th>
+                            <th>账户</th>
+                            <th>状态</th>
+                            <th>申请时间</th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                         <volist name="tixian" id="vo">
+                          <tr style="word-break: break-all;word-wrap: break-word;">
+                           <td><span class="text-muted">{$vo['turename']}</span></td>
+                           <td><span class="money-text ">{$vo['money']}</span></td>
+                           <td><span class="text-muted">{$vo['count']}</span></td>
+                           <if condition="$vo['state'] eq 1">
+                              <td><span class="label label-success">已支付</span></td>
+                           <else/> 
+                              <td><span class="label label-danger">待支付</span></td>
+                           </if>
+                           <td><span class="text-muted text-sm">{$vo['addtime']}</span></td>
+                          </tr>
+                         </volist>
+                         </tbody>
+                       </table>
+					   <nav class="text-center"><div class="pagination text-center">{$Page2}</div></nav>
+                      <else/> 
+                         <div class="table-responsive">
+                          <table class="table table-striped">
+                             <div class="empty">暂无记录</div>
+                          </table>
+                         </div>
+                      </if> 
+                      </div> 
+                      </div>
+                    </div>
+                   </div>  
+               </div>
+	        </div>
+          </div>
+      </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>      
+<tc_include file="Public:scripts" />
+<script>
+$("#myModal").on("hidden.bs.modal", function() {
+    $(this).removeData("bs.modal");
+});
+</script>
+<tc_include file="Public:footer" />

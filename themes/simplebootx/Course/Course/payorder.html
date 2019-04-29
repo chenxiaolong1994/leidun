@@ -1,0 +1,89 @@
+<tc_include file="Public:header" />
+<div id="content-container" class="container">
+ <div class="order-pay">
+  <div class="es-section">
+    <ul class="es-step es-step-3 clearfix">
+      <li><span class="number"><i class="es-icon es-icon-done"></i></span>订单确认</li>
+      <li class="doing"><span class="number">2</span>订单支付</li>
+      <li><span class="number">3</span>订单完成</li>
+    </ul>
+    <div class="order-pay-body">
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+                 订单已提交，请在４８小时内完成支付！逾期订单将被取消。
+      </div>
+      <div class="order-detail-bg  checkout" style="border:none">
+        <div class="order-detail  clearfix">
+          <div class="order-img hidden-xs">
+             <a ><img class="img-responsive" src="{$cs_data['cs_picture']}"alt="收费"></a>
+          </div>
+          <div class="order-info">
+             <p>订单名称：购买课程《{$cs_data['cs_name']}》</p>
+             <p>订单号：{$out_trade_no}</p>
+             <p>订单价格：<span class="pay-rmb">￥{$cs_data['cs_price']}.00</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="es-piece" style="margin-bottom:20px;"><div class="piece-header">支付方式</div></div>
+       <form class="form-paytype" method="post" action="{:u('course/Course/payment',array('id'=>$cs_data['id']))}">
+         <input type="hidden" name="orderId" value="{$out_trade_no}">
+         <input type="hidden" name="courseid" value="{$cs_data['id']}">
+         <input type="hidden" name="totalmoney" value="{$cs_data['cs_price']}">
+		 <input type="hidden" name="ordsubject" value="{$cs_data['cs_name']}">
+		 <input type="hidden" name="ordbody" value="订单描述">
+         <input type="hidden" name="payment" id="payment" value="yuepay">
+        
+        <div class="form-group order-detail-bg">
+           <div class="check active " id="yuepay" onclick="chengepay(1)">
+              <img src="__PUBLIC__/simplebootx/public/images/pay2_img29.png" />
+              <span class="icon"></span>
+           </div>
+           <div class="check" id="alipay" onclick="chengepay(2)">
+              <img src="__PUBLIC__/simplebootx/public/images/alipay.png" />
+              <span class="icon"></span>
+           </div>
+           <div class="check" id="wxpay" onclick="chengepay(3)">
+              <img src="__PUBLIC__/simplebootx/public/images/wxpay.png" />
+              <span class="icon"></span>
+           </div>
+          
+        </div>
+        <div class="form-group">
+          <div class="total-price">应付金额：
+            <span role="pay-rmb" class="pay-rmb">￥{$cs_data['cs_price']}.00</span>
+          </div>
+        </div>
+        <div class="form-group text-right">
+           <button class="pay-button btn btn-primary"  type="submit">确认支付</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+function chengepay(pay){
+var value = document.getElementById("payment");
+   if(pay==1){
+   document.getElementById('yuepay').className = 'check active';
+   document.getElementById('alipay').className = 'check';
+   document.getElementById('wxpay').className = 'check';
+   value.value="yuepay"
+   }
+   if(pay==2){
+   document.getElementById('yuepay').className = 'check';
+   document.getElementById('alipay').className = 'check active';
+   document.getElementById('wxpay').className = 'check';
+   value.value="alipay"
+   }if(pay==3){
+   document.getElementById('yuepay').className = 'check';
+   document.getElementById('alipay').className = 'check';
+   document.getElementById('wxpay').className = 'check active';
+   value.value="wxpay"
+   }
+}
+ </script>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

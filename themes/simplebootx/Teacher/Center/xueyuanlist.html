@@ -1,0 +1,83 @@
+<tc_include file="Public:header" />
+<link rel="stylesheet" media="screen" href="./themes/simplebootx/public/css/fileinput.css" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+            <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item active"><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item " ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>				<li class="list-group-item "><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>
+			   <li class="list-group-item "><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>
+			   <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">		      
+				<div class="panel-heading_img" style="margin-bottom:20px;float:left;width:118px;height:66px;border:1px solid #e3e1e1">			  
+					<if condition="empty($cs_pic)">				 
+						<img style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle" src="__PUBLIC__/images/course.png" alt="{$lession.cs_name}">	
+					<else /> 			
+						<img  style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle" src="{$cs_pic}" alt="{$lession.cs_name}">				
+					</if> 			 
+				</div>			 
+				<div style="height:66px;float:left;text-align:left;margin-left:20px;line-height:66px;" >{$cs_name}</div>		    
+			</div>	
+	          <div class="panel-body">
+  		  	     <table class="table table-hover  table-list">
+				<thead>
+					<tr>
+						<th width="80">ID</th>
+						<th width="150">用户名</th>
+						<th>学习进度</th>
+						<th width="180">购买时间</th>
+					</tr>
+				</thead>
+				<foreach name="xueyuan" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.user_id|getusername}</td>
+					<td> <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: {$vo['bili']}%;">{$vo['bili']}%</div>
+                         </div>
+                    </td>
+					<td>{$vo.addtime}</td>
+				</tr>
+				</foreach>
+				
+			</table>
+				<nav class="text-center"><div class="pagination text-center">{$Page}</div></nav>  
+
+                   
+		      </div>
+	        </div>
+         </div>
+     </div>
+   </div>
+<tc_include file="Public:scripts" />   
+<tc_include file="Public:footer" />

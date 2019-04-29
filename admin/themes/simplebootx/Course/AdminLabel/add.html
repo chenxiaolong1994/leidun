@@ -1,0 +1,39 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+	     <ul class="nav nav-tabs">
+            <li ><a href="{:U('AdminLabel/index')}">标签列表</a></li>
+            <li class="active"><a href="{:U('AdminLabel/add')}">添加标签</a></li>
+        </ul>
+		<form class="form-horizontal js-ajax-form" action="{:u('AdminLabel/add_post')}" method="post">
+		    <div class="tab-pane active" id="A">
+		        <table cellpadding="2" cellspacing="2" width="100%">
+					<tbody>
+						<tr>
+							<td width="140">所属分类:</td>
+							<td>
+							  <select name="c_id" class="normal_select">
+							     <option value="0">请选择分类</option>
+							     	<foreach name="terms" item="vo">
+									   <php>$selected=$parent==$vo['term_id']?"selected":""</php>
+							           <option value="{$vo.term_id}" {$selected}>{$vo.spacer}{$vo.name}</option>
+								     </foreach>
+							   </select>
+							 </td>
+						</tr>
+						<tr>
+							<td>标签名称:</td>
+							<td><input type="text" class="input" name="labelname" value=""><span class="must_red">*</span></td>
+						</tr>
+					</tbody>
+				 </table>
+		      </div>
+		      <div class="form-actions">
+		           <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+		      		<a class="btn" href="{:U('AdminCoursetype/label')}">返回</a>
+		      </div>
+		</form>
+	</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

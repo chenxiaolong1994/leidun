@@ -1,0 +1,43 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+		<ul class="nav nav-tabs">
+           <li><a href="{:U('AdminCard/add',array('type_id'=>1))}"  target="_self">充值点卡</a></li>
+           <li><a href="{:U('AdminCard/add_jihuo',array('type_id'=>2))}" target="_self">课程激活卡</a></li>
+           <li><a href="{:U('AdminCard/add_vip',array('type_id'=>3))}"  target="_self">VIP激活卡</a></li>
+           <li class="active"><a href="{:U('AdminCard/add_tiyan',array('type_id'=>4))}"  target="_self">免费体验卡</a></li>
+        </ul>
+		<form class="form-horizontal js-ajax-form" name="myform" id="myform" action="{:u('AdminCard/add_post')}" method="post">
+			<div class="form-group" style="margin-bottom:10px;">
+             <label>数量</label> 
+              <input type="hidden" name="type_id" value="{$type_id}">
+			  <input type="hidden" name="domain" id="domain" value={$domain} />
+			  <input type="hidden" name="code" id="code" value=""/>
+			  <input type="hidden" name="count" id="count" value="" />
+              <input type="text" style="width:400px;" name="numbers" id="numbers"   value="" style="color:" class="input input_hd J_title_color" placeholder="点卡的数量" />       
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>金额</label>
+              <input type='text' name='card_price' id='card_price'  value='' style='width:400px;'   class='input' placeholder="点卡的面值"  >
+            <div class="form-action" style="margin-top:40px;">
+              <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.all.min.js"></script>
+             <button class="btn btn-primary js-ajax-submit"type="submit">提交</button>
+              <a class="btn" href="{:U('AdminCard/index')}">返回</a>
+            </div>
+		</form>
+	</div>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+       var domain=document.getElementById("domain").value;
+	  $.ajax({
+     	type : "get",
+	    url : "http://gw.ruisi365.com/index.php?g=api&m=Regcheck&a=index&domain="+domain,
+    	dataType : "jsonp",
+	    success : function(data){
+	    	document.getElementById("code").value=data.cnotice;
+			document.getElementById("count").value=data.ccount;
+	      }
+     });
+	</script>
+</body>
+</html>

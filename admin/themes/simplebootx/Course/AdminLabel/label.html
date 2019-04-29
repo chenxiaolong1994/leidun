@@ -1,0 +1,77 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap jj">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="{:U('AdminCoursetype/label')}">标签列表</a></li>
+     <li><a href="{:U('AdminCoursetype/addlabel')}">添加标签</a></li>
+  </ul>
+  <div class="common-form">
+    <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>标签名称</th>
+	            <th>所属分类</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"已审核","0"=>"未审核");
+        		$recommend_status=array("1"=>"已推荐","0"=>"未推荐");
+        	</php>
+        	<foreach name="courselist" item="vo">
+	        	<tr> 
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><input name="listorders[{$vo.id}]" class="input input-order"  type='text' size='3' value='{$vo.listorder}'></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.cs_name}</span></td>
+                    <td>
+    	               {$vo.coursetype_name}
+    	            </td>
+		            <td>
+		                <div class="btn-group">
+		                   <a  class="btn btn-default btn-sm" href="{:u('course/AdminSection/add',array('cs_id'=>$vo['id']))}">添加</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a href="{:u('course/AdminSection/index_cs',array('cs_id'=>$vo['id']))}">课时列表</a></li>
+                             <li><a href="{:u('course/AdminMaterial/index_cs',array('cs_id'=>$vo['id']))}">资料列表</a></li>
+                             <li><a href="{:u('course/AdminCourse_user/index_cs',array('cs_id'=>$vo['id']))}">学员列表</a></li>
+                             <li><a href="{:u('course/AdminCourse_comment/index_cs',array('cs_id'=>$vo['id']))}">评论列表</a></li>
+                             <li><a href="{:u('card/AdminCard/index_cs',array('cs_id'=>$vo['id']))}">激活点卡</a></li>
+                             <li class="divider"></li>
+                             <li><a href="{:U('AdminCourse/edit',array('id' => $vo['id']))}">修改课程</a></li>
+                             <li><a href="{:U('AdminCourse/delete',array('id' => $vo['id']))}" class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？">删除课程</a></li>
+                           </ul>
+                          </div>
+					</td>
+	          	</tr>
+          </foreach>
+          <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="40">ID</th>
+	            <th>课程名称</th>
+	            <th>所属分类</th>           
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$Page}</div>   
+      <div class="form-actions">                       
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCourse/listorders')}">排序</button>
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminCourse/delete')}">删除</button>
+        <button class="btn btn-primary" type="button" id="J_Content_remove">批量移动</button>
+      </div>
+  </form>
+  </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+	 <form class="form-horizontal js-ajax-form" name="myform" id="myform" action="{:u('AdminSection/edit_post')}" method="post">
+		<div class="form-group" style="margin-bottom:10px;">
+           <label>课件名称</label>
+            <input type="hidden" name="video_type" id="video_type" value="1">
+           <input type="hidden" name="id" value="{$section['id']}" />
+           <input type="text" style="width:400px;" name="sc_name" id="sc_name"   value="{$section['sc_name']}" style="color:" class="input input_hd J_title_color" placeholder="课件标题" />       
+        </div>
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>所属课程</label>
+           <select name="cs_id">
+		    <volist name="course" id="vo">
+			   <option value="{$vo['id']}"<eq name="section.cs_id" value="$vo['id']">selected="selected"</eq>>{$vo['cs_name']}</option>
+		    </volist>
+		  </select>
+       </div>
+       <div class="form-group" style="margin-bottom:10px;">
+           <label>播放时长</label>
+           <input type='text' name='sc_time' id='sc_time'  value="{$section.sc_time}" style='width:400px;' class='input' >
+       </div> 
+       <php>
+          $tencent=$section['video_type']==1?"checked":"";
+          $youku=$section['video_type']==2?"checked":"";
+          $isfree=$section['is_free']==0?"checked":"";
+       </php>     
+      <div class="form-group" style="margin-bottom:10px;" id="video">
+              <label>播放地址</label>
+              <label class="checkbox-inline" style="margin-top:10px;margin-bottom:20px;">
+                  <input type="radio" name="radio"  value="1" {$tencent}  onchange="radioSwitch(this)">&nbsp&nbsp云存储
+                  <input type="radio" name="radio"  value="2" {$youku} onchange="radioSwitch(this)" style="margin-left:20px;">&nbsp&nbsp视频网站
+              </label>
+              
+              <div id="yun" class="">
+			     <if condition="$section['video_type']==1">
+                  <input type='text' name='yun_url'  value='{$section.yun_url}' style='width:400px;'   class='input' placeholder="可以直接添加，也可以点击后面的加号上传！">
+                <else/>
+				  <input type='text' name='yun_url'  value='' style='width:400px;'   class='input' placeholder="可以直接添加，也可以点击后面的加号上传！">
+				</if>
+				 <a href="javascript:open_iframe_dialog('{:u('Course/AdminSection/add_video',array('cs_id'=>$cs_id))}','上传视频')" style="height:20px;width:50px;margin-left:10px;"><img src="__ROOT__/public/images/tv-expandable.gif"></a>
+              </div>
+			  <div id="youku"  style="display:none">
+			   <if condition="$section['video_type']==2"> 
+                  <input type='text' name='youku_url' value='{$section.yun_url}' style='width:340px;'   class='input' placeholder="优酷的分享视频地址！">
+                  <input type='text' name='playpass' value='{$section.playpass}' style='width:60px;'   class='input' placeholder="播放密码！">
+			   <else/>   
+				  <input type='text' name='youku_url' value='' style='width:340px;'   class='input' placeholder="优酷的分享视频地址！">
+			      <input type='text' name='playpass' value='' style='width:60px;'   class='input' placeholder="播放密码！">
+			   </if>
+			  </div>
+            
+            </div>
+       <div style="margin-top:40px;">
+       	 <button class="btn btn-primary "type="submit">提交</button>
+       </div>
+	</form>
+	</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script>
+var val = $('#video input[name="radio"]:checked ').val();
+if(val==1){
+	document.getElementById('yun').style.display = "";
+	document.getElementById('youku').style.display = "none";
+	}else{
+		document.getElementById('yun').style.display = "none";
+		document.getElementById('youku').style.display = "";
+		}
+ 
+function radioSwitch(){
+	var val = $('#video input[name="radio"]:checked ').val();
+	if(val==1){
+		document.getElementById('yun').style.display = "";
+		document.getElementById('youku').style.display = "none";
+		document.getElementById("video_type").value='1';
+		}else{
+			document.getElementById('yun').style.display = "none";
+			document.getElementById('youku').style.display = "";
+			document.getElementById("video_type").value='2';
+			}
+	 
+}
+</script> 
+</body>
+</html>

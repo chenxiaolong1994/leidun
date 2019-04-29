@@ -1,0 +1,43 @@
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/fileinput.css" />
+<link href="__PUBLIC__/simplebootx/public/css/bootstrap.css"rel="stylesheet" />
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/simplebootx/public/js/fileinput.js"></script>
+<script src="__PUBLIC__/simplebootx/public/js/fileinput_locale_zh.js"></script>
+<style>
+.neirong{
+	text-align:center;
+	height:300px;
+	line-height:300px;
+	font-size: 16pt;
+}
+</style>
+ <div class="file-browser-list-container" style="height:350px;">
+  <input type="hidden" name="domain" id="domain" value={$domain} />
+  <div class="modal-body" id="content">
+    <input type="file" name="upvideo" id="upvideo" multiple data-min-file-count="1" class="file"/>
+  </div>
+ </div>
+ <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> 
+     <a href="#" class="btn btn-primary" data-dismiss="modal">完成</a>
+ </div>
+	 
+<script>
+
+ $('#upvideo').fileinput({
+	language: 'zh',
+	uploadUrl: "{:u('Teacher/Center/cos_upload',array('type'=>document))}",
+	allowedFileExtensions : ['rar','zip','doc','docx','ppt','pptx'],
+	maxFileCount: 20,
+	showUpload: true, 
+	showCaption: true,
+	showPreview:true,
+	dropZoneEnabled: false,
+	validateInitialCount:false,
+	overwriteInitial: false,
+	browseClass: "btn btn-primary",         
+	msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+ });
+ 
+</script>
+

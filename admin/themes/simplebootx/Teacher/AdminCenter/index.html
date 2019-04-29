@@ -1,0 +1,67 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="{:U('AdminCenter/index')}"  target="_self">教师列表</a></li>
+     <li><a href="{:U('AdminCenter/tixian')}"  target="_self">提现管理</a></li>
+	 <li><a href="{:U('AdminCenter/setbili')}"  target="_self">分成比例设置</a></li>
+  </ul>
+  
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="40">编号</th>
+	            <th>姓名</th>
+	            <th width="160">课程数</th>
+	            <th width="160">学员数</th>
+	            <th width="200">加入时间</th>
+	            <th width="100">状态</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"<font color='green'>已审核</font>","0"=>"<font color='blue'>未审核</font>","2"=>"<font color='red'>未通过</font>");
+        		$recommend_status=array("1"=>"已推荐","0"=>"未推荐");
+        	</php>
+        	<foreach name="teacher" item="vo">
+	        	<tr> 
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.t_name}</span></td>
+    	            <td>{$vo.csnum}</td>
+		            <td>{$vo.xynum}</td>
+		            <td>{$vo.addtime}</td>
+		            <td>{$status[$vo['state']]}</td>
+		            <td>
+		                <div class="btn-group">
+		                   <a  class="btn btn-default btn-sm" >操作</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+                             <li><a href="javascript:open_iframe_dialog('{:U('Teacher/AdminCenter/tcourse',array('t_id'=>$vo['user_id']))}','课程列表')">查看课程</a></li>
+                             <li><a href="javascript:open_iframe_dialog('{:U('Teacher/AdminCenter/requery',array('t_id'=>$vo['user_id']))}','资格审核')">资格审核</a></li>
+                             <if condition="empty($vo['folderid'])" >
+							    <li><a href="{:U('Teacher/AdminCenter/creatfolder',array('t_id'=>$vo['user_id']))}">创建上传目录</a></li>
+							 <else />	
+							    <li><a href="javascript:open_iframe_dialog('{:U('Teacher/AdminCenter/folder',array('t_id'=>$vo['user_id']))}','上传目录信息')">上传目录信息</a></li>
+							 </if>
+							 <if condition="$vo['adminplate']==1" >
+								<li><a href="{:U('Teacher/AdminCenter/adminforum',array('t_id'=>$vo['user_id']))}">取消论坛管理员</a></li>
+							 <else />	
+								<li><a href="{:U('Teacher/AdminCenter/adminforum',array('t_id'=>$vo['user_id']))}">设置为论坛管理员</a></li>
+							 </if>
+                           </ul>
+                         </div>
+					</td>
+	          	</tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>   
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+      <if condition="empty($avatar)">
+       <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}"" class="alert-link" target="_blank">点击设置</a>
+	  </div>
+	  <else/>
+	    <if condition="empty($user['user_nicename'])">
+	     <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link" target="_blank">点击设置</a>
+         </div>
+        </if>
+	 </if>
+     <div class="row row-3-9">
+        <div class="col-md-3">
+           <div class="sidenav">
+             <ul class="list-group">
+               <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+               <li class="list-group-heading">课程管理</li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+			   <if condition="$cs_type==normal">
+                 <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   <else/>
+			     <li class="list-group-item"><a href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+			   </if>
+               <li class="list-group-item"><a href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+               <li class="list-group-item "><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a></li>
+			   <li class="list-group-heading">题库管理</li>
+			   <li class="list-group-item active" ><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a></li>			   <li class="list-group-item"><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a></li>			   <li class="list-group-item"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a></li>			   <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a></li>
+            </ul>
+          </div>
+        </div>
+         <div class="col-md-9">
+           <div class="panel panel-default panel-col">
+             <div class="panel-heading">
+               <div class="pull-right">
+                 <a href="{:u('Exam/Shiti/addshiti',array('cs_id'=>$cs_id,'type'=>1))}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 选择题</a>
+                 <a href="{:u('Exam/Shiti/addshiti',array('cs_id'=>$cs_id,'type'=>2))}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 填空题</a>
+                 <a href="{:u('Exam/Shiti/addshiti',array('cs_id'=>$cs_id,'type'=>3))}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 判断题</a>
+                 <a href="{:u('Exam/Shiti/addshiti',array('cs_id'=>$cs_id,'type'=>4))}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 问答题</a>
+                 <a href="{:u('Exam/Shiti/addshiti',array('cs_id'=>$cs_id,'type'=>5))}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 材料题</a>
+               </div>题目管理
+             </div>
+
+             <div class="panel-body " id="quiz-table-container">
+
+              <form class="form-inline well well-sm" action="{:u('Exam/Shiti/shitilist')}" method="post">
+                <div class="form-group">
+                  <select class="form-control" name="typeid">
+                    <option value="0">--按题型--</option>
+					<option value="1">选择题</option>
+					<option value="2">填空题</option>
+					<option value="3">判断题</option>
+					<option value="4">问答题</option>
+					<option value="5">材料题</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词">
+				  <input type="hidden" id="cs_id" name="cs_id" class="form-control" value="{$cs_id}">
+                </div>
+                <button class="btn btn-primary btn-sm">搜索</button>
+              </form>
+			<php>
+        		$type=array("1"=>"选择题","2"=>"填空","3"=>"判断","4"=>"解答题","5"=>"材料题");
+        	</php>
+			 <form class="form-inline well well-sm js-ajax-form" action="{:u('Exam/Shiti/delshiti')}" method="post">
+				 <table class="table table-striped table-hover" id="quiz-table">
+				   <thead>
+					 <tr>
+					   <th></th>
+					   <th width="65%">题干</th>
+					   <th width="15%">类型</th>
+					   <th width="15%">操作</th>
+					 </tr>
+				   </thead>
+				   <tbody id="list">
+				   <foreach name="shiti" item="vo">
+					  <tr >
+						   <td><input value="{$vo['id']}" type="checkbox" name="ids[]" ></td>
+						   <td><a href="{:u('Exam/Shiti/preview',array('id'=>$vo['id'],'type'=>$vo['typeid']))}"  data-toggle="modal" data-target="#myModal">{$vo['stem']}</a></td>
+						   <td>{$type[$vo['typeid']]}</td>
+						   <td>
+							  <div class="btn-group">
+								 <a href="{:u('Exam/Shiti/preview',array('id'=>$vo['id'],'type'=>$vo['typeid']))}" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">预览</a>
+								 <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+								<ul class="dropdown-menu pull-right">
+								   <li><a href="{:u('Exam/Shiti/editshiti',array('id'=>$vo['id']))}"><span class="glyphicon glyphicon-edit"></span> 编辑</a></li>
+								   <li><a href="{:u('Exam/Shiti/delshiti',array('id'=>$vo['id']))}" class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？"><span class="glyphicon glyphicon-remove-circle"></span> 删除</a></li>
+								</ul>
+							  </div>
+						   </td>
+					   
+					  </tr>
+					   </foreach> 
+				   </tbody>
+				 </table>
+				 <div>
+				   <label class="checkbox-inline"><input type="checkbox"  id="all" > 全选</label>
+				   <button class="btn btn-default btn-sm mlm js-ajax-submit" type="submit">删除</button>
+				   <span class="pull-right text-muted">共{$count}题</span>
+				 </div>
+				</form>
+               <nav class="text-center"><div class="pagination pagination-lg text-center">{$Page}</div></nav>
+            </div>
+          </div>
+        </div>	
+     </div>
+   </div>
+ 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+         <div class="modal-body">
+          
+         </div>
+      </div>
+   </div>
+</div>
+<tc_include file="Public:scripts" /> 
+<script type="text/javascript"> 
+$("#myModal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+</script>
+<script type="text/javascript"> 
+$("#all").click(function(){    
+    if(this.checked){ 
+        $("#list :checkbox").attr("checked", true);   
+    }else{    
+        $("#list :checkbox").attr("checked", false); 
+    }    
+});
+
+</script>      
+<tc_include file="Public:footer" />

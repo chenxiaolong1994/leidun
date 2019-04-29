@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>{$name} {$site_name} {$site_seo_title}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}" />
+<link rel="icon" href="__PUBLIC__/simplebootx/public/images/favicon_1409967740.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="__PUBLIC__/simplebootx/public/images/favicon_1409967740.ico" type="image/x-icon" media="screen" />
+<link href="__PUBLIC__/simplebootx/public/css/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/common.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/main.css" />
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/es-icon.css" />
+<link href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen" href="__PUBLIC__/simplebootx/public/css/theme.css" />
+<tc_include file="Public:scripts" /> 
+<!--[if lt IE 9]>
+    <script src="__PUBLIC__/simplebootx/public/js/html5shiv.js"></script>
+    <script src="__PUBLIC__/simplebootx/public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<style>
+.breadcrumb {
+    background-color: #f5f5f5;
+    width: 100%;
+    height: 50px;
+    background: #2d3e50;
+    line-height: 50px;
+    position: relative;
+}
+body{background: #2d3e50;position: relative;font-size: 14px;font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;}
+.es-section {
+    background: #2d3e50;
+    padding: 0px;
+    margin-bottom: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    border: 0px solid #e4ecf3;
+   
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.divider{ position:relative;top:-7px;}
+.es-section2{ background: #2d3e50;}
+.breadcrumb2{ background-color: #2d3e50;height: 40px;line-height: 40px;boder-bottom:1px solid #ccc;color:#fff;margin-bottom:0px;}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.col-md-9 {  width: 96%; /*width: 79%;*/}
+.zvright {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 54px;
+    z-index: 1000;
+    height: 200px;
+    margin-top: 230px;
+}
+
+.t5o {
+    -webkit-transition: all .5s ease .1s !important;
+    -moz-transition: all .5s ease .1s !important;
+    -o-transition: all .5s ease .1s !important;
+    transition: all .5s ease .1s !important;
+}
+
+.zvright a {
+    display: block;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    /* background: #4d4d4d; */
+    color: #b5b5b5;
+    border-radius: 3px 0 0 3px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 12px 0;
+}
+
+p {
+    margin: 0 0 8px;
+    font-size: 12px;
+}
+a:active,a:hover {
+	text-decoration:none;
+	cursor:pointer;
+	
+}
+
+
+.zvright a.aH, .zvright a:hover {
+    background: #5ecfba;
+    color: #fff;
+}
+
+.zvright a.aH, .zvright a:active {
+    background: #5ecfba;
+    color: #fff;
+}
+.active{background: #5ecfba;color: #fff;border-radius: 3px 0 0 3px; position: relative;z-index: 999;}
+.active p{color: #fff;}
+
+.zvrightf{background: #4d4d4d;color: #fff;border-radius: 3px 0 0 3px; position: relative;z-index: 999;}
+.period-list{margin-top:0px;}
+.period-list .period {
+  position: relative;
+  padding: 5px 10px 5px 45px;
+  
+}
+
+.period-list .period .es-icon-undone, .period-list .period .es-icon-doing, .period-list .period .es-icon-done1 {
+  position: absolute;
+  top: 8px;
+  left: 15px;
+} 
+.period-list .period .title{
+	color:#fff;
+}
+a:hover{
+  color:#39C;
+}
+.period-list .period:hover{
+	background-color:#2d3e50;
+}
+</style>
+
+<body>
+	<div class=" row" id="top">
+		<ol class="breadcrumb">
+			<span class="divider">
+				<a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}" style="color:#82d867;">返回课程</a>
+			</span>
+			<span class="chapter-label divider" id="cstitle" style="color:#fff;padding-left:30px; line-height:50px;">{$lession['sc_name']}</span>
+			<if condition="$lession['video_type']==2">
+				<span class="chapter-label divider" id="cstitle" style="color:#fff;padding-left:30px; line-height:50px;">{$lession['sc_name']}</span>
+				<span class="chapter-label divider"> <font color="#82d867">&nbsp&nbsp&nbsp&nbsp播放密码：{$lession['playpass']}</font></span>
+			</if>
+			<input type="hidden" id="cs_id" value="{$lession['cs_id']}"></input>
+			<input type="hidden" id="sc_id" value="{$lession['id']}"></input>
+			<input type="hidden" id="url" value="{$lession['yun_url']}"></input>
+		</ol> 
+	</div>
+	<div class="col-md-9 t5o" id="list-container">
+		<section class="es-section">
+			<div  id="playcontent">
+				<if condition="!$isover">
+					<if condition="$lession['video_type']==1">
+						<div id="a1">
+						    <iframe marginWidth="0" marginHeight="0"  src="http://www.wsview.com/yzplayerAction!play2.action?autoPlay=false&userVideoID={$lession[yun_url]}" iframe="iframe" frameBorder="0" height="100%" width="100%" scrolling="no"  allowTransparency></iframe>
+						</div>
+						
+					<else />
+						<div id="a1"> <embed src="{$lession[yun_url]}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" height="100%" width="100%" ></embed></div>
+					</if>
+				<else />
+					<div  id="a1" style="background:url(../public/images/bg_video_preview.bmp) no-repeat;background-size:cover;text-align: center; line-height: 400px;font-size:30px;color:#FFC125">
+						课程已经超过学习有效期，无法继续学习！
+					</div>
+				</if>
+			</div>       
+		</section>
+	</div>
+	<div class="zvright t5o">
+	   <div class="active"> <a num="1" id="num"><p><img src="/public/simplebootx/public/images/rightico001.png"></p><p>目录</p></a></div>
+	</div>
+	<div class="col-md-3 t5o" id="seclist" style="display:none;width:25%;right: -10px;position: absolute;">
+		<section class="es-section2" id="right-list">
+			     
+			<div  id="sec-right-list" style="overflow-y:auto;">
+				<ul class="period-list" >
+					<if condition="$is_zhang">
+						<volist name="sc_list" id="vo">
+                            <li class="chapter clearfix"  style="background:#ccc">
+                                <i class="es-icon es-icon-toc"></i>
+                                    <span class="title">{$vo['sc_name']}</span>
+                                    <span class="period-show"><i class="es-icon es-icon-remove"></i></span>
+                            </li>
+                                <volist name="vo['voo']" id="sub"> 
+                                    <li  class="period lesson-item">
+									    <if condition="$sub['video_type']==1">
+											<a href="{:u('course/Course/study',array('id'=>$sub['id']))}" title="{$sub['sc_name']}">
+												<if condition="isstudy($sub['id']) eq 1">
+												  <i class="es-icon es-icon-done1  status-icon" id="{$i+1000}"></i>
+												<else/>
+												  <i class="es-icon es-icon-undone status-icon" id="{$i+1000}"></i>
+												</if>
+												<span class="title" id="{$i-1}" onmousemove="this.style.color='#5ecfba';"  onmouseout="this.style.color='#fff'">{$sub['sc_name']}</span>
+											</a>
+										<else/>	
+											<a href="{:u('course/Course/study',array('id'=>$sub['id']))}" title="{$sub['sc_name']}">
+												<if condition="isstudy($sub['id']) eq 1">
+												  <i class="es-icon es-icon-done1  status-icon" id="{$i+1000}"></i>
+												<else/>
+												  <i class="es-icon es-icon-undone status-icon" id="{$i+1000}"></i>
+												</if>
+												<span class="title" id="{$i-1}" onmousemove="this.style.color='#5ecfba';"  onmouseout="this.style.color='#fff'">{$sub['sc_name']}</span>
+											</a>
+										</if>	
+                                    </li>
+                                </volist> 
+                        </volist> 
+                    <else />
+					    <volist name="sc_list" id="sub"> 
+							<li  class="period lesson-item">
+								<if condition="$sub['video_type']==1">
+									<a href="{:u('course/Course/study',array('id'=>$sub['id']))}" title="{$sub['sc_name']}">
+										<if condition="isstudy($sub['id']) eq 1">
+											<i class="es-icon es-icon-done1  status-icon" id="{$i+1000}"></i>
+										<else/>
+											<i class="es-icon es-icon-undone status-icon" id="{$i+1000}"></i>
+										</if>
+										<span class="title" id="{$i-1}" onmousemove="this.style.color='#5ecfba';"  onmouseout="this.style.color='#fff'">{$sub['sc_name']}</span>
+									</a>
+								<else/>	
+									<a href="{:u('course/Course/study',array('id'=>$sub['id']))}" title="{$sub['sc_name']}">
+										<if condition="isstudy($sub['id']) eq 1">
+											<i class="es-icon es-icon-done1  status-icon" id="{$i+1000}"></i>
+										<else/>
+											<i class="es-icon es-icon-undone status-icon" id="{$i+1000}"></i>
+										</if>
+										<span class="title" id="{$i-1}" onmousemove="this.style.color='#5ecfba';"  onmouseout="this.style.color='#fff'">{$sub['sc_name']}</span>
+									</a>
+								</if>	
+							</li>
+						</volist> 
+					</if>
+				</ul> 
+			</div>        
+			
+		</section>
+	</div>
+	<div class="modal fade" id="buyModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+		  <div class="modal-content">
+			 <div class="modal-body">
+			     <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal">x</button>
+                   <h5></h5>
+                 </div>
+				 <div class="modal-body">
+                    <p><font color="green">你还没购买此课程,无法观看!</font></p>
+                 </div> 
+                 <div class="modal-footer">
+					<a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}" class="btn btn-primary">购买此课程</a>
+                 </div>
+			 </div>
+		  </div>
+	   </div>
+   </div>
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+		  <div class="modal-content">
+			 <div class="modal-body">
+			     <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal">x</button>
+                   <h5>学习进度</h5>
+                 </div>
+				 <div class="modal-body">
+                    <p><font color="green">恭喜你，已经学完本节课程，你可以再回顾一下或者继续学习！～～～</font></p>
+                 </div> 
+                 <div class="modal-footer">
+                   <a href="{:u('course/Course/courseinfo',array('id'=>$lession['cs_id']))}" class="btn btn-primary">返回课程</a>
+                 </div>
+			 </div>
+		  </div>
+	   </div>
+   </div>
+<script>
+	total = document.documentElement.clientHeight;
+	colHeight = total-document.getElementById("list-container").offsetTop;
+	document.getElementById("list-container").style.height=colHeight+"px";
+	document.getElementById("playcontent").style.height=colHeight-20+"px";
+	document.getElementById("a1").style.height=colHeight-20+"px";
+	document.getElementById("right-list").style.height=colHeight-20+"px";
+	document.getElementById("sec-right-list").style.height=colHeight-62+"px";
+</script>
+<script type="text/javascript">
+	$(function(){
+		var onf=true;		
+		$('#num').click(function(){
+			if(onf){
+				$(".col-md-9").css("width","76%");
+				$(".col-md-3").css("display","block");
+				$(".zvright").css("right","25%");
+				onf=false;
+			}else{
+				$(".col-md-9").css("width","96%");
+				$(".col-md-3").css("display","none");
+				$(".zvright").css("right","0px");
+			onf=true;
+			}
+		});
+	})
+</script>
+
+</body>

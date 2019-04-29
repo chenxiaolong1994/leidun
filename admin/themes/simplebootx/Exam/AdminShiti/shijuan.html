@@ -1,0 +1,109 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <form class="well form-search" method="post" action="{:u('AdminShiti/shijuan')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">
+            &nbsp; &nbsp;关键字：
+        <input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词">
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+    <php>
+		$state=array("1"=>"已发布","0"=>"已关闭");
+	</php>
+  <form class="js-ajax-form" action="" method="post">
+      <table width="100%" class="table table-hover  table-list">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>试卷名称</th>
+	            <th width="100">状态</th>
+	            <th width="130">考试时间</th>
+				<th width="160">添加时间</th>
+				<th width="130">出题教师</th>
+				<th width="120">操作</th>
+	          </tr>
+        </thead>
+        	
+        	<foreach name="data" item="vo">
+	        	<tr> 
+		            <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+		            <td><a>{$vo.id}</a></td>
+		            <td><span>{$vo.title}</span></td>
+		            <td>{$state[$vo['state']]}</td>
+					<td>{$vo.limitedtime}分钟</td>
+					<td>{$vo.addtime}</td>
+					<td>{$vo.teacherid|getusername}</td>
+		            <td>
+		                <div class="btn-group">
+		                   <a  class="btn btn-default btn-sm" href="{:u('Exam/shiti/paperspriew',array('id'=>$vo['id']))}" target="_blank">预览</a>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                             <span class="caret"></span>
+                             <span class="sr-only"></span>                             
+                           </button>                          
+                           <ul class="dropdown-menu pull-right" role="menu" >
+						        <if condition="$vo['state'] eq 1">
+									<li><a class="close-testpaper" id="{$vo['id']}" href="javascript:" title="关闭试卷"> 关闭试卷</a></li>
+								<else/>
+									<li><a class="open-testpaper" id="{$vo['id']}" href="javascript:" title="开启试卷"> 开启试卷</a></li>
+								</if>
+						      <li><a href="javascript:open_iframe_dialog('{:U('AdminShiti/renyuan',array('id'=>$vo['id']))}','成绩单')">成绩单</a></li>
+                              <li><a href="{:u('AdminShiti/delshijuan',array('id'=>$vo['id']))}" class="js-ajax-delete" data-subcheck="true" data-msg="你确定删除吗？">删除</a></li>
+                           </ul>
+                          </div>
+					</td>
+	          	</tr>
+          </foreach>
+          <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+	            <th width="40">ID</th>
+	            <th>试卷名称</th>
+	            <th width="100">状态</th>
+	            <th width="130">考试时间</th>
+				<th width="160">添加时间</th>
+				<th width="130">出题教师</th>
+				<th width="120">操作</th>
+	          </tr>
+        </thead>
+          </table>
+          <div class="pagination">{$Page}</div>   
+      <div class="form-actions">                       
+        <button class="btn btn-primary js-ajax-submit" type="submit" data-action="{:u('AdminShiti/delshijuan')}">删除</button>
+      </div>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript"> 
+$(".close-testpaper").click(function(){ 
+   var id=$(this).attr('id');
+   $.ajax({ url:'{:u('Exam/Shiti/closetestpaper')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+
+}); 
+$(".open-testpaper").click(function(){ 
+   var id=$(this).attr('id');
+   $.ajax({ url:'{:u('Exam/Shiti/opentestpaper')}', 
+		 type:"post", data:{'id':id}, 
+		 dataType:'json', 
+		 success:function(data){
+		   location.reload(); 
+		   }
+		}
+	  );
+
+}); 
+</script>   
+</body>
+</html>

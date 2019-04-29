@@ -1,0 +1,48 @@
+<admintpl file="header" />
+</head>
+<body style="min-width: 800px;">
+	<div class="wrap js-check-wrap">
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">编号</th>
+						<th width="100">用户名</th>
+						<th>评论内容</th>
+						<th width="150">时间</th>
+						<th width="80">操作</th>
+					</tr>
+				</thead>
+				<foreach name="pinglun" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+					<td>{$vo.id}</td>
+					<td>{$vo.user_id|getusername}</td>
+					<td>{$vo.pinglun}</td>
+					<td>{$vo.pingluntime}</td>
+					<td>
+						<a href="{:U('Course/AdminCourse/pinglundel',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">编号</th>
+						<th width="100">用户名</th>
+						<th>评论内容</th>
+						<th width="150">时间</th>
+						<th width="80">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Commentadmin/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">删除</button>
+			</div>
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

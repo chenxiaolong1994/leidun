@@ -1,0 +1,87 @@
+<tc_include file="Public:header" />
+<link href="__PUBLIC__/js/artDialog_v6/ui_dialog.css" rel="stylesheet" />
+<div id="content-container" class="container">
+    <div class="row row-6">
+		<div class="col-md-6 col-md-offset-3 ptl">
+			<div class="panel panel-default panel-page">
+					<div class="panel-heading"><h2>重设密码</h2></div>
+					<form  class="form-vertical js-ajax-form" action="{:u('User/Setting/repasspost')}" method="post">
+						<div class="form-group">
+							<label class="control-label required" for="mobile">手机号码</label>
+							<div class="controls">
+								<input type="text" id="mobilephone" name="mobile"  class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label required" for="sms_code">短信验证码</label>
+							<div class="controls row" >
+								<div class = "col-md-8" >
+									<input type="text" class="form-control" id="sms-code" name="mobile_verify" placeholder="输入短信验证码">
+								</div>
+								<div class="col-md-4">
+									<input id="btnSendCode" class="form-control js-ajax-dialog-btn" type="button" value="获取验证码" onclick="sendMessage()"style="width:130px" />
+								</div>
+								<div class="col-md-12 help-block"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label required" for="mobile">输入新密码</label>
+							<div class="controls">
+								<input type="text" id="password" name="password"  class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-primary js-ajax-submit">重设密码</button>
+							</div>
+						</div>
+					</form>
+			</div>
+		</div>
+	</div>
+</div>
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/js/artDialog_v6/dialogmin.js"></script>
+<script type="text/javascript"> 
+var InterValObj; 
+var count = 60; 
+var curCount;
+function sendMessage() {
+     var tel = $("#mobilephone").val();
+	 if(tel==''){
+		var d = dialog({
+			title: '错误',
+			content: '请输入手机号！'
+		});
+		d.width(300)
+		d.showModal();
+		
+	 }else{
+	     curCount = count;
+		 $("#btnSendCode").attr("disabled", "true");
+		 $("#btnSendCode").val("请在" + curCount + "秒内输入");
+		 InterValObj = window.setInterval(SetRemainTime, 1000); 
+		 $.ajax({ 
+			 url:'{:u('user/register/get_mobile_verify')}', 
+			 type:"POST",
+			 data:{'tel':tel}, 
+			 dataType:'json', 
+			 success:function(data){
+			   }
+		 });
+	 }
+}
+
+function SetRemainTime() {
+	if (curCount == 0) {                
+		window.clearInterval(InterValObj);
+		$("#btnSendCode").removeAttr("disabled");
+		$("#btnSendCode").val("重新发送");
+	}
+	else {
+		curCount--;
+		$("#btnSendCode").val("请在" + curCount + "秒内输入");
+	}
+} 
+</script>
+<tc_include file="Public:footer" /> 

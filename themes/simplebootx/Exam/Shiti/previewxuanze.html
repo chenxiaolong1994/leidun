@@ -1,0 +1,32 @@
+		
+		<div class="modal-body">
+			<div class="testpaper-question testpaper-question-choice file-browser-list-container" style="height:300px ;">
+				<div class="testpaper-question-body" style="width:90%;">
+					<div class="testpaper-question-stem-wrap clearfix">
+						<div class="testpaper-question-seq-wrap">
+							<div class="testpaper-question-seq"></div>
+							<div class="testpaper-question-score"></div>
+						</div>
+						<div class="testpaper-question-stem"><strong>{$data['stem']}</strong></div>
+					</div>
+					<ul class="testpaper-question-choices">
+						<li class=""><span class="testpaper-question-choice-index">A.</span> {$data['xa']}</li>
+						<li class=""><span class="testpaper-question-choice-index">B.</span> {$data['xb']}</li>
+						<li class=""><span class="testpaper-question-choice-index">C.</span> {$data['xc']}</li>
+						<li class=""><span class="testpaper-question-choice-index">D.</span> {$data['xd']}</li>
+					</ul>
+				</div>
+
+				<div class="testpaper-preview-answer clearfix mtl mbl">
+					<div class="testpaper-question-result">
+						正确答案是 <strong class="text-success">{$data['daan']}</strong>
+					</div>
+				</div>
+
+				<div class="testpaper-question-analysis well" style="width:85%;"><p><strong>{$data['analysis']}</strong></p><br /></div>
+					
+
+			</div>
+
+		</div>
+		<div class="modal-footer">  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div>

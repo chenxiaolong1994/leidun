@@ -1,0 +1,47 @@
+<admintpl file="header" />
+<style>
+.admin_info1 {
+    float: left;
+    background: #fff;
+    width:46%;
+}
+
+.admin_info2 {
+    width: 100%;
+    float: left;
+    display: block;
+    text-indent: 15px;
+    font-size: 14px;
+   height:50px;
+}
+</style>
+</head>
+<body>
+<php>
+    $status=array("1"=>"正常","0"=>"禁用");
+     $sex=array("1"=>"男","2"=>"女","0"=>"保密");
+</php>
+   <div class="wrap">
+        <div class="col-md-12" >
+            <div class="admin_info1" >
+                <div class="admin_info2">用户名：<span>{$lists['user_nicename']|default="未设置"}</span></div> 
+                <div class="admin_info2">性别：<span>{$sex[$lists['sex']]}</span></div>
+                <div class="admin_info2">生日：<span>{$lists['birthday']|default="这家伙真懒，什么都没留下！"}</span></div>
+                <div class="admin_info2">个性签名：<span>{$lists['signature']|default="这家伙真懒，什么都没留下！"}</span></div>
+                <div class="admin_info2">最后登录IP：<span>{$lists['last_login_ip']}</span></div> 
+                <div class="admin_info2">最后登录时间：<span>{$lists['last_login_time']}</span></div>
+                <div class="admin_info2">注册时间：<span>{$lists['create_time']}</span></div>
+        	</div>
+        	<div class="admin_info1" >
+                <div class="admin_info2">用户状态：<span>{$status[$lists['user_status']]}</span></div> 
+                <div class="admin_info2">手机号码：<span>{$lists['mobile']}</span></div>
+                <div class="admin_info2">可用金额：<span>{$lists['coin']}</span></div>
+                <div class="admin_info2">家庭地址：<span>{$lists['prov']}{$lists['city']}{$lists['dist']|default="这家伙真懒，什么都没留下！"}</span></div>
+                <div class="admin_info2">微信：<span>{$lists['weiixn']|default="这家伙真懒，什么都没留下！"}</span></div>
+                <div class="admin_info2">QQ：<span>{$lists['qq']|default="这家伙真懒，什么都没留下！"}</span></div>
+        	</div>
+      	</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

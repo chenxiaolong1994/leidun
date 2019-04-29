@@ -1,0 +1,101 @@
+<tc_include file="Public:header" />  
+ <section class="index-course-list lazyload">
+   <div  class="container">
+     <div class="es-tabs">
+       <div class="tab-header">
+          
+           <ul class="clearfix" id="lab1">
+		      <if condition="empty($topid)">
+                 <li class="active" ><a href="{:leuu('course/Course/coursecenter')}">全部</a></li>
+			  <else/>
+				  <li class="" ><a href="{:leuu('course/Course/coursecenter')}">全部</a></li>
+			 </if>
+             <volist name="toptype" id="vo" key="key">
+			    <if condition="$vo['term_id']==$topid">
+                    <li class="active"><a href="{:leuu('course/Course/coursecenter',array('topid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+                <else/>
+				    <li class=""><a href="{:leuu('course/Course/coursecenter',array('topid'=>$vo['term_id']))}">{$vo['name']}</a></li>
+				</if>
+			 </volist> 
+           </ul>
+		</div>   
+	   <if condition="!empty($topid)">
+		  <div class="tab-body">
+			<ul class="clearfix">
+				<li class="all"><a href="{:leuu('course/Course/coursecenter',array('topid'=>$topid))}">全部</a></li>
+				<volist name="childtype" id="voo" key="key">
+					<if condition="$voo['term_id']==$childid">
+						 <li class="active"><a href="{:leuu('course/Course/coursecenter',array('topid'=>$topid,'childid'=>$voo['term_id']))}">{$voo['name']}</a></li>
+					<else/>
+						 <li class=""><a href="{:leuu('course/Course/coursecenter',array('topid'=>$topid,'childid'=>$voo['term_id']))}">{$voo['name']}</a></li>
+					</if>
+				</volist> 
+			</ul>
+		  </div>
+	   </if>
+	   <if condition="!empty($childid)">
+		  <div class="tab-body">
+			<ul class="clearfix">
+				<li class="all"><a href="{:leuu('course/Course/coursecenter',array('topid'=>$topid,'childid'=>$childid))}">全部</a></li>
+				<volist name="label" id="vooo" key="key">
+					<if condition="$vooo['id']==$labelid">
+						 <li class="active"><a href="{:u('course/Course/coursecenter',array('topid'=>$topid,'childid'=>$childid,'labelid'=>$vooo['id']))}">{$vooo['labelname']}</a></li>
+					<else/>
+						 <li class=""><a href="{:leuu('course/Course/coursecenter',array('topid'=>$topid,'childid'=>$childid,'labelid'=>$vooo['id']))}">{$vooo['labelname']}</a></li>
+					</if>
+				</volist> 
+			</ul>
+		  </div>
+	   </if> 
+      
+     </div>
+      <div class="course-list">
+         <div class="row">
+          <volist name="csdata" id="vo"> 
+             <div class="col-lg-3 col-md-4 col-xs-6">
+               <div class="course-item">
+                 <div class="course-img">
+                    <a href="{:leuu('course/Course/courseinfo',array('id'=>$vo['id']))}" target="_blank">
+					<if condition="$vo['course_type']=='live'">
+						<span class="tags">
+							<span class="tag-live"></span>
+						</span>	
+					<else /> 
+						<if condition="$vo['isover']==0">
+							<span class="tags"><span class="tag-serialing"></span></span>
+						<else />
+						     <span class="tags">
+								    <span class="tag-finished"></span>
+							</span>	
+						</if>
+					</if>
+					<if condition="empty($vo['cs_picture'])">
+						<img class="img-responsive thumb" src="__PUBLIC__/images/course.png">
+					<else /> 
+						<img src="{$vo['cs_picture']}"  class="img-responsive thumb">
+					</if> 
+					</a>
+                 </div>
+                 <div class="course-info" style="margin-bottom:10px;">
+                   <div class="title"><a href="{:leuu('course/Course/courseinfo',array('id'=>$vo['id']))}">{$vo['cs_name']}</a></div>
+                    <div class="metas clearfix">
+                      <span class="num"><i class="es-icon es-icon-people"></i>{$vo['xueyuannum']}人在学</span>
+					  <span class="comment"><i class="es-icon es-icon-textsms"></i>{$vo['pinglununm']}</span>
+                      <if condition="$vo['cs_price'] eq 0">
+                        <span class="price  price-num ">免费</span>
+                      <else/>
+                        <span class="price price-num">¥{$vo['cs_price']}</span>
+                      </if>                           
+                    </div>
+                  </div>
+                </div>          
+              </div>
+            </volist>   
+		   
+          </div>
+       </div>
+      <nav class="text-center"><div class="pagination text-center">{$Page}</div></nav>
+   </div>
+ </section>
+<tc_include file="Public:scripts" />
+<tc_include file="Public:footer" />

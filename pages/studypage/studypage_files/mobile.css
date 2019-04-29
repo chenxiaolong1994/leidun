@@ -1,0 +1,173 @@
+@media only screen and (max-width: 600px) {
+    blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,input,legend,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0}body,button,input,select,textarea{font:12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif}h1,h2,h3,h4,h5,h6{font-size:100%}
+
+    .tx-main{
+        position: relative;
+        width: 100% !important;
+    }
+
+    /* 头部标题 */
+    .tx-banner{
+        width: 100%;
+        height: 50px;
+        background: #2eb8aa;
+        display: flex;
+    }
+    .tx-banner .tx-banner-title{
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        color: #fff;
+        border-left: solid 1px #fff;
+        padding-left: 15px;
+    }
+
+
+    /* 中间主体 */
+    .tx-main-inner{
+        display: flex;
+        flex-direction: column;
+    }
+    .tx-player-wrapper{
+        width: 100% !important;
+    }
+    .tx-player-wrapper .bd{
+        width: 100%;
+        height: 300px;
+        min-height: 200px;
+    }
+    .tx-player-wrapper .container{
+        background: #000;
+        position: relative;
+    }
+    .tx-player-wrapper .bd .poster{
+        width: 100% !important;
+        height: 300px !important;
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+    }
+    #J_Player{
+        height: 100% !important;
+    }
+  
+    /* 导航菜单 */
+    #J_SideBar{
+        width: 100% !important;
+    }
+    #J_tab{
+        width: 100%;
+    }
+    #J_tab .tx-info{
+        background: #ddd;
+        padding: 20px 0;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    #J_tab .tx-info a{
+        width: 100% !important;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 20px;
+    }
+    #J_tab .tx-info img{
+        max-width: 118px;
+        max-height: 66px;
+        margin-right: 15px;
+    }
+
+    #J_OutlineInner{
+        position: relative;
+    }
+    #J_OutlineInner .bar {
+        position: absolute;
+        z-index: 1;
+        left: 80px;
+        top: 52px;
+        width: 3px;
+        height: 100%;
+        background-color: #ccc;
+    }
+    #J_OutlineInner .chapter {
+        position: relative;
+        padding-top: 3px;
+    }
+    #J_OutlineInner .chapter h4 {
+        overflow: hidden;
+        padding-left: 20px;
+        line-height: 70px;
+        height: 70px;
+        font-size: 18px;
+        color: #333;
+        cursor: default;
+    }
+    #J_OutlineInner .chapter h4 .num {
+        position: absolute;
+        z-index: 2;
+        top: 22px;
+        left: 66px;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border: 3px solid #ccc;
+        text-align: center;
+        font-size: 14px;
+        background-color: #fff;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border-radius: 50%;
+    }
+    #J_OutlineInner .chapter h4 .name {
+        margin-left: 52px;
+    }
+
+    #J_OutlineInner .chapter .course.active {
+        background-color: #e3f7f5;
+        color: #333;
+    }
+    #J_OutlineInner .chapter .course {
+        text-decoration: none;
+        position: relative;
+        height: 56px;
+        padding-top: 14px;
+        padding-left: 20px;
+        line-height: 24px;
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+    }
+    #J_OutlineInner .chapter .course .info {
+        float: left;
+        width: 88px;
+    }
+    #J_OutlineInner .chapter .course .detail {
+        margin-left: 88px;
+    }
+    #J_OutlineInner .chapter .course .progress.done {
+        border-color: #2eb8aa;
+    }
+    #J_OutlineInner .chapter .course .progress {
+        position: absolute;
+        z-index: 2;
+        top: 18px;
+        left: 73px;
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        font-size: 0;
+        border: 3px solid #ccc;
+        background-color: #fff;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border-radius: 50%;
+    }
+    
+
+}

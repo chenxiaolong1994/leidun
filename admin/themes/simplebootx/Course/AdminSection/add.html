@@ -1,0 +1,67 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+           <li class="active"><a href="{:U('Course/AdminMaterial/add',array('cs_id'=>$cs_id))}"  target="_self">添加资料</a></li>
+           <li><a href="{:U('Card/AdminCard/add_jihuo_cs',array('cs_id'=>$cs_id,'type_id'=>2))}"  target="_self">激活卡</a></li>
+        </ul>
+		<form class="form-horizontal js-ajax-form" name="myform" id="myform" action="{:u('AdminSection/add_post')}" method="post">
+			<div class="form-group" style="margin-bottom:10px;">
+             <label>课时名称</label>
+              <input type="hidden" name="cs_id" value="{$cs_id}">
+              <input type="hidden" name="type_id" value="0">
+              <input type="hidden" name="video_type" id="video_type" value="1">
+              <input type="hidden" name="section_type" value="1">
+              <input type="text" style="width:400px;" name="sc_name" id="sc_name"   value="" style="color:" class="input input_hd J_title_color" placeholder="课件标题" />       
+            </div>
+            <div class="checkbox" style="margin-bottom:10px;">
+              <label> <input type="checkbox" name="is_free" value="1" >免费课程</label>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>播放时长</label>
+              <input type='text' name='sc_time' id='sc_time'  value='' style='width:400px;'   class='input' placeholder="课件的播放时长，单位分钟"  >
+            </div>
+            <div class="form-group" style="margin-bottom:10px;" id="video">
+              <label>播放地址</label>
+              <label class="checkbox-inline" style="margin-top:10px;margin-bottom:20px;">
+                  <input type="radio" name="radio"  value="1" checked  onchange="radioSwitch(this)">&nbsp&nbsp云存储
+                  <input type="radio" name="radio"  value="2" onchange="radioSwitch(this)" style="margin-left:20px;">&nbsp&nbsp视频网站
+              </label>
+              
+              <div id="yun" class="">
+                  <input type='text' name='yun_url'   style='width:400px;' value="{$_SESSION['access_url']}"  class='input' placeholder="可以直接添加，也可以点击后面的加号上传！">
+                  <a href="javascript:open_iframe_dialog('{:u('Course/AdminSection/add_video',array('cs_id'=>$cs_id))}','上传视频')" style="height:20px;width:50px;margin-left:10px;"><img src="__ROOT__/public/images/tv-expandable.gif"></a>
+              </div>
+			  <div id="youku"  style="display:none">
+                  <input type='text' name='youku_url'  style='width:340px;'   class='input' placeholder="优酷的分享视频地址！">
+                  <input type='text' name='playpass'  style='width:60px;'   class='input' placeholder="播放密码！">
+			  </div>
+            
+            </div>
+               <input type="hidden" name="addtime"  value="{:date('Y-m-d H:i:s',time())}" size="21" class="input length_3 J_datetime "></td>
+            <div class="form-action" style="margin-top:40px;">
+              <button class="btn btn-primary js-ajax-submit"type="submit">提交</button>
+              <a class="btn" href="{:U('AdminCourse/index')}">返回</a>
+            </div>
+		</form>
+	</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script>
+function radioSwitch(){
+	var val = $('#video input[name="radio"]:checked ').val();
+	if(val==1){
+		document.getElementById('yun').style.display = "";
+		document.getElementById('youku').style.display = "none";
+		document.getElementById("video_type").value='1';
+		}else{
+			document.getElementById('yun').style.display = "none";
+			document.getElementById('youku').style.display = "";
+			document.getElementById("video_type").value='2';
+			}
+	 
+}
+</script> 
+</body>
+</html>

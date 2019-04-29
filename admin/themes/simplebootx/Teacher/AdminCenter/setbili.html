@@ -1,0 +1,36 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+     <li ><a href="{:U('AdminCenter/index')}"  target="_self">教师列表</a></li>
+     <li ><a href="{:U('AdminCenter/tixian')}"  target="_self">提现管理</a></li>
+	 <li class="active"><a href="{:U('AdminCenter/setbili')}"  target="_self">分成比例设置</a></li>
+  </ul>
+   <form class="form-horizontal js-ajax-forms" action="{:U('AdminCenter/setbili_post')}" method="post">
+			<fieldset>
+				<div class="tabbable">
+					<div class="tab-content">
+						 <div class="control-group">
+							 <label class="control-label">支付宝支付分成</label>
+							 <div class="controls">
+							    <input type="text" name="alipaybili" value="{$alipaybili}"><span class="form-required">*</span>
+							 </div>
+						 </div>
+						 <div class="control-group">
+							 <label class="control-label">点卡支付分成</label>
+							 <div class="controls">
+							    <input type="text" name="cardbili" value="{$cardbili}"><span class="form-required">*</span>
+							 </div>
+						 </div>
+ 					</div>
+				</div>
+
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary  js-ajax-submit">保存</button>
+				</div>
+			</fieldset>
+	 </form>
+</div>
+
+</body>
+</html>

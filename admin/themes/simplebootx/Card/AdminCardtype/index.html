@@ -1,0 +1,43 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap jj">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="{:U('AdminCardtype/index')}">点卡分类</a></li>
+     <li><a href="{:U('AdminCardtype/add')}">添加分类</a></li>
+  </ul>
+  <div class="common-form">
+    <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="16"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+	            <th width="40">ID</th>
+	            <th>点卡分类</th>
+	            <th width="100">操作</th>
+	          </tr>
+        </thead>
+        	<foreach name="cardtype_data" item="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}"></td>
+		            <td>{$vo.id}</td>
+		            <td>{$vo.typename}</td>
+		            <td>
+                      <a href="{:U('AdminCardtype/edit',array('id' => $vo['id']))}" >编辑</a> <a href="{:U('AdminCardtype/delete',array('id' => $vo['id']))}" class="J_ajax_del" >删除</a>
+					</td>
+	          	</tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+    <div class="form-actions">
+        <label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>                
+        <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminCardtype/delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+      </div>
+  </form>
+  </div>
+</div>
+<script src="__ROOT__/statics/js/common.js?"></script>
+</body>
+</html>

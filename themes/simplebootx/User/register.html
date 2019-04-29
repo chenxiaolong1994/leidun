@@ -1,0 +1,152 @@
+<tc_include file="Public:header" />
+<link href="__PUBLIC__/js/artDialog_v6/ui_dialog.css" rel="stylesheet" />
+<div id="wrapper" class="pad-bottom">
+   <div id="content-container" class="container">
+<div class="es-section login-section">
+  <div class="logon-tab clearfix">
+    <a href="{:u('User/Login/index')}">登录帐号</a>
+    <a class="active">注册帐号</a>
+  </div>
+  <div class="login-main">
+      <form class="form-horizontal js-ajax-form" action="{:U('user/register/doregister')}" method="post">
+		   <label class="control-label required">手机号</label>
+	       <div class="control-group" style="margin-bottom:10px;">
+			 <input type="text" name="mobile" id="mobilephone" placeholder="作为登陆帐号使用" value="" class="form-control input-lg span4">
+		   </div>
+		   <label class="control-label required" >昵称</label>
+	       <div class="control-group" style="margin-bottom:10px;">
+			 <input type="text" name="user_nicename" placeholder="昵称" class="form-control input-lg span4">
+		   </div>
+		   <if condition="$is_mobile_verify==1">
+		     <label class="control-label required" >手机验证码</label>
+		    <div class="control-group" style="margin-bottom:10px;">
+			 <input type="text" name="mobile_verify" placeholder="点击右侧获取" class="form-control input-lg span4" style="width:200px;float:left;margin-right:5px;">
+			 <input id="btnSendCode" class="form-control input-lg js-ajax-dialog-btn" type="button" value="获取验证码" onclick="sendMessage()"style="width:130px" />
+		   </div> 
+		 </if>
+		
+		   <label class="control-label required" >密码</label>
+		   <div class="control-group" style="margin-bottom:10px;">
+			 <input type="password" name="password" placeholder="登陆密码,请牢记!" class="form-control input-lg span4">
+		   </div>
+		  
+		   <label class="control-label required" >验证码</label>
+			  <div class="control-group" style="margin-bottom:10px;">
+				<div class="span4" style="margin-left: 0px;margin-bottom:10px;">
+				  <input type="text" name="verify" placeholder="输入右侧数字" style="width:210px;float:left;margin-right:5px;" class="form-control input-lg span4">
+					{:sp_verifycode_img('length=4&font_size=14&width=115&height=34&charset=1234567890&use_noise=1&use_curve=0')}
+				</div>
+			  </div>			  
+			  <div class="control-group">
+				<button class="btn btn-primary js-ajax-submit btn-lg btn-block" type="submit" data-wait="1500" style="margin-left: 0px;margin-top:30px;">确定注册</button>
+			  </div>
+		</form>
+	  <div class="social-login">
+		  <div class="line"></div>
+		  <a class="fa fa-lg fa-wechat" id="wechat_icon" href="{:u('user/weixin/weixin_login')}"  data-toggle="modal" data-target="#myModal" ></a>
+	  </div>
+     </div>
+
+    </div>
+   </div>
+  </div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<tc_include file="Public:scripts" />
+<script src="__PUBLIC__/js/artDialog_v6/dialogmin.js"></script>
+<script type="text/javascript"> 
+var InterValObj; 
+var count = 60;
+var curCount;
+function sendMessage() {
+     var tel = $("#mobilephone").val();
+	 if(tel==''){
+		var d = dialog({
+			title: '错误',
+			content: '请输入手机号！'
+		});
+		d.width(300)
+		d.showModal();
+		
+	 }else{
+	     curCount = count;
+		 $("#btnSendCode").attr("disabled", "true");
+		 $("#btnSendCode").val("请在" + curCount + "秒内输入");
+		 InterValObj = window.setInterval(SetRemainTime, 1000); 
+		 $.ajax({ 
+			 url:'{:u('user/register/get_mobile_verify')}', 
+			 type:"POST",
+			 data:{'tel':tel}, 
+			 dataType:'json', 
+			 success:function(data){
+			   }
+		 });
+	 }
+}
+
+function SetRemainTime() {
+	if (curCount == 0) {                
+		window.clearInterval(InterValObj);
+		$("#btnSendCode").removeAttr("disabled");
+		$("#btnSendCode").val("重新发送");
+	}
+	else {
+		curCount--;
+		$("#btnSendCode").val("请在" + curCount + "秒内输入");
+	}
+}
+
+
+$("#myModal").on("hidden.bs.modal", function() {
+	$(this).removeData("bs.modal");
+});
+function scan_status(){
+	var scene_str = $("#scene_str").val();
+	$.ajax({
+		url:'{:u("user/Weixin/scan_status_check")}',
+		dataType:'json',
+		type:'post',
+		data:{'scene_str':scene_str},
+		success:function(data){
+			if(data == '2' ){
+				window.clearInterval(int); //销毁定时器
+				swal({
+					title: "登录成功！",
+					text: "3s 后自动跳转到首页",
+					icon: "success",
+					timer: 3000,
+					showConfirmButton: false
+				});
+				setTimeout(function(){
+					//跳转到结果页面
+					window.location.href="{:u('/')}";
+				},3000)
+
+			}else if(data =='1'){
+				console.log('no scan');
+			}
+		},
+		error:function(){
+			console.log('error');
+			//alert("error");
+
+		},
+
+	});
+}
+//启动定时器
+var int=self.setInterval(function(){scan_status()},1000);
+
+</script>
+
+<tc_include file="Public:footer" />  

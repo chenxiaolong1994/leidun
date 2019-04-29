@@ -1,0 +1,71 @@
+<tc_include file="Public:header"/>
+<div id="wrapper" class="pad-bottom">
+    <div id="content-container" class="container">
+        <div class="es-section login-section">
+            <div class="logon-tab clearfix">
+                <a class="active"></a>
+            </div>
+            <div class="login-main">
+
+
+                <div class="wechat-login-img">
+                    <div>使用微信扫描下方二维码登录</div>
+                    <img src="{:u('user/weixin/show_qrcode_img')}">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<tc_include file="Public:scripts"/>
+<tc_include file="Public:footer"/>
+
+<script>
+
+
+    function scan_status() {
+        var scene_str = $("#scene_str").val();
+        $.ajax({
+            url: '{:u("user/Weixin/scan_status_check")}',
+            dataType: 'json',
+            type: 'post',
+            data: {'scene_str': scene_str},
+            success: function (data) {
+                if (data == '2') {
+                    window.clearInterval(int); //销毁定时器
+                    swal({
+                        title: "登录成功！",
+                        text: "3s 后自动跳转到首页",
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function () {
+                        //跳转到结果页面
+                        window.location.href = "{:u('/')}";
+                    }, 3000)
+
+                } else if (data == '1') {
+                    console.log('no scan');
+                } else if (data == 3) {
+                    window.clearInterval(int);
+                }
+            },
+            error: function () {
+                console.log('error');
+                //alert("error");
+
+            },
+
+        });
+    }
+    //启动定时器
+    var int = self.setInterval(function () {
+        scan_status()
+    }, 1000);
+
+</script>

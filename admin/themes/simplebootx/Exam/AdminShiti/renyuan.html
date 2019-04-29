@@ -1,0 +1,40 @@
+<admintpl file="header" />
+</head>
+<body style="min-width: 800px;">
+	<div class="wrap js-check-wrap">
+		
+		<form class="js-ajax-form" method="post">
+			
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">编号</th>
+						<th >学员名</th>
+						<th width="180">考试成绩</th>
+						<th width="180">考试时间</th>
+					</tr>
+				</thead>
+				<foreach name="users" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.userid|getusername}</td>
+					<td>{$vo['score']}分</td>
+					<td>{$vo.addtime}</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="50">编号</th>
+						<th >学员名</th>
+						<th width="180">考试成绩</th>
+						<th width="180">考试时间</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

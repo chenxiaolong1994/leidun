@@ -1,0 +1,285 @@
+<tc_include file="Public:header"/>
+<div id="content-container" class="container">
+    <if condition="empty($avatar)">
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>您还没有头像</strong>。拥有一个独有的头像，老师和同学们能更容易关注到你哦～～ <a href="{:u('user/center/pic')}" class="alert-link"
+            target="_blank">点击设置</a>
+        </div>
+        <else/>
+        <if condition="empty($user['user_nicename'])">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>您还没设置昵称</strong>。请到个人设置里面设置～～ <a href="{:u('user/center/setting')}" class="alert-link"
+                                                         target="_blank">点击设置</a>
+            </div>
+        </if>
+    </if>
+    <div class="row row-3-9">
+        <div class="col-md-3">
+            <div class="sidenav">
+                <ul class="list-group">
+                    <li class="list-group-heading"><a href="{:u('Teacher/Center/index')}">我的课程</a></li>
+                    <li class="list-group-heading">课程管理</li>
+                    <li class="list-group-item active"><a
+                            href="{:u('Teacher/Center/sectionlist',array('cs_id'=>$cs_id))}">课时管理</a></li>
+                    <if condition="$cs_type==normal">
+                        <li class="list-group-item"><a href="{:u('Teacher/Center/addsection',array('cs_id'=>$cs_id))}">添加课时</a>
+                        </li>
+                    </if>
+                    <if condition="$cs_type==live">
+                        <li class="list-group-item"><a
+                                href="{:u('Teacher/Center/addlivesection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+                    </if>
+                    <if condition="$cs_type==doc">
+                        <li class="list-group-item"><a
+                                href="{:u('Teacher/Center/adddocsection',array('cs_id'=>$cs_id))}">添加课时</a></li>
+                    </if>
+                    <li class="list-group-item"><a
+                            href="{:u('Teacher/Center/material',array('cs_id'=>$cs_id))}">资料管理</a></li>
+                    <li class="list-group-item"><a
+                            href="{:u('Teacher/Center/xueyuanlist',array('cs_id'=>$cs_id))}">学员列表</a></li>
+                    <li class="list-group-item"><a href="{:u('Teacher/Center/pinglun',array('cs_id'=>$cs_id))}">评论列表</a>
+                    </li>
+                    <li class="list-group-heading">题库管理</li>
+                    <li class="list-group-item"><a href="{:u('Exam/Shiti/shitilist',array('cs_id'=>$cs_id))}">题目管理</a>
+                    </li>
+                    <li class="list-group-item "><a href="{:u('Exam/Shiti/import',array('cs_id'=>$cs_id))}">导入导出</a>
+                    </li>
+                    <li class="list-group-item"><a href="{:u('Exam/Shiti/shijuan',array('cs_id'=>$cs_id))}">试卷管理</a>
+                    </li>
+                    <li class="list-group-item"><a href="{:u('Exam/Shiti/checkpaper',array('cs_id'=>$cs_id))}">试卷批阅</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+
+            <div class="panel panel-default panel-col">
+                <div class="panel-heading">
+                    <div class="panel-heading_img"
+                         style="margin-bottom:20px;float:left;width:118px;height:66px;border:1px solid #e3e1e1">
+                        <if condition="empty($cs_pic)"><img
+                                style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle"
+                                src="__PUBLIC__/images/course.png" alt="{$lession.cs_name}">
+                            <else/>
+                            <img style="max-width:118px;max-height:66px;_width:118px;_height:66px;vertical-align:middle"
+                                 src="{$cs_pic}" alt="{$lession.cs_name}"></if>
+                    </div>
+                    <div style="height:66px;float:left;text-align:left;margin-left:20px;line-height:66px;">{$cs_name}
+                    </div>
+                </div>
+                <form class="js-ajax-form" action="" method="post">
+                    <div class="table_list">
+                        <table width="100%" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th width="80">编号</th>
+                                <th>课时名称</th>
+                                <if condition="$cs_type==live">
+                                    <th width="160">直播时间</th>
+                                    <th width="90">直播状态</th>
+                                    <else/>
+                                </if>
+                                <th width="80">状态</th>
+                                <th width="80">是否免费</th>
+                                <th width="120">操作</th>
+                            </tr>
+                            </thead>
+                            <php>
+                                $status=array("1"=>"已审核","0"=>"未审核");
+                                $free_status=array("1"=>"免费","0"=>"不免费");
+                                $livestate=array(""=>"<font color='red'>未创建直播间</font>","1"=>"<font
+                                    color='red'>未创建直播间</font>","2"=>"<font color='green'>直播未开始</font>","3"=>"<font
+                                    color='red'>正在直播</font>","4"=>"<font color='red'>已结束</font>","5"=>"<font
+                                    color='blue'>有回放</font>");
+                            </php>
+                            <foreach name="sc_data" item="vo">
+                                <tr>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.sc_name}</td>
+                                    <if condition="$cs_type==live">
+                                        <td>{$vo['live_starttime']}</td>
+                                        <td>{$livestate[$vo['live_state']]}</td>
+                                        <else/>
+                                    </if>
+                                    <td>{$status[$vo['state']]}</td>
+                                    <td><a onclick="isfree(this,'{$vo[id]}')"
+                                           href="">{$free_status[$vo['is_free']]}</a></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn  btn-sm btn-default">管理</button>
+                                            <button type="button" class="btn btn-sm btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+
+                                                <if condition="$cs_type==live">
+                                                    <li>
+                                                        <a href="{:u('Teacher/Center/livsecedit',array('id'=>$vo['id']))}">编辑</a>
+                                                    </li>
+                                                    <if condition="$vo['live_state']==1">
+                                                        <li>
+                                                            <a href="{:u('Teacher/Center/addzhibo',array('id'=>$vo['id']))}"
+                                                               data-toggle="modal" data-target="#myModal">创建直播间</a></li>
+
+                                                        <elseif condition="$vo['live_state']==2"/>
+                                                        <li>
+                                                            <a href="{:u('Teacher/Center/seepushurl',array('id'=>$vo['id']))}"
+                                                               data-toggle="modal" data-target="#myModal">查看推流地址</a>
+                                                        </li>
+                                                        <li><a  sc_id="{$vo.id}" live_state="3" class="J_change_live_state">开始直播</a></li>
+
+                                                        <elseif condition="$vo['live_state']==3"/>
+                                                        <li>
+                                                            <a href="{:u('Teacher/Center/seepushurl',array('id'=>$vo['id']))}"
+                                                               data-toggle="modal" data-target="#myModal">查看推流地址</a></li>
+
+                                                          <!--<li>  <a href="{:u('Teacher/Center/livexiangqing',array('chid'=>$vo['channelid']))}"-->
+                                                               <!--data-toggle="modal" data-target="#myModal">直播间详情</a></li>-->
+                                                        <!--<li>-->
+                                                            <!--<a href="{:u('Teacher/Center/livedel',array('chid'=>$vo['channelid']))}"-->
+                                                               <!--data-toggle="modal" data-target="#myModal">删除直播间</a></li>-->
+                                                        <!--<li>-->
+                                                            <!--<a href="{:u('Teacher/Center/liveonline',array('chid'=>$vo['channelid']))}"-->
+                                                               <!--data-toggle="modal" data-target="#myModal">在线人数</a></li>-->
+
+                                                        <li>
+                                                            <a sc_id="{$vo.id}" live_state="4" class="J_change_live_state" >结束直播</a></li>
+                                                        <li>
+
+                                                        <elseif condition="$vo['live_state']==4"/>
+                                                        <li>
+                                                            <a href="{:u('Teacher/Center/write_playback_url',array('id'=>$vo['id']))}"
+                                                               data-toggle="modal" data-target="#myModal">填写回放地址</a>
+                                                        </li>
+
+                                                        <else/>
+
+                                                    </if>
+                                                </if>
+                                                <if condition="$cs_type==normal">
+                                                    <li><a href="{:u('Teacher/Center/secedit',array('id'=>$vo['id']))}">编辑</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="$cs_type==doc">
+                                                    <li><a href="{:u('Teacher/Center/docedit',array('id'=>$vo['id']))}">编辑</a>
+                                                    </li>
+                                                </if>
+                                                <li>
+                                                    <a href="{:U('Teacher/Center/materialadd',array('sc_id'=>$vo['id'],'cs_id'=>$cs_id))}"
+                                                       target="_self">添加资料</a></li>
+                                                <li><a href="{:U('Teacher/Center/secdelete',array('id' => $vo['id']))}"
+                                                       class="js-ajax-delete" data-subcheck="true"
+                                                       data-msg="你确定删除吗？">删除</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </foreach>
+
+                        </table>
+                        <nav class="text-center">
+                            <div class="pagination text-center">{$Page}</div>
+                        </nav>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:700px;">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file="Public:scripts"/>
+<script>
+
+    $(function () {
+        $(".J_change_live_state").click(function () {
+            var live_state = $(this).attr('live_state');
+            var sc_id = $(this).attr('sc_id');
+            var msg = {
+                3: "开始直播，请使用客户端直播！",
+                4: "结束直播，请上传直播录像"
+            };
+            $.ajax({
+                url: '{:u("teacher/Center/update_live_state")}',
+                dataType: 'json',
+                type: 'post',
+                data: {live_state: live_state, sc_id: sc_id},
+                success: function (data) {
+                    swal({
+                        title: msg[live_state],
+                        text: "3s 后刷新本页",
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function () {
+                        //跳转到结果页面
+                        window.location.reload();
+                    }, 3000)
+
+
+                },
+                error: function () {
+                    console.log('error');
+                    //alert("error");
+
+                },
+
+            });
+        });
+    });
+
+    function radioSwitch() {
+        var val = $('#video input[name="radio"]:checked ').val();
+        var yun = document.getElementById('yun');
+        var youku = document.getElementById('youku');
+        if (val == 1) {
+            yun.className = 'col-md-7 controls col-md-offset-2';
+            youku.className = 'col-md-7 controls col-md-offset-2 hidden';
+            document.getElementById("video_type").value = '1';
+        } else {
+            yun.className = 'col-md-7 controls col-md-offset-2  hidden';
+            youku.className = 'col-md-7 controls col-md-offset-2';
+            document.getElementById("video_type").value = '2';
+        }
+
+    }
+</script>
+<script>
+    function isfree(obj, id) {
+        $.ajax({
+                    url: "{:u('Teacher/Center/isfree')}",
+                    type: "post", data: {
+                        'id': id
+                    }
+                    ,
+                    dataType: 'json',
+                    success: function (data) {
+                        location.reload();
+                    }
+                }
+        )
+        ;
+    }
+</script>
+<script>
+    $("#myModal").on("hidden.bs.modal", function () {
+        $(this).removeData("bs.modal");
+        location.reload();
+    });
+</script>
+<tc_include file="Public:footer"/>

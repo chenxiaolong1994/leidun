@@ -1,0 +1,80 @@
+<tc_include file="Public:header" />
+  <div id="content-container" class="container">
+    <php>
+		$sex=array("1"=>"男","2"=>"女");
+    </php>
+      <div class="row row-3-9">
+        <div class="col-md-6 col-md-offset-3">	
+          <div class="panel panel-default panel-col">
+	        <div class="panel-heading">报名信息</div>
+	           <div class="panel-body">
+			     <form id="user-profile-form" class="form-horizontal js-ajax-form" method="post" name="myform" action="{:U('Exam/Baoming/add_post')}">
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="profile_truename">报名类别</label>
+						<div class="col-md-7 controls radios">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['toptype']}
+						</div> 
+            		</div>
+					<div class="form-group" id="gread">
+						<label class="col-md-2 control-label" for="profile_truename">报名年级</label>
+						<div class="col-md-7 controls radios">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['childtype']}
+						</div> 
+            		</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="profile_truename">真实姓名</label>
+						<div class="col-md-7 controls radios">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['username']}
+						</div> 
+            		</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别</label>
+						<div class="col-md-7 controls radios">
+							<div id="profile_gender">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$sex[$result['sex']]}</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="profile_mobile" class="col-md-2 control-label">手机号码</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['mobilephone']}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">固定电话</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['fixedphone']}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">身份证号</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['patriarchal']}
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="profile_qq" class="col-md-2 control-label">Q Q 号码</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['qq']}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">家长姓名</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['patriarchal']}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">家长电话</label>
+						<div class="col-md-7 controls">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$result['patriarchalphone']}
+						</div>
+					</div>
+					
+			    </form>
+		       </div>
+	         </div>
+          </div>
+     </div>
+  </div>
+ <tc_include file="Public:scripts" />
+ <tc_include file="Public:footer" />
