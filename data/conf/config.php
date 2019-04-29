@@ -1,7 +1,7 @@
 <?php	return array (
   'seller_email' => 'manong123@foxmail.com',
-  'notify_url' => 'http://www.leidun.site/course/Course/notifyurl',
-  'return_url' => 'http://www.leidun.site/user/center/order',
+  'notify_url' => '', // 支付回调地址
+  'return_url' => '', // 支付宝支付完跳转页面
   'successpage' => 'http://www.leidun.site/user/center/order',
   'errorpage' => 'http://www.leidun.site/user/center/order',
   'partner' => '2088331125774685',
@@ -45,12 +45,12 @@
   'alidayu_app_key' => 'LTAICie4zNfdtjeG',
   'alidayu_app_secret' => 'q0qE51jLOY4OauEF2UgERy56Y0heRC',
   'smsFreeSignName' => '雷顿学院',
-  'smsTemplateCode' => 'SMS_148075467',
+  'smsTemplateCode' => '', // 短信发送模版
   'mobileverify' => '1',
-  'wxpay_notify' => 'http://www.leidun.site/course/course/wxPayNotify',
+  'wxpay_notify' => '', // 微信支付回调地址
   'member_charge' => 268,
-  'member_charge_notify_url' => 'http://www.leidun.site/user/Paynotify/notifyurl',
-  'member_charge_wx_notify_url' => 'http://www.leidun.site/user/Paynotify/wx_notifyurl',
+  'member_charge_notify_url' => '',
+  'member_charge_wx_notify_url' => '',
   'member_charge_return_url' => 'http://www.leidun.site/user/Center/count',
 
 
@@ -63,13 +63,13 @@
 
     'project_class_id' => array(28, 29, 30),
 
-    'wx_appid' => 'wx8ff0cf3dda38b461',
-    'wx_appsecret' => '40966fe168ab3d34c90cfd0625698e85',
-    'wx_token' => 'leiduncollege_weixin_token',
+    'wx_appid' => '',
+    'wx_appsecret' => '',
+    'wx_token' => '',
     'give_coin' => 50, //关注公众号自动赠送金币
 
-    'Ali_AccessKey' => 'LTAICie4zNfdtjeG',
-    'Ali_Secret' => 'q0qE51jLOY4OauEF2UgERy56Y0heRC'
+    'Ali_AccessKey' => '',
+    'Ali_Secret' => ''
 
 
 
